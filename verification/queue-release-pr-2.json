@@ -1,0 +1,19 @@
+{
+  "pullRequest": {
+    "headRefOid": "86923d82e98f3267c88f86e6f311c1792d84af57",
+    "mergeCommit": {
+      "oid": "181ead40c95b3f5c3ac08d18fc5f71af863a457f"
+    },
+    "mergedAt": "2026-09-07T18:23:10Z",
+    "state": "MERGED",
+    "url": "https://github.com/odin-labs-ai/open-docs/pull/2"
+  },
+  "mergeGroupRun": {
+    "conclusion": "success",
+    "event": "merge_group",
+    "headSha": "181ead40c95b3f5c3ac08d18fc5f71af863a457f",
+    "status": "completed",
+    "url": "https://github.com/odin-labs-ai/open-docs/actions/runs/34151198286"
+  },
+  "reviewReceipt": "https://github.com/odin-labs-ai/open-docs/blob/review/pr-2/verification/reviews/pr-2.md"
+}
