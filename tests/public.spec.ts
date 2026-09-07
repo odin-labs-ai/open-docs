@@ -27,3 +27,19 @@ test('public navigation, official mark and downloads work without an identity ba
   expect(privateRequests).toEqual([]);
   expect(errors).toEqual([]);
 });
+
+for (const width of [320, 390]) {
+  test(`public mobile navigation stays in one row at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto('./#learn');
+    const buttons = page.locator('.mode-nav button');
+    await expect(buttons).toHaveCount(4);
+    const boxes = await buttons.evaluateAll(nodes => nodes.map(node => {
+      const rect = node.getBoundingClientRect();
+      return { top: rect.top, height: rect.height, right: rect.right };
+    }));
+    expect(new Set(boxes.map(box => box.top)).size).toBe(1);
+    expect(boxes.every(box => box.height >= 44 && box.right <= width)).toBeTruthy();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(1);
+  });
+}

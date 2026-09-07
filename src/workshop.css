@@ -41,3 +41,7 @@ body[data-view=learn] .page-footer,body[data-view=workspace] .page-footer{color:
 @media(max-width:600px){.workspace-controls label{display:block}.workspace-controls select{display:block;min-width:0;width:100%;margin-top:12px}.workspace-login.primary,.workspace-retry.secondary{width:100%;margin-right:0}.workspace-document h2{font-size:26px}.workshop-visual .teaching-nodes{margin-inline:15px}.workshop-visual .teaching-caption{margin-inline:17px}}
 .workshop-visual{grid-column:1;grid-row:1}.workshop-task{grid-column:2;grid-row:1}
 @media(max-width:850px){.workshop-task{grid-column:1;grid-row:1;border-top:0;border-bottom:1px solid #bfcfc3}.workshop-visual{grid-column:1;grid-row:2}}
+
+/* Keep all four public destinations together on narrow screens. */
+@media(max-width:600px){.mode-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:100%;gap:0}.mode-nav button{min-width:0;justify-content:center;padding:10px 2px;min-height:44px}.mode-nav button svg{width:12px}.mode-nav button.active:after{left:5px;right:5px}}
+@media(max-width:360px){.mode-nav button{font-size:10px;gap:3px}}
