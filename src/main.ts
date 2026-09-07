@@ -1,3 +1,4 @@
+import { mountAgentOverview } from './agent-overview';
 import './style.css';
 import './workshop.css';
 import { components, lessons, sources, type Component, type Lesson } from './curriculum';
@@ -84,7 +85,7 @@ app.innerHTML = `
       </div>
     </aside>
     <main id="main-content">
-      <section id="learn-view" hidden aria-label="Hands-on workshop"></section>
+      <section id="learn-view" hidden aria-label="Understand agents and try the workshop"><div id="agent-overview-host"></div><div id="workshop-host"></div></section>
       <section class="intro">
         <div><h1>Harness engineering<span class="title-period">.</span></h1><p>Explore the system around the intelligence.<br class="desktop-break" /> Build the judgment to make agents work reliably.</p></div>
         <div class="course-facts"><span>Foundations to production</span><strong>18 lessons <i>/</i> 6 experiments</strong><span>Learn at your own pace</span></div>
@@ -169,6 +170,7 @@ function setMode(next: string) {
   mode = next;
   history.replaceState(null, '', `#${next === 'explore' ? current.id : next}`);
   if (next === 'learn') workshop?.enter(); else workshop?.pause();
+  overview?.pause(next !== 'learn');
   lessonTheater?.pause(next !== 'explore' || paused); traceTheater?.pause(next !== 'lab' || paused);
   document.body.dataset.view = mode;
   if (matchMedia('(max-width:760px)').matches && next !== 'reference') $<HTMLDetailsElement>('#curriculum-disclosure').open = false;
@@ -353,7 +355,8 @@ $('.trace-header').after($('#trace-outcome'));
 $('.trace-panel').prepend($('.run-actions'));
 const inspectTrace = document.createElement('button'); inspectTrace.className = 'text-button'; inspectTrace.textContent = 'Inspect the current event in 3D'; inspectTrace.addEventListener('click', () => $('#lab-theater').scrollIntoView({ block: 'start', behavior: 'instant' })); $('.trace-panel').append(inspectTrace);
 const initialHash = location.hash;
-const workshop = mountWorkshop($('#learn-view'), id => chooseLesson(id, true));
+const workshop = mountWorkshop($('#workshop-host'), id => chooseLesson(id, true));
+const overview = mountAgentOverview($('#agent-overview-host'), id => chooseLesson(id, true), () => { const entry = $('#workshop-entry'); entry.scrollIntoView({ block: 'start', behavior: 'instant' }); entry.focus({ preventScroll: true }); });
 const lessonTheater = mountLessonTheater($('#lesson-theater'), current);
 const traceTheater = mountTraceTheater($('#lab-theater'));
 renderCurriculum(); renderLesson(); renderReference(); selectScenario(activeScenario);
@@ -363,7 +366,7 @@ import('./scene').then(module => {
   try { scene = module.createScene($('#scene-host'), selectComponent, fallback); scene.select(current.component); $('#scene-loading').remove(); $('#engine-state').textContent = 'Interactive 3D'; }
   catch { fallback(); }
 }).catch(fallback);
-window.addEventListener('pagehide', () => { stopRun(); scene?.dispose(); workshop.dispose(); lessonTheater.dispose(); traceTheater.dispose(); });
+window.addEventListener('pagehide', () => { stopRun(); scene?.dispose(); workshop.dispose(); overview.dispose(); lessonTheater.dispose(); traceTheater.dispose(); });
 window.addEventListener('pageshow', event => { if (event.persisted) location.reload(); });
 // Keep the current view explicit for debugging without exposing a privileged runtime.
 document.body.dataset.view = mode;
