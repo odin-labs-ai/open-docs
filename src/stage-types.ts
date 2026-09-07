@@ -6,5 +6,5 @@ export type StageCode = { file: string; language: string; text: string; highligh
 export type StageNode = { id: string; label: string; asset: StageAsset; detail: string; code: StageCode; position?: [number, number, number] };
 export type StageLink = { from: string; to: string; label: string; kind: 'context' | 'proposal' | 'action' | 'result' | 'checkpoint' | 'denied' };
 export type StageFrame = { id: string; title: string; explanation: string; focus: string[]; route: string[]; code?: StageCode; states?: Record<string, 'ready' | 'active' | 'blocked' | 'passed'>; packet?: string };
-export type StageSpec = { id: string; title: string; subtitle: string; layout: StageLayout; provider?: string; nodes: StageNode[]; links: StageLink[]; frames: StageFrame[]; sources: { title: string; url: string }[]; note: string };
+export type StageSpec = { id: string; title: string; subtitle: string; layout: StageLayout; provider?: string; inspectionMode?: 'code' | 'component'; nodes: StageNode[]; links: StageLink[]; frames: StageFrame[]; sources: { title: string; url: string }[]; note: string };
 export type StageRenderer = { update(spec: StageSpec, frame: number, selected: string): void; pause(paused: boolean): void; capture(): string | null; reset(): void; dispose(): void };

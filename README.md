@@ -3,10 +3,11 @@
 **[Start learning →](https://odin-labs-ai.github.io/open-docs/)**
 
 Open, interactive harness engineering docs, powered by [Odin](https://www.odin-labs.ai).
-Start with a small task: fix a typo and preserve a link. Predict an outcome, change
-one control, inspect the artifact, and explain what happened.
+Start with the model and the system around it. Inspect how context, skills, tools,
+workflows and feedback shape an agent, then try one small task: fix a typo and
+preserve a link. Predict an outcome, inspect the artifact, and explain what happened.
 
-- **Start here:** five connected discoveries, from a precise task to safe recovery.
+- **Start here:** an interactive agent map, followed by five hands-on discoveries.
 - **Explore:** 18 lessons with code, checks, and interactive 3D walkthroughs.
 - **Failure lab:** experiment with permissions, context, verification, and recovery.
 - **Field guide:** 111 concepts and links to primary sources.

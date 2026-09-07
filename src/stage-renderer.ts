@@ -205,7 +205,10 @@ export function createStageRenderer(host: HTMLElement, initial: StageSpec, initi
       objects.set(node.id, object); content.add(object.group);
       object.group.traverse(child => { if (child instanceof THREE.Mesh) pickables.push(child); });
       const button = document.createElement('button'); button.type = 'button'; button.className = 'stage-node-label'; button.dataset.stageNode = node.id; button.dataset.state = state; button.setAttribute('aria-pressed', String(isSelected)); button.title = node.detail;
-      const name = document.createElement('span'); name.textContent = String(spec.nodes.indexOf(node) + 1); button.setAttribute('aria-label', `${node.label}: ${state === 'blocked' ? 'blocked before action' : state === 'active' ? 'current event' : state}. Inspect code`); const status = document.createElement('small'); status.textContent = state === 'blocked' ? 'Blocked before action' : state === 'passed' ? 'Passed' : state === 'active' ? 'Current step' : 'Inspect component'; button.append(name, status); button.addEventListener('click', () => onPick(node.id)); labelsLayer.append(button);
+      const name = document.createElement('span'); name.textContent = String(spec.nodes.indexOf(node) + 1);
+      const componentInspection = spec.inspectionMode === 'component';
+      button.setAttribute('aria-label', componentInspection ? `${node.label}. Explain component` : `${node.label}: ${state === 'blocked' ? 'blocked before action' : state === 'active' ? 'current event' : state}. Inspect code`);
+      const status = document.createElement('small'); status.textContent = componentInspection ? 'Component explanation' : state === 'blocked' ? 'Blocked before action' : state === 'passed' ? 'Passed' : state === 'active' ? 'Current step' : 'Inspect component'; button.append(name, status); button.addEventListener('click', () => onPick(node.id)); labelsLayer.append(button);
       const position = object.group.position.clone().add(new THREE.Vector3(0, object.labelHeight + 0.15, 0));
       const labelSprite = sprite(node.label, 2.15, 0.44); labelSprite.position.copy(position); labelSprite.visible = false; content.add(labelSprite);
       const leader = document.createElementNS('http://www.w3.org/2000/svg', 'line'); leaders.append(leader); nodeLabels.push({ node, button, leader, position, sprite: labelSprite });
