@@ -1,7 +1,6 @@
 # A small, checkable agent task
 
 Correct `Welcomme` to `Welcome` in `help.md`. Preserve every other byte and file.
-The English fixture remains identical when used with the Dutch documentation.
 
 ## Prepare the exercise
 
@@ -94,15 +93,3 @@ response, inspect the actual files before repeating work and rerun the check.
 - DeepSeek tool calls: https://api-docs.deepseek.com/guides/tool_calls/
 - Factory Droid: https://docs.factory.ai/droid-cli/quickstart
 - Factory AGENTS.md: https://docs.factory.ai/harness/agents-md
-
-## Nederlands
-
-Bewaar `harness-starter` als vertrouwd origineel buiten het schrijfbereik van de
-agent. Kopieer de volledige map naar `harness-work`. Voer vanuit die werkmap zelf
-`node ../harness-starter/verify.mjs .` uit: eerst moet de controle mislukken.
-Laat je agent alleen de typefout in help.md corrigeren. Beëindig het bewerken en
-voer zelf dezelfde externe controle opnieuw uit. Alleen de exacte wijziging mag
-slagen. De instructiebestanden installeren geen technische toegangsgrens.
-Een aangepaste FAQ, extra bestand of gewijzigde verifier moet in een afzonderlijke
-wegwerpkopie worden afgewezen. Gebruik de volledige Nederlandstalige opdracht en
-stappen op de website; de oefenbestanden blijven bewust in het Engels.

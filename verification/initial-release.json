@@ -1,0 +1,20 @@
+{
+  "repository": "https://github.com/odin-labs-ai/open-docs",
+  "pages": "https://odin-labs-ai.github.io/open-docs/",
+  "initialPullRequest": 1,
+  "reviewedHead": "f8592636565c1cdde010b89db2aec943e255ef5b",
+  "initialMainCommit": "43d0792ce7d50508906d2ef276fa9ee32fc0d4dd",
+  "initialQualityRun": "https://github.com/odin-labs-ai/open-docs/actions/runs/34150250500",
+  "quality": {
+    "browserTestsPassed": 17,
+    "starterTestsPassed": 11,
+    "nestedLessonsRead": 18,
+    "conceptLinksChecked": 111,
+    "providerLayoutsChecked": 5,
+    "badResponses": 0,
+    "pageErrors": 0
+  },
+  "reviewReceipt": "https://github.com/odin-labs-ai/open-docs/blob/review/pr-1/verification/reviews/pr-1.md",
+  "rulesetId": 22471916,
+  "queueConfiguration": ".github/rulesets/main.json"
+}

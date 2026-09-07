@@ -12,7 +12,7 @@ const protectedHashes = {
   "faq.md": "4584d843eac320601ebafff3283c6b12b1902d9deae932581de8244c517aaa7c",
   "AGENTS.md": "2c67927bd556dbcf5f524a6717bfe72b55593c4ac63c2f7d3096203d5a5cc011",
   "CLAUDE.md": "b44c0d5617b7642a52796c00b33bf5e2bfe0e10a5634d3a92c363125b799745b",
-  "README.md": "0e69da12df3f3c763127a70c5bd4e7814f52457cb9d1d98a1e5f6d9c64a6b87c"
+  "README.md": "1bf5942b57d8f8dfcecc97abdc2b2c33011a6d2efe0b07c6592bb74a10f44ec9"
 };
 const expectedNames = ['AGENTS.md', 'CLAUDE.md', 'README.md', 'faq.md', 'help.md', 'verify.mjs'].sort();
 const failures = [];
