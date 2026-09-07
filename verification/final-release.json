@@ -1,0 +1,74 @@
+{
+  "recordedAt": "2026-09-07T18:37:15.774050+00:00",
+  "repository": "https://github.com/odin-labs-ai/open-docs",
+  "publicURL": "https://odin-labs-ai.github.io/open-docs/",
+  "release": {
+    "conclusion": "success",
+    "event": "push",
+    "headSha": "c5af02411ae60ed4b0c24ea0be0f3e53e24d87d0",
+    "jobs": [
+      {
+        "name": "Quality",
+        "status": "completed",
+        "conclusion": "success"
+      },
+      {
+        "name": "Publish and verify live",
+        "status": "completed",
+        "conclusion": "success"
+      }
+    ],
+    "status": "completed",
+    "url": "https://github.com/odin-labs-ai/open-docs/actions/runs/34151932243"
+  },
+  "mergeQueueRun": {
+    "conclusion": "success",
+    "event": "merge_group",
+    "headSha": "c5af02411ae60ed4b0c24ea0be0f3e53e24d87d0",
+    "status": "completed",
+    "url": "https://github.com/odin-labs-ai/open-docs/actions/runs/34151723967"
+  },
+  "pullRequest": {
+    "headRefOid": "61ce73e7d0810159f0e49c7f0854c3b4e3c3cc73",
+    "mergeCommit": {
+      "oid": "c5af02411ae60ed4b0c24ea0be0f3e53e24d87d0"
+    },
+    "mergedAt": "2026-09-07T18:30:47Z",
+    "state": "MERGED",
+    "url": "https://github.com/odin-labs-ai/open-docs/pull/3"
+  },
+  "independentReview": "https://github.com/odin-labs-ai/open-docs/blob/review/pr-3/verification/reviews/pr-3.md",
+  "deployedBrowserTestsPassed": 19,
+  "starterTestsPassed": 11,
+  "servedFilesMatchingFinalBuild": 22,
+  "dependencyAudit": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0
+    },
+    "dependencies": 79,
+    "devDependencies": 0,
+    "optionalDependencies": 0,
+    "totalDependencies": 79
+  },
+  "githubAlertStateAtRecording": [
+    {
+      "number": 2,
+      "state": "open",
+      "package": "fflate",
+      "manifest": "pnpm-lock.yaml"
+    },
+    {
+      "number": 1,
+      "state": "open",
+      "package": "fflate",
+      "manifest": "package.json"
+    }
+  ],
+  "alertStateNote": "GitHub alert metadata may lag the fixed main commit. Both manifests now resolve fflate0.8.3; the final dependency audit reports zero advisories and the served bundle matches that patched build. Alerts were not dismissed to hide their state.",
+  "learnerReview": "https://github.com/odin-labs-ai/open-docs/blob/review/pr-2/verification/initial-learner-review.md",
+  "mobileCorrectionEvidence": "https://github.com/odin-labs-ai/open-docs/tree/review/pr-2/verification/refined-ui"
+}
