@@ -1,0 +1,27 @@
+{
+  "base": "https://odin-labs-ai.github.io/open-docs/",
+  "version": {
+    "sha": "181ead40c95b3f5c3ac08d18fc5f71af863a457f",
+    "builtAt": "2026-09-07T18:23:46.004Z"
+  },
+  "widths": [
+    {
+      "width": 1440,
+      "result": "A testable finish line",
+      "inspectedCodeLength": 257,
+      "conceptLinks": 111,
+      "navRows": 1,
+      "referenceOverflow": 0
+    },
+    {
+      "width": 390,
+      "result": "A testable finish line",
+      "inspectedCodeLength": 257,
+      "conceptLinks": 111,
+      "navRows": 1,
+      "referenceOverflow": 0
+    }
+  ],
+  "errors": [],
+  "failedResponses": []
+}
