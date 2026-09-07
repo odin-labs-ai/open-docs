@@ -1,0 +1,95 @@
+{
+  "url": "https://odin-labs-ai.github.io/open-docs/",
+  "expectedSha": "947ffb07683b3ea40916c58d4ea46de61ea7ad31",
+  "deployedVersion": {
+    "sha": "947ffb07683b3ea40916c58d4ea46de61ea7ad31",
+    "builtAt": "2026-09-07T23:15:11.254Z"
+  },
+  "verifiedAt": "2026-09-07T23:18:56.091Z",
+  "observations": [
+    {
+      "width": 1440,
+      "motion": "no-preference",
+      "components": [
+        {
+          "id": "model",
+          "accessibleName": "Model. Explain component",
+          "explanation": "The model supplies the intelligence."
+        },
+        {
+          "id": "knowledge",
+          "accessibleName": "Context & skills. Explain component",
+          "explanation": "Give the agent the knowledge for this job."
+        },
+        {
+          "id": "tools",
+          "accessibleName": "Tools & permissions. Explain component",
+          "explanation": "Connect reasoning to permitted actions."
+        },
+        {
+          "id": "work",
+          "accessibleName": "Workflows & work orders. Explain component",
+          "explanation": "Give the work a shape and a finish line."
+        },
+        {
+          "id": "feedback",
+          "accessibleName": "Telemetry & checks. Explain component",
+          "explanation": "See what happened. Check what it produced."
+        },
+        {
+          "id": "plugins",
+          "accessibleName": "Plugins. Explain component",
+          "explanation": "Package extensions so they can be reused."
+        }
+      ],
+      "lessonRoute": "repository",
+      "workshopFocused": true,
+      "workshopResult": "A testable finish line",
+      "overflow": false,
+      "errors": [],
+      "badResponses": []
+    },
+    {
+      "width": 390,
+      "motion": "no-preference",
+      "components": [
+        {
+          "id": "model",
+          "accessibleName": "Model. Explain component",
+          "explanation": "The model supplies the intelligence."
+        },
+        {
+          "id": "knowledge",
+          "accessibleName": "Context & skills. Explain component",
+          "explanation": "Give the agent the knowledge for this job."
+        },
+        {
+          "id": "tools",
+          "accessibleName": "Tools & permissions. Explain component",
+          "explanation": "Connect reasoning to permitted actions."
+        },
+        {
+          "id": "work",
+          "accessibleName": "Workflows & work orders. Explain component",
+          "explanation": "Give the work a shape and a finish line."
+        },
+        {
+          "id": "feedback",
+          "accessibleName": "Telemetry & checks. Explain component",
+          "explanation": "See what happened. Check what it produced."
+        },
+        {
+          "id": "plugins",
+          "accessibleName": "Plugins. Explain component",
+          "explanation": "Package extensions so they can be reused."
+        }
+      ],
+      "lessonRoute": "repository",
+      "workshopFocused": true,
+      "workshopResult": "A testable finish line",
+      "overflow": false,
+      "errors": [],
+      "badResponses": []
+    }
+  ]
+}
