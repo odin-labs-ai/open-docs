@@ -1,0 +1,101 @@
+{
+  "pr": 4,
+  "repository": "odin-labs-ai/open-docs",
+  "url": "https://github.com/odin-labs-ai/open-docs/pull/4",
+  "headSha": "30d9ee1ce005ed95f5b8cbe7ce979655476f8251",
+  "verdict": "SHIP",
+  "recordedAt": "2026-09-07T23:09:15.406629Z",
+  "reviewer": {
+    "kind": "independent Codex agent",
+    "role": "Skeptical exact-head reviewer",
+    "authoredImplementation": false
+  },
+  "scope": {
+    "base": "origin/main",
+    "changedFilesReviewed": [
+      "HOMEPAGE-INTENT.md",
+      "README.md",
+      "src/agent-overview.css",
+      "src/agent-overview.ts",
+      "src/main.ts",
+      "src/stage-renderer.ts",
+      "src/stage-types.ts",
+      "src/workshop.ts",
+      "tests/overview.spec.ts"
+    ],
+    "instructionsRead": [
+      "AGENTS.md",
+      "CONTRIBUTING.md",
+      "HOMEPAGE-INTENT.md"
+    ],
+    "headMatchesPullRequest": true,
+    "featureWorktreeUnchanged": true
+  },
+  "findings": [],
+  "assessment": [
+    "The homepage now introduces model reasoning and surrounding harness responsibilities before the exercise, while preserving the existing workshop and lesson flows.",
+    "The overview is a conceptual component map: its numbered objects select explanations and lesson routes, not code inspection or execution events. Its inspectionMode=component labels say Explain component. Existing lesson/workshop stages retain their code inspection and event-state labels because the optional mode defaults to existing behavior.",
+    "Mount lifecycle handles selection before lazy import, navigation while loading, mode pause, reduced-motion changes, pagehide disposal and failed-module fallback. Runtime probes also verified overview WebGL context-loss fallback.",
+    "Desktop and mobile visual inspection showed readable hierarchy, the existing green identity, reachable pins, and no clipped hero content. Keyboard activation retains the graph pin focus and workshop entry focuses the target heading.",
+    "Committed normal-motion tests compare canvas image data, rather than DOM state alone, and require later stability. The independent probes strengthen this by waiting two animation frames before sampling, requiring more than three distinct canvas images across nine samples, then checking settling and reduced-motion stability. This proves actual raster changes over multiple frames for the exercised workshop replay, rather than a single repaint."
+  ],
+  "validation": [
+    {
+      "check": "pnpm install --frozen-lockfile",
+      "result": "PASS",
+      "environment": "Independent detached checkout; Node 22.22.2; pnpm 10.11.1"
+    },
+    {
+      "check": "pnpm build",
+      "result": "PASS",
+      "detail": "Strict TypeScript and production bundle. Existing large Three.js chunk warning remains informational."
+    },
+    {
+      "check": "pnpm test:starter",
+      "result": "PASS",
+      "testsPassed": 11,
+      "detail": "Uncorrected starter fails; exact correction passes; protected files, link, extras, symlink and altered verifier are rejected."
+    },
+    {
+      "check": "pnpm test:static",
+      "result": "PASS",
+      "detail": "Nested production URL; 18 lessons read, 111 concept links checked, five provider layouts, real mesh selection, fonts and context-loss recovery; zero external requests, bad responses or page errors."
+    },
+    {
+      "check": "pnpm test --reporter=line",
+      "result": "PASS",
+      "testsPassed": 27,
+      "duration": "2.2 minutes",
+      "detail": "24 committed browser tests plus 3 independent review probes. Includes failed/corrected workshop journeys and persistence, renderer-unavailable paths, desktop/mobile component-to-lesson routes, keyboard focus, provider/lesson stage sweep and accessibility."
+    },
+    {
+      "check": "Independent normal-motion probes at 1440px and 390px",
+      "result": "PASS",
+      "detail": "Nine canvas samples after two animation frames yielded more than three distinct images per width. Canvas stable after settling and an additional 500ms; reduced-motion replay stable; zero page errors; homepage axe WCAG A/AA scan passed at both widths."
+    },
+    {
+      "check": "Independent delayed renderer and context-loss probes",
+      "result": "PASS",
+      "detail": "Selecting Tools while renderer import was pending preserved selection after load. Overview context loss exposed written fallback, disabled reset, and preserved component-to-lesson navigation at both widths."
+    },
+    {
+      "check": "Independent rendered screenshot inspection",
+      "result": "PASS",
+      "viewports": [
+        "1440x900",
+        "390x900"
+      ]
+    },
+    {
+      "check": "Final source and PR head binding",
+      "result": "PASS",
+      "detail": "PR #4 and clean feature checkout still resolve to the reviewed full SHA."
+    }
+  ],
+  "limitations": [
+    "Local verification used headless Chromium. It does not establish behavior in Safari or Firefox, physical mobile devices, or every GPU driver.",
+    "Normal-motion pixel probes cover a representative pi workshop event at desktop and mobile widths. They do not prove every event of every provider animates; the broader stage sweep checks event/code behavior under reduced motion.",
+    "The overview is a conceptual map with component selection, not an execution timeline; workshop pixel evidence should not be described as proof of an agent execution animation in the overview.",
+    "This verdict does not establish merge-queue success or a live deployment. Required CI, separate review receipt, queue checks and public version/deployment verification remain the commander responsibilities."
+  ]
+}
