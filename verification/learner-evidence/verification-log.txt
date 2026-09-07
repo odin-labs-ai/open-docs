@@ -1,0 +1,20 @@
+Baseline
+cwd: <temporary-exercise>/harness-work
+command: /Users/mitchelltieleman/.nvm/versions/node/v22.22.2/bin/node <temporary-exercise>/harness-starter/verify.mjs .
+exit: 1
+FAIL: /private<temporary-exercise>/harness-work
+- help.md: expected only Welcomme → Welcome; preserve all other bytes.
+
+Exact correction
+cwd: <temporary-exercise>/harness-work
+command: /Users/mitchelltieleman/.nvm/versions/node/v22.22.2/bin/node <temporary-exercise>/harness-starter/verify.mjs .
+exit: 0
+PASS: /private<temporary-exercise>/harness-work
+Exact typo correction; protected files and verifier unchanged; no extra files.
+
+Broken link negative case
+cwd: <temporary-exercise>/broken-link
+command: /Users/mitchelltieleman/.nvm/versions/node/v22.22.2/bin/node <temporary-exercise>/harness-starter/verify.mjs .
+exit: 1
+FAIL: /private<temporary-exercise>/broken-link
+- help.md: expected only Welcomme → Welcome; preserve all other bytes.
