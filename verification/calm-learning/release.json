@@ -1,0 +1,45 @@
+{
+  "pr": 6,
+  "reviewedHead": "f42713248afef104e24dac89e945049c29401919",
+  "deployedHead": "4996848b347a66d67ee403ac2af5b1ffcf513615",
+  "reviewedAndMergedTree": "1ccf8dbcb9097871061290f9760ecabf45a38452",
+  "url": "https://odin-labs-ai.github.io/open-docs/",
+  "release": {
+    "id": 34272128911,
+    "url": "https://github.com/odin-labs-ai/open-docs/actions/runs/34272128911",
+    "status": "completed",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "Quality",
+        "conclusion": "success",
+        "completedAt": "2026-09-08T20:02:49Z"
+      },
+      {
+        "name": "Publish and verify live",
+        "conclusion": "success",
+        "completedAt": "2026-09-08T20:05:44Z"
+      }
+    ]
+  },
+  "preMergeReviewReceiptCommit": "a0a6b8ac0c69bda73fb62b9bb3d574b7ca91a997",
+  "prChecks": 34271259218,
+  "mergeGroupChecks": 34271793922,
+  "deployedBrowserTests": 31,
+  "directPublicCheck": "PASS",
+  "directWidths": [
+    1440,
+    390
+  ],
+  "directScenarios": [
+    "explanation-first overview",
+    "optional parts and map",
+    "reading-first lesson and deep dive",
+    "workshop failure",
+    "corrected result and reflection enables continuation"
+  ],
+  "pageErrors": [],
+  "horizontalOverflow": false,
+  "confidenceClaim": "No measured confidence or learning-gain claim.",
+  "provenance": "AI-Delegated: Codex (OpenAI)"
+}
