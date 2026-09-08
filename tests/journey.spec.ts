@@ -83,7 +83,7 @@ test('returning to the same lesson preserves a deep inspection and its selected 
   await expect(stage).toHaveAttribute('data-stage', stageId!);
   await expect(stage).toHaveAttribute('data-frame', frame!);
   await expect(stage.locator('.engineering-code h3')).toHaveText(selectedTitle);
-  await expect(stage.locator('.engineering-code pre')).toHaveText(selectedCode);
+  await expect(stage.locator('.engineering-code pre')).toHaveText(selectedCode, { useInnerText: true });
   await page.locator('#close-lesson-stage').click();
   await expect(page.locator('#lesson-inspection')).toBeHidden();
   await expect(page.locator('#open-lesson-stage')).toBeFocused();
