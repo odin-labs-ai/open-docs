@@ -1,0 +1,32 @@
+[
+  {
+    "width": 1440,
+    "version": {
+      "sha": "eae0012b5e0f06ed1ab79a6c6da707f999db9338",
+      "builtAt": "2026-09-08T01:26:36.426Z"
+    },
+    "scrollY": 1433,
+    "focus": "provider-transfer",
+    "heading": {
+      "top": 152.65625,
+      "bottom": 246.71875
+    },
+    "headerBottom": 80,
+    "progress": "5 / 5 discoveries completed. Saved on this device."
+  },
+  {
+    "width": 390,
+    "version": {
+      "sha": "eae0012b5e0f06ed1ab79a6c6da707f999db9338",
+      "builtAt": "2026-09-08T01:26:36.426Z"
+    },
+    "scrollY": 2047,
+    "focus": "provider-transfer",
+    "heading": {
+      "top": 181.203125,
+      "bottom": 264.078125
+    },
+    "headerBottom": 112,
+    "progress": "5 / 5 discoveries completed. Saved on this device."
+  }
+]

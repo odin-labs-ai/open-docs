@@ -1,0 +1,692 @@
+[
+  {
+    "width": 390,
+    "name": "overview-expanded",
+    "url": "http://127.0.0.1:4330/#learn",
+    "scrollY": 534,
+    "focus": "",
+    "history": {
+      "scrollY": 534,
+      "focusId": "",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "essentials"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#agent-part-detail": {
+        "y": 512.484375,
+        "bottom": 854.609375,
+        "height": 342.125,
+        "text": "Connect reasoning to permitted actions.Tools let the agent read files, edit code or call a service. The harness checks what is allowed, executes the operation and returns its resul"
+      },
+      ".agent-part-boundary": {
+        "y": 762.609375,
+        "bottom": 804.609375,
+        "height": 42,
+        "text": "A proposed tool call is not an executed action. A denied action is not a completed task."
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "overview-lesson",
+    "url": "http://127.0.0.1:4330/#tools",
+    "scrollY": 254,
+    "focus": "tab-deep",
+    "history": {
+      "scrollY": 254,
+      "focusId": "tab-deep",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "deep"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#lesson-reader": {
+        "y": 149.5,
+        "bottom": 1278.515625,
+        "height": 1129.015625,
+        "text": "← Return to your workshopYour experiment is saved while you read.\n          Lesson 06 of 18Tools are contractsIntermediate\n          \n            Foundations\n            Deep dive\n"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "back-overview",
+    "url": "http://127.0.0.1:4330/#learn",
+    "scrollY": 534,
+    "focus": "overview-part-lesson",
+    "history": {
+      "scrollY": 534,
+      "focusId": "overview-part-lesson",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "deep"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#agent-part-detail": {
+        "y": 512.484375,
+        "bottom": 752.109375,
+        "height": 239.625,
+        "text": "Connect reasoning to permitted actions.Tools let the agent read files, edit code or call a service. The harness checks what is allowed, executes the operation and returns its resul"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "workshop-entry",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 0,
+    "focus": "workshop-entry",
+    "history": {
+      "scrollY": 0,
+      "focusId": "workshop-entry",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "deep"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "[data-prediction=\"0\"]": {
+        "y": 641.515625,
+        "bottom": 690.953125,
+        "height": 49.4375,
+        "text": "Improve the help page."
+      },
+      "#run-workshop": {
+        "y": 808.21875,
+        "bottom": 853.21875,
+        "height": 45,
+        "text": "Run this request"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "step1-fail",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 771,
+    "focus": "",
+    "history": {
+      "scrollY": 771,
+      "focusId": "",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "deep"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#workshop-result": {
+        "y": 206.8125,
+        "bottom": 378.171875,
+        "height": 171.359375,
+        "text": "The request has no reliable acceptance test.“Improve” leaves both the intended change and permitted side effects undefined. Try the request that names the exact result.Observed run"
+      },
+      "#change-workshop-configuration": {
+        "y": 378.171875,
+        "bottom": 422.171875,
+        "height": 44,
+        "text": "Change request"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "step1-wrong-reflection",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 1248,
+    "focus": "",
+    "history": {
+      "scrollY": 1248,
+      "focusId": "",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "deep"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#reflection-feedback": {
+        "y": 466.046875,
+        "bottom": 487.640625,
+        "height": 21.59375,
+        "text": "Revisit the observed result and its explanation."
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "step1-reflection",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 1248,
+    "focus": "",
+    "history": {
+      "scrollY": 1248,
+      "focusId": "",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "deep"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#reflection-feedback": {
+        "y": 466.046875,
+        "bottom": 487.640625,
+        "height": 21.59375,
+        "text": "You connected the result to the mechanism."
+      },
+      "#workshop-next": {
+        "y": 557.4375,
+        "bottom": 602.4375,
+        "height": 45,
+        "text": "Next discovery"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "workshop-before-detour",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 1248,
+    "focus": "",
+    "history": {
+      "scrollY": 1248,
+      "focusId": "",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "deep"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#workshop-deeper": {
+        "y": 224.9375,
+        "bottom": 262.9375,
+        "height": 38,
+        "text": "Open the engineering lesson"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "lesson-keyboard-tab",
+    "url": "http://127.0.0.1:4330/#intent",
+    "scrollY": 254,
+    "focus": "tab-check",
+    "history": {
+      "scrollY": 254,
+      "focusId": "tab-check",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "check",
+      "workshopReturn": {
+        "scrollY": 1248,
+        "focusId": "workshop-deeper"
+      }
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#tab-check": {
+        "y": 331.5,
+        "bottom": 357.5,
+        "height": 26,
+        "text": "Check understanding 0/2"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "browser-back-workshop",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 1248,
+    "focus": "workshop-deeper",
+    "history": {
+      "scrollY": 1248,
+      "focusId": "workshop-deeper",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "check"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#workshop-deeper": {
+        "y": 224.9375,
+        "bottom": 262.9375,
+        "height": 38,
+        "text": "Open the engineering lesson"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "browser-forward-lesson",
+    "url": "http://127.0.0.1:4330/#intent",
+    "scrollY": 254,
+    "focus": "tab-check",
+    "history": {
+      "scrollY": 254,
+      "focusId": "tab-check",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "check",
+      "workshopReturn": {
+        "scrollY": 1248,
+        "focusId": "workshop-deeper"
+      }
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#tab-check": {
+        "y": 331.5,
+        "bottom": 357.5,
+        "height": 26,
+        "text": "Check understanding 0/2"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "explicit-return",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 1248,
+    "focus": "workshop-deeper",
+    "history": {
+      "scrollY": 1248,
+      "focusId": "workshop-deeper",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "check"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#workshop-deeper": {
+        "y": 224.9375,
+        "bottom": 262.9375,
+        "height": 38,
+        "text": "Open the engineering lesson"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "step2-fail",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 1087,
+    "focus": "",
+    "history": {
+      "scrollY": 1087,
+      "focusId": "",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "check"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#workshop-result": {
+        "y": 207.140625,
+        "bottom": 351.5,
+        "height": 144.359375,
+        "text": "This briefing is not ready for the task.10 / 4 teaching units used. The preservation rule is missing. The unrelated archive crowds out the budget. Change the sources and run again."
+      },
+      "#change-workshop-configuration": {
+        "y": 351.5,
+        "bottom": 395.5,
+        "height": 44,
+        "text": "Change configuration"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "step2-wrong-reflection",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 1235,
+    "focus": "",
+    "history": {
+      "scrollY": 1235,
+      "focusId": "",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "check"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#reflection-feedback": {
+        "y": 822.375,
+        "bottom": 843.96875,
+        "height": 21.59375,
+        "text": "Revisit the observed result and its explanation."
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "step2-reflection",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 1366,
+    "focus": "",
+    "history": {
+      "scrollY": 1366,
+      "focusId": "",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "check"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#reflection-feedback": {
+        "y": 691.375,
+        "bottom": 712.96875,
+        "height": 21.59375,
+        "text": "You connected the result to the mechanism."
+      },
+      "#workshop-next": {
+        "y": 782.765625,
+        "bottom": 827.765625,
+        "height": 45,
+        "text": "Next discovery"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "step3-fail",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 962,
+    "focus": "",
+    "history": {
+      "scrollY": 962,
+      "focusId": "",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "check"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#workshop-result": {
+        "y": 207.390625,
+        "bottom": 351.75,
+        "height": 144.359375,
+        "text": "Export denied before execution.No export occurred. Containment worked; the requested typo repair is still incomplete. Try the authorized edit to finish the task.Observed run 5. Cha"
+      },
+      "#change-workshop-configuration": {
+        "y": 351.75,
+        "bottom": 395.75,
+        "height": 44,
+        "text": "Change configuration"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "step3-wrong-reflection",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 1440,
+    "focus": "",
+    "history": {
+      "scrollY": 1440,
+      "focusId": "",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "check"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#reflection-feedback": {
+        "y": 465.625,
+        "bottom": 487.21875,
+        "height": 21.59375,
+        "text": "Revisit the observed result and its explanation."
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "step3-reflection",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 1440,
+    "focus": "",
+    "history": {
+      "scrollY": 1440,
+      "focusId": "",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "check"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#reflection-feedback": {
+        "y": 465.625,
+        "bottom": 487.21875,
+        "height": 21.59375,
+        "text": "You connected the result to the mechanism."
+      },
+      "#workshop-next": {
+        "y": 557.015625,
+        "bottom": 602.015625,
+        "height": 45,
+        "text": "Next discovery"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "step4-fail",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 919,
+    "focus": "",
+    "history": {
+      "scrollY": 919,
+      "focusId": "",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "check"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#workshop-result": {
+        "y": 207.359375,
+        "bottom": 378.71875,
+        "height": 171.359375,
+        "text": "FAIL: the link changed despite the success claim.Actual document check: heading corrected; FAQ link broken; unexpected change detected. Choose the scoped correction and recheck.Obs"
+      },
+      "#change-workshop-configuration": {
+        "y": 378.71875,
+        "bottom": 422.71875,
+        "height": 44,
+        "text": "Change configuration"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "step4-wrong-reflection",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 1040,
+    "focus": "",
+    "history": {
+      "scrollY": 1040,
+      "focusId": "",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "check"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#reflection-feedback": {
+        "y": 822.59375,
+        "bottom": 844.1875,
+        "height": 21.59375,
+        "text": "Revisit the observed result and its explanation."
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "step4-reflection",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 1171,
+    "focus": "",
+    "history": {
+      "scrollY": 1171,
+      "focusId": "",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "check"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#reflection-feedback": {
+        "y": 691.59375,
+        "bottom": 713.1875,
+        "height": 21.59375,
+        "text": "You connected the result to the mechanism."
+      },
+      "#workshop-next": {
+        "y": 782.984375,
+        "bottom": 827.984375,
+        "height": 45,
+        "text": "Next discovery"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "step5-fail",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 962,
+    "focus": "",
+    "history": {
+      "scrollY": 962,
+      "focusId": "",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "check"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#workshop-result": {
+        "y": 207.390625,
+        "bottom": 403.9375,
+        "height": 196.546875,
+        "text": "Two operation records for one intended edit.2 operation records now exist in this fixture. The unchanged final text hides a duplicate attempt; other tools could duplicate a busines"
+      },
+      "#change-workshop-configuration": {
+        "y": 403.9375,
+        "bottom": 447.9375,
+        "height": 44,
+        "text": "Change configuration"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "step5-wrong-reflection",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 1492,
+    "focus": "",
+    "history": {
+      "scrollY": 1492,
+      "focusId": "",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "check"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#reflection-feedback": {
+        "y": 465.8125,
+        "bottom": 487.40625,
+        "height": 21.59375,
+        "text": "Revisit the observed result and its explanation."
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "step5-reflection",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 1492,
+    "focus": "",
+    "history": {
+      "scrollY": 1492,
+      "focusId": "",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "check"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#reflection-feedback": {
+        "y": 465.8125,
+        "bottom": 487.40625,
+        "height": 21.59375,
+        "text": "You connected the result to the mechanism."
+      },
+      "#workshop-next": {
+        "y": 557.203125,
+        "bottom": 602.203125,
+        "height": 45,
+        "text": "Take it into your own agent"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "name": "complete-transfer",
+    "url": "http://127.0.0.1:4330/#workshop",
+    "scrollY": 2197,
+    "focus": "provider-transfer",
+    "history": {
+      "scrollY": 2197,
+      "focusId": "provider-transfer",
+      "odin": true,
+      "documentId": "ff279868-d16f-4634-b49d-db3821397495",
+      "tab": "check"
+    },
+    "header": 112,
+    "overflow": false,
+    "boxes": {
+      "#provider-transfer": {
+        "y": 0.203125,
+        "bottom": 1667.515625,
+        "height": 1667.3125,
+        "text": "Same idea.Your own agent.Take the small project into a real tool. Follow the same change from instruction to evidence.Download the starter projectCodexClaude CodePiDeepSeek + PiFac"
+      }
+    }
+  },
+  {
+    "width": 390,
+    "errors": [],
+    "completed": true
+  },
+  {
+    "name": "no-webgl",
+    "fallback": true,
+    "code": "Independent verifier"
+  }
+]

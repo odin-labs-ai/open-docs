@@ -1,0 +1,130 @@
+{
+  "pr": 5,
+  "repository": "odin-labs-ai/open-docs",
+  "url": "https://github.com/odin-labs-ai/open-docs/pull/5",
+  "headSha": "eae0012b5e0f06ed1ab79a6c6da707f999db9338",
+  "baseSha": "947ffb07683b3ea40916c58d4ea46de61ea7ad31",
+  "verdict": "PASS",
+  "recordedAt": "2026-09-08T01:28:07.995Z",
+  "reviewer": {
+    "id": "/root/learner_friction_b",
+    "role": "Independent skeptical exact-head reviewer",
+    "authoredImplementation": false
+  },
+  "findings": [],
+  "resolvedFindings": [
+    {
+      "severity": "P2",
+      "description": "The final transfer heading was scrolled behind the sticky navigation.",
+      "foundAtHead": "f128bf89835bf40aaaf301197977ea24ace97707",
+      "resolvedAtHead": "eae0012b5e0f06ed1ab79a6c6da707f999db9338",
+      "verification": "Independent final build and actual fifth-step completion at 1440×844 and 390×844: heading y152.66–246.72 with header bottom 80; heading y181.20–264.08 with header bottom 112. Transfer received keyboard focus in both cases."
+    }
+  ],
+  "validation": [
+    {
+      "kind": "provenance",
+      "result": "PASS",
+      "detail": "Independent detached review checkout. One initial GitHub PR query confirmed PR 5 OPEN at f128bf8/base 947ffb0. Final supplied commit checked out locally; diff f128bf8..eae0012 contains only responsive transfer scroll offsets and focused completion assertions. Clean tracked tree."
+    },
+    {
+      "kind": "build",
+      "result": "PASS",
+      "detail": "Node 22.22.2 frozen pnpm install, independent TypeScript and Vite build at first head, then independent rebuild at final head. Local 4330 preview version.json matched the reviewed head in each probe. Final builtAt 2026-09-08T01:26:36.426Z."
+    },
+    {
+      "kind": "source-review",
+      "result": "PASS",
+      "detail": "Read AGENTS, CONTRIBUTING, HOMEPAGE-INTENT, changed source/styles and relevant tests. Reviewed history destination/state semantics, document-scoped workshop return, skip-link routing, experiment invalidation/reflection progression, optional inspection preserve/pause behavior and native text alternatives."
+    },
+    {
+      "kind": "desktop-journey",
+      "result": "PASS",
+      "detail": "1440×844 actual first failed/corrected request, visible correction/result/reflection/Next, keyboard example disclosure, zero Axe WCAG 2A/AA+2.1AA violations for sampled expanded overview, overview lesson origin, workshop detour Back/Forward and explicit return with preserved artifact, selected section and focus. Inspected screenshots."
+    },
+    {
+      "kind": "mobile-journey",
+      "result": "PASS",
+      "detail": "390×844 independently completed all five discoveries through configured failures and corrections, wrong and correct reflections, Next progression and 5/5 completion. Reflection feedback and enabled Next visible, with 1px fractional layout tolerance. Back restored workshop scroll 1248 and focus workshop-deeper; Forward restored lesson #intent at scroll 254 and selected/focused tab-check. No page errors or horizontal overflow in captured journey. Inspected screenshots."
+    },
+    {
+      "kind": "inspection-and-media",
+      "result": "PASS",
+      "detail": "Focused actual browser probe preserved code and frame codex-contract-2 across close/reopen. Closing stopped playback beyond 2.6s timer interval. Separate normal-motion replay changed canvas pixels then settled identically. Forced absent WebGL retained overview buttons, passing experiment, fallback runtime path and Independent verifier code."
+    },
+    {
+      "kind": "final-delta",
+      "result": "PASS",
+      "detail": "Final diff only CSS target offsets plus completion test. Independently rebuilt exact final head, resumed reachable saved state with discoveries 1–4 completed, performed actual fifth prediction/configuration/run/reflection/Next at both widths, verified focused unobscured destination heading and 5/5. Final screenshots inspected."
+    }
+  ],
+  "limitations": [
+    "Local rendered-browser review, not deployment verification. Root retains responsibility for CI, queue and live Pages verification.",
+    "Prior independent evidence for unchanged behavior is retained from f128bf8; final review reran only the two-file correction and actual completion viewport against eae0012.",
+    "The broad custom desktop probe was interrupted by a Chromium click timeout after actionability checks; focused separate probes verified inspection preservation and hidden playback. No claim that the interrupted broad probe completed. Earlier base-URL, Axe-context and hidden-role probe setup errors were corrected.",
+    "Axe coverage is sampled, not a complete accessibility conformance claim. No native CUA overlay was available or claimed.",
+    "No remote mutations, comments or commits performed by reviewer. All reviewer browsers and owned preview servers closed. Receipt must be recorded durably on a separate evidence branch before auto-merge."
+  ],
+  "artifacts": [
+    {
+      "file": "pr5-review-notes.md",
+      "sha256": "4cd5560dd3689b85094fa894c6243abca3bad9066f2fece80b43eca9b7cb1f3b"
+    },
+    {
+      "file": "pr5-mobile.json",
+      "sha256": "8dfbe95616d21a8cc47cde1df02dd30a1b790e2d72752bcdb5b614c8e63ecd5a"
+    },
+    {
+      "file": "pr5-motion.json",
+      "sha256": "ac09a09e985c176405ffb7ecfc435b29b995abd4374f1060b394becdcbb3105d"
+    },
+    {
+      "file": "pr5-inspection.json",
+      "sha256": "255f59044de5e6e0df2870dd7524a3c4f725ef5465449d995be593eb4d4730ca"
+    },
+    {
+      "file": "pr5-final-completion.json",
+      "sha256": "6e0c33a892cb5ddd3baff2a50f779da57934816fa80545545209139dabbbc124"
+    },
+    {
+      "file": "pr5-1440-overview-expanded.png",
+      "sha256": "b2f991ba42f485d051dc11bc24986aa1b8b45931e6c05f855a2482281889f68f"
+    },
+    {
+      "file": "pr5-1440-step1-reflection.png",
+      "sha256": "9c773fcb636a502695a066a48ae5f3467aea8c5edebb23ee6e39134b0136e8fa"
+    },
+    {
+      "file": "pr5-1440-browser-forward-lesson.png",
+      "sha256": "1461f0915fa3b81c879d246a9b377cd1d1939b4bcf52c83a2d261e4b1e40e1ec"
+    },
+    {
+      "file": "pr5-390-workshop-entry.png",
+      "sha256": "e22453db75e2f50168ec7f27b70b252fb4cf95fee13bdc8734f6967875d7bcea"
+    },
+    {
+      "file": "pr5-390-step5-reflection.png",
+      "sha256": "1aee1163bf069e50f0c664a6017abd47f8d04f15ba56f02144b0c772c4f66097"
+    },
+    {
+      "file": "pr5-normal-motion-settled.png",
+      "sha256": "42fbfb443c6ca2fa9986d242100fce32e99c43b5d9022626c856201ef9c79479"
+    },
+    {
+      "file": "pr5-inspection-closed.png",
+      "sha256": "c1b410ae50cfe2c9438245b1b3f7448e289f560084fe9b43def32c61e0298474"
+    },
+    {
+      "file": "no-webgl.png",
+      "sha256": "11acdac651f95097415d041899dcefb6a20be24cc7f44543d4d016c17a993a56"
+    },
+    {
+      "file": "pr5-final-1440-completion.png",
+      "sha256": "958307bcecc2421ec7f1b66e11246db881201677637c65b0c523513914b306f8"
+    },
+    {
+      "file": "pr5-final-390-completion.png",
+      "sha256": "28aca893b09d6feb97607762ca1ad03ccb4c52ea8458fe2c189411df4ac79be6"
+    }
+  ]
+}
