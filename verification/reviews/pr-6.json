@@ -1,0 +1,55 @@
+{
+  "pr": 6,
+  "headSha": "f42713248afef104e24dac89e945049c29401919",
+  "verdict": "PASS",
+  "recordedAt": "2026-09-08T19:51:34.311850+00:00",
+  "reviewer": "Independent Codex skeptical reviewer; no implementation edits",
+  "repository": "odin-labs-ai/open-docs",
+  "baselineSha": "4804a34d239f47e4ae169cd059b11177f5bf5f07",
+  "findings": [],
+  "resolvedFindings": [
+    "Fresh homepage lacked its contract-required concrete example; existing example now visible before optional depth.",
+    "Lesson summary lived in hidden architecture inspection and analogy required disclosure; summary and analogy now visible in reading path.",
+    "Same-lesson return reset deep subsection and inspection state; independent browser check preserves subsection 1, selected frame/object/code through Reference and Back."
+  ],
+  "exactHeadEvidence": {
+    "gitHeadAndRemotePrHead": "f42713248afef104e24dac89e945049c29401919",
+    "browserServedVersion": "cb3ad2a73256b8042d78dc3c36c935b231284c8b",
+    "sourceTreeHashBothHeads": "7960335c2f4588679002b36f66f7eeb434960e3c",
+    "successorDelta": "Only tests/journey.spec.ts one-line correction: compare selectedCode captured via innerText using toHaveText(..., { useInnerText: true }). Reviewed directly; no source/assets/package/lockfile delta.",
+    "targetedSuccessorTest": "history-green.log: same-lesson deep inspection regression passed; test source matches final head."
+  },
+  "verification": [
+    "Independently recomputed every baseline-manifest hash from git 4804a34; all 16 match. Final content check and three deletion refutations pass.",
+    "Source review confirms protected curriculum, simulations, providers, stages, workshop declarations and starter remain reachable; no private data added to proposed evidence.",
+    "One bounded final viewport browser pass at 1440x844 and 390x844; fresh and returning sessions, screenshot inspection, explanation/read action, populated 18-lesson navigation, home map selection retention, lesson close/reopen focus and deep subsection history state.",
+    "Actual first workshop failure/correction/reflection and lesson detour preserve evidence. Seeded first four completed discoveries, then actual fifth failure/correction/reflection; completion heading clears sticky navigation at both widths; starter download works.",
+    "Axe WCAG2A/AA/2.1AA sampled fresh homepage at both widths: zero violations. Browser page errors in standard contexts: zero.",
+    "Unavailable WebGL mobile: readable fallback, close focus, and ungated next-lesson navigation passed.",
+    "All 15 captured viewport screenshots inspected; no material visual regression, obstruction or horizontal overflow observed."
+  ],
+  "evidenceFiles": {
+    "reviewer/completion-1440.png": "da13bd750ed4d67382ef93d0bd9cc2e8010c4bdfa478009f947a6e380c9d09f8",
+    "reviewer/completion-390.png": "5b2237a60530d93485a8125fe1cd4c7b2d74a35791c2fa39d0ee519ec7d85aff",
+    "reviewer/home-1440.png": "c95ad2050bf0dab752bf06ef39b2674f5bb6106eef9c4c61c7ac2a75d0832778",
+    "reviewer/home-390.png": "b4e9860583a916c7e876613d2a729610fe334f02299973efed5a06a4847b10fa",
+    "reviewer/home-map-1440.png": "97ed880ddc704c2af0458ea68383a30d939cb2e3e10b6e8588b2cda31c4f81d5",
+    "reviewer/home-map-390.png": "af1c6dab7752b58a226f112996561a879ddd9f2ec261c27d3b0ffc40735adaf0",
+    "reviewer/lesson-1440.png": "bd0c3fb91477cce3ce55f78eff0d87e5bcfa074e4db518e40790ef13c34b8b44",
+    "reviewer/lesson-390.png": "f27d0443449a042ff35e8bc8b48ef704caeddbdb3398e533128e97a2ede733c9",
+    "reviewer/lesson-inspection-1440.png": "6706fd9067bf2480571e8b6bd009af97dfdec980017757e6313499d4eb6280d7",
+    "reviewer/lesson-inspection-390.png": "ec83bb34943c5e196493de5f34696a8e319968eb26301a2f98396984d58d18a5",
+    "reviewer/no-webgl-390.png": "f03b95858a4f16156cbe1f1e1cccff319619ab258f623b9c569d3fd4d2a964c6",
+    "reviewer/observations.json": "d33699352abe50a8c156cec5164a51445b78ffd1dbb3264456af53755d61cac7",
+    "reviewer/workshop-corrected-1440.png": "9dac179ccea65bf7d8db17ea276565749b10838301e8fd02c3df55561e527c36",
+    "reviewer/workshop-corrected-390.png": "279b41679d9bd5f163363111c7045a85fdf3ea66f8d8b90359fa19d6f087f5fc",
+    "reviewer/workshop-failed-1440.png": "b601ebb53137b3aa83ef9d2a7033a6818cd7cee717e929aea0138d15ef170247",
+    "reviewer/workshop-failed-390.png": "6feb27e8737ae81b87b51f147d04a9a8e83b74c948633869f056d5af98502a1c"
+  },
+  "limitations": [
+    "Review passes local source/UI behavior, not measured comprehension or learner confidence.",
+    "Browser pass used reduced motion and does not independently certify animation timing; root/browser suite covers animated lifecycle.",
+    "Full exact-head remote CI and public deployment remain separate required gates; this receipt does not claim either has completed.",
+    "Optional stage close after history restores a useful current open-stage control because original DOM trigger was rerendered; selected stage content is retained."
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "headSha": "cb3ad2a73256b8042d78dc3c36c935b231284c8b",
+  "servedVersion": {
+    "sha": "cb3ad2a73256b8042d78dc3c36c935b231284c8b",
+    "builtAt": "2026-09-08T19:47:37.017Z"
+  },
+  "results": [
+    {
+      "width": 1440,
+      "checks": [
+        "Fresh reading-first home, visible example, no open map, zero sampled WCAG violations",
+        "Keyboard disclosure, map open-close and component selection retained",
+        "Visible lesson summary/analogy, all 18 navigation routes populated",
+        "Deep subsection 1 frame/code/selection survive reference/back and close/reopen; close returns useful focus",
+        "Actual first discovery failure/correction, reflection and lesson detour preserve evidence",
+        "Seeded completed first4, actual fifth failure/correction/reflection, completion heading clears sticky navigation, starter downloads"
+      ],
+      "screenshots": [
+        "home-1440.png",
+        "home-map-1440.png",
+        "lesson-1440.png",
+        "lesson-inspection-1440.png",
+        "workshop-failed-1440.png",
+        "workshop-corrected-1440.png",
+        "completion-1440.png"
+      ],
+      "errors": []
+    },
+    {
+      "width": 390,
+      "checks": [
+        "Fresh reading-first home, visible example, no open map, zero sampled WCAG violations",
+        "Keyboard disclosure, map open-close and component selection retained",
+        "Visible lesson summary/analogy, all 18 navigation routes populated",
+        "Deep subsection 1 frame/code/selection survive reference/back and close/reopen; close returns useful focus",
+        "Actual first discovery failure/correction, reflection and lesson detour preserve evidence",
+        "Seeded completed first4, actual fifth failure/correction/reflection, completion heading clears sticky navigation, starter downloads"
+      ],
+      "screenshots": [
+        "home-390.png",
+        "home-map-390.png",
+        "lesson-390.png",
+        "lesson-inspection-390.png",
+        "workshop-failed-390.png",
+        "workshop-corrected-390.png",
+        "completion-390.png"
+      ],
+      "errors": []
+    },
+    {
+      "width": 390,
+      "checks": [
+        "Unavailable WebGL preserves explanatory reading, accessible stage and ungated next lesson"
+      ],
+      "screenshots": [
+        "no-webgl-390.png"
+      ]
+    }
+  ]
+}
