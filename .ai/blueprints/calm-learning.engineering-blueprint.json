@@ -1,0 +1,132 @@
+{
+  "apiVersion": "blueprint-conformance/v1alpha1",
+  "kind": "EngineeringBlueprint",
+  "metadata": {
+    "id": "calm-learning",
+    "name": "Preserve the learning; reveal the tools when useful",
+    "version": "0.1.0",
+    "status": "proposed",
+    "ownerRole": "Open Docs maintainer"
+  },
+  "intentRefs": [
+    "verification/calm-learning/intent.md#business-clauses"
+  ],
+  "scope": {
+    "repositories": [
+      "odin-labs-ai/open-docs"
+    ],
+    "paths": [
+      "src/**/*.ts"
+    ]
+  },
+  "architecture": {
+    "components": [
+      {
+        "id": "learning-app",
+        "type": "typescriptModule"
+      }
+    ],
+    "relationships": []
+  },
+  "constraints": [
+    {
+      "id": "preserve-curriculum-connection",
+      "type": "requiredDependency",
+      "severity": "high",
+      "component": "typescriptModule",
+      "scopePaths": [
+        "src/main.ts"
+      ],
+      "to": "module:src/curriculum.ts",
+      "businessClause": "BC1"
+    },
+    {
+      "id": "preserve-simulation-connection",
+      "type": "requiredDependency",
+      "severity": "high",
+      "component": "typescriptModule",
+      "scopePaths": [
+        "src/main.ts"
+      ],
+      "to": "module:src/simulation.ts",
+      "businessClause": "BC2"
+    },
+    {
+      "id": "preserve-workshop-connection",
+      "type": "requiredDependency",
+      "severity": "high",
+      "component": "typescriptModule",
+      "scopePaths": [
+        "src/main.ts"
+      ],
+      "to": "module:src/workshop.ts",
+      "businessClause": "BC2"
+    },
+    {
+      "id": "preserve-overview-connection",
+      "type": "requiredDependency",
+      "severity": "high",
+      "component": "typescriptModule",
+      "scopePaths": [
+        "src/main.ts"
+      ],
+      "to": "module:src/agent-overview.ts",
+      "businessClause": "BC2"
+    },
+    {
+      "id": "preserve-lesson-theater-connection",
+      "type": "requiredDependency",
+      "severity": "high",
+      "component": "typescriptModule",
+      "scopePaths": [
+        "src/main.ts"
+      ],
+      "to": "module:src/lesson-theater.ts",
+      "businessClause": "BC2"
+    },
+    {
+      "id": "preserve-provider-guides-connection",
+      "type": "requiredDependency",
+      "severity": "high",
+      "component": "typescriptModule",
+      "scopePaths": [
+        "src/workshop.ts"
+      ],
+      "to": "module:src/provider-guides.ts",
+      "businessClause": "BC2"
+    },
+    {
+      "id": "preserve-provider-stages-connection",
+      "type": "requiredDependency",
+      "severity": "high",
+      "component": "typescriptModule",
+      "scopePaths": [
+        "src/workshop.ts"
+      ],
+      "to": "module:src/provider-stages.ts",
+      "businessClause": "BC2"
+    },
+    {
+      "id": "preserve-lesson-stages-connection",
+      "type": "requiredDependency",
+      "severity": "high",
+      "component": "typescriptModule",
+      "scopePaths": [
+        "src/lesson-theater.ts"
+      ],
+      "to": "module:src/lesson-stages.ts",
+      "businessClause": "BC2"
+    }
+  ],
+  "extraction": {
+    "profile": "typescript-module-graph",
+    "paths": [
+      "src/**/*.ts"
+    ],
+    "minFiles": 15,
+    "tsconfig": "tsconfig.json"
+  },
+  "minEngineVersion": "0.3.0",
+  "evidenceRequirements": [],
+  "approvals": []
+}

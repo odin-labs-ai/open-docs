@@ -64,7 +64,7 @@ for (const width of [1440, 390]) {
   const selectedCode = await stage.locator('.engineering-code h3').innerText();
   await page.locator('#close-workshop-inspection').click();
   await expect(page.locator('#workshop-inspection')).toBeHidden();
-  await expect(page.locator('.workshop-evidence')).toBeFocused();
+  await expect(page.locator('#inspect-workshop-run')).toBeFocused();
   await page.locator('#inspect-workshop-run').click();
   await expect(stage).toHaveAttribute('data-frame', selectedFrame!);
   await expect(stage.locator('.engineering-code h3')).toHaveText(selectedCode);
@@ -83,9 +83,10 @@ for (const width of [1440, 390]) {
   const stage = page.locator('#lesson-theater .engineering-stage');
   await stage.getByRole('button', { name: 'Next event', exact: true }).click();
   await visibleFeedback(stage.locator('.engineering-narrative'), height);
-  await page.getByRole('button', { name: 'Back to lesson and checks', exact: true }).click();
-  await visibleFeedback(page.locator('#tab-check'), height);
-  await expect(page.locator('#lesson-reader')).toBeFocused();
+  await page.locator('#close-lesson-stage').click();
+  await expect(page.locator('#lesson-inspection')).toBeHidden();
+  await visibleFeedback(page.locator('#open-lesson-stage'), height);
+  await expect(page.locator('#open-lesson-stage')).toBeFocused();
   await page.locator('[data-mode="lab"]').click();
   await expect(page.locator('.sidebar')).toBeHidden();
   await expect(page.locator('[data-control]:visible')).toHaveCount(1);

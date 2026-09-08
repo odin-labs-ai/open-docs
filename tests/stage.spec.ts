@@ -42,6 +42,8 @@ test('provider selection changes the engineered ecosystem and inspectable code',
 test('every lesson and individual deep section changes the stage and its code', async ({ page }) => {
   test.setTimeout(360000);
   await page.goto('./#foundations');
+  await page.locator('#curriculum-disclosure > summary').click();
+  await page.locator('#open-lesson-stage').click();
   const stage = page.locator('#lesson-theater .engineering-stage');
   await expect(stage).toHaveAttribute('data-engine', 'three');
   const ids = await page.locator('.lesson-link').evaluateAll(nodes => nodes.map(n => (n as HTMLElement).dataset.lesson!));

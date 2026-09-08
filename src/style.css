@@ -17,3 +17,49 @@
 @media(max-width:760px){.workshop-navigation{margin-bottom:18px}.workshop-navigation span{display:none}}
 .topbar .brand{align-items:center;gap:10px;color:#e2eee6;font-size:16px}.topbar .brand img{width:31px;height:34px}.brand strong{font-weight:400}.brand span{white-space:nowrap}
 @media(max-width:600px){.topbar .brand{font-size:14px;gap:7px}.topbar .brand img{width:26px;height:29px}}
+
+/* Read one lesson at a time; the course map and inspections open on request. */
+body[data-view=explore] .app-layout,body[data-view=reference] .app-layout{display:block;max-width:1160px}
+body[data-view=explore] main,body[data-view=reference] main{padding:36px 48px 0}
+body[data-view=explore] .sidebar,body[data-view=reference] .sidebar{position:static;height:auto;min-height:0;display:flex;flex-direction:row;align-items:flex-start;flex-wrap:wrap;gap:0 28px;padding:0 48px;border:0;border-bottom:1px solid var(--line);background:transparent}
+.sidebar #curriculum-disclosure,.sidebar #progress-disclosure,.sidebar .course-about{overflow:visible;flex:1;min-width:180px}
+.sidebar summary{cursor:pointer;display:list-item;list-style:disclosure-closed;padding:16px 0;font-size:13px;min-height:48px;color:var(--muted)}
+.sidebar summary::-webkit-details-marker{display:revert}.sidebar summary:after{display:none}.sidebar details[open]>summary{list-style:disclosure-open;color:var(--text)}
+.sidebar summary>span{margin-left:10px;font-size:11px}
+.sidebar .sidebar-inner{max-height:430px;overflow:auto;padding:0 0 24px}.sidebar .search-box{margin:6px 0 18px}.sidebar .search-box input{font-size:14px;min-height:24px}
+.sidebar .lesson-link{font-size:13px;min-height:44px;padding:10px 6px}.sidebar .curriculum-group h3{font-size:12px;padding-inline:6px}
+.sidebar .progress-panel{display:block;background:transparent;border:0;padding:4px 0 24px;margin:0}.sidebar .progress-panel p{font-size:12px;padding:0}.sidebar .progress-panel .text-button{display:flex;min-height:44px;font-size:12px;padding:0;margin:0;background:none}
+.sidebar .course-about .intro{display:block;margin:0 0 24px}.sidebar .course-about .intro h1{font-size:23px;letter-spacing:-.02em}.sidebar .course-about .intro p{font-size:13px}.sidebar .course-facts{display:flex;text-align:left;margin-top:16px;font-size:12px}.sidebar .course-facts strong{font-size:13px}
+body[data-view=explore] #lesson-reader{max-width:740px;margin:0 auto;scroll-margin-top:104px}
+#lesson-reader .reader-heading{align-items:start;margin-bottom:28px}#lesson-reader .reader-heading>div{display:flex;flex-direction:column;align-items:start;gap:9px}
+#lesson-reader #lesson-position{font-size:12px;margin:0}#lesson-reader #lesson-title{font-size:34px;line-height:1.2;letter-spacing:-.025em}#lesson-reader .level-badge{font-size:11px;margin-top:5px}
+#lesson-reader .lesson-tabs{gap:28px}#lesson-reader .lesson-tabs button{font-size:14px;min-height:44px;padding-bottom:12px}#lesson-reader #check-indicator{font-size:11px}
+#lesson-reader #lesson-panel{padding-top:30px}#lesson-reader .lesson-columns{display:block}#lesson-reader .prose{max-width:72ch}
+#lesson-reader .prose p{font-size:16px;line-height:1.85;margin-bottom:24px;color:#c2d3da}#lesson-reader .prose h3{font-size:19px;line-height:1.4;margin-bottom:12px}
+#lesson-reader .lesson-pitfall{margin-top:32px;margin-bottom:28px}#lesson-reader .lesson-pitfall p{color:#d0e6db}
+#lesson-reader .reading-disclosure{display:block;border:0;border-top:1px solid var(--line);padding:0;margin:0}
+#lesson-reader .reading-disclosure>summary{font-size:14px;min-height:48px;cursor:pointer;padding:16px 0;color:#b7d3c7}
+#lesson-reader .reading-disclosure[open]>summary{color:var(--text)}#lesson-reader .reading-disclosure>p,#lesson-reader .reading-disclosure>div{margin:0 0 20px}
+#lesson-reader .concept-tags{gap:8px 16px}#lesson-reader .concept-tags span{font-size:13px;padding:0;background:none;border:0;border-radius:0;color:#bfd2db}
+#lesson-reader .lesson-sources>div{display:flex;flex-direction:column;align-items:start;gap:12px}#lesson-reader .lesson-sources a{font-size:14px;min-height:28px}
+#lesson-reader .lesson-notes pre{font-size:13px;line-height:1.8;padding:18px}#lesson-reader .lesson-notes .example-note{font-size:13px}
+#lesson-reader .prose>.text-button{margin:16px 0 24px;font-size:14px;min-height:44px}#lesson-reader .stage-section-link{font-size:13px;min-height:44px;padding:6px 0;color:#91cbb3;text-decoration:underline;text-underline-offset:4px}
+#lesson-reader .lesson-footer{margin-top:24px;padding-top:20px}#lesson-reader .lesson-footer button{font-size:13px;min-height:44px}#lesson-reader #lesson-status{font-size:11px}
+#lesson-reader .answer-options{grid-template-columns:1fr}#lesson-reader .question legend{font-size:17px}#lesson-reader .answer{font-size:15px;min-height:56px}#lesson-reader .quiz-intro,#lesson-reader .answer-feedback{font-size:15px}#lesson-reader .completion-rule{font-size:13px}
+#lesson-inspection,#lab-inspection{scroll-margin-top:104px;margin-top:24px}.optional-inspection>button{min-height:44px;margin-bottom:12px;font-size:14px}
+#lesson-reader .open-lesson-stage{font-size:14px;min-height:44px;margin-top:18px;scroll-margin-top:104px}
+@media(max-width:760px){
+ body[data-view=explore] main,body[data-view=reference] main{padding:26px 20px 0}
+ body[data-view=explore] .sidebar,body[data-view=reference] .sidebar{padding:0 20px;gap:0 22px}
+ .sidebar #curriculum-disclosure{flex-basis:100%}.sidebar #progress-disclosure,.sidebar .course-about{min-width:120px}
+ .sidebar summary{font-size:13px;padding:12px 0;min-height:44px}.sidebar .course-about .intro h1{font-size:21px}
+ #lesson-reader .reader-heading{margin-bottom:22px;gap:16px}#lesson-reader #lesson-title{font-size:29px}#lesson-reader #lesson-position{font-size:12px}#lesson-reader .level-badge{font-size:10px}
+ #lesson-reader .lesson-tabs{gap:20px}#lesson-reader .lesson-tabs button{font-size:12px}#lesson-reader #check-indicator{font-size:10px}
+ #lesson-reader .prose p{font-size:16px;line-height:1.8}#lesson-reader .lesson-footer>span{font-size:11px;text-align:left}
+ body[data-view=explore] #lesson-reader,#lesson-inspection,#lab-inspection,#lesson-reader .open-lesson-stage,#lesson-reader .stage-section-link{scroll-margin-top:150px}
+}
+
+body{min-height:100vh}
+#lesson-reader #lesson-summary{font-size:18px;line-height:1.65;color:#c5dfd2;max-width:65ch;margin:-12px 0 28px}
+#lesson-reader .prose .analogy{border:0;padding:0;margin:28px 0 32px}
+@media(max-width:760px){#lesson-reader #lesson-summary{font-size:17px;margin:-6px 0 24px}}

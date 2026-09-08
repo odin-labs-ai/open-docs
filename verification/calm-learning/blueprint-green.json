@@ -1,0 +1,48 @@
+{
+  "blueprintRef": "calm-learning@0.1.0",
+  "coverage": {
+    "extractor": "ast",
+    "filesScanned": 16,
+    "unresolvedImports": [
+      {
+        "from": "module:src/agent-overview.ts",
+        "kind": "import",
+        "reason": "relative module target was not found",
+        "ref": "src/agent-overview.ts#L2",
+        "specifier": "./agent-overview.css"
+      },
+      {
+        "from": "module:src/engineering-stage.ts",
+        "kind": "import",
+        "reason": "relative module target was not found",
+        "ref": "src/engineering-stage.ts#L1",
+        "specifier": "./engineering-stage.css"
+      },
+      {
+        "from": "module:src/main.ts",
+        "kind": "import",
+        "reason": "relative module target was not found",
+        "ref": "src/main.ts#L2",
+        "specifier": "./style.css"
+      },
+      {
+        "from": "module:src/main.ts",
+        "kind": "import",
+        "reason": "relative module target was not found",
+        "ref": "src/main.ts#L3",
+        "specifier": "./workshop.css"
+      }
+    ],
+    "unsupported": [
+      "direct statically named imports only; no transitive reachability or cycle analysis",
+      "runtime-constructed module specifiers cannot be resolved statically and fail relevant boundaries closed"
+    ]
+  },
+  "ctRepoRevision": "unpinned",
+  "evidenceRef": "architecture-graph.json@sha256:edda01a69fdc8872e5f556153369d637feb15cfb006c62f652cba1f57008f697",
+  "schemaVersion": "1",
+  "score": 100,
+  "summary": "8 constraint(s) evaluated; 0 violation(s); score 100",
+  "verdict": "pass",
+  "violations": []
+}

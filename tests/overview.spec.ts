@@ -7,6 +7,8 @@ for (const width of [1440, 390]) {
     await page.goto('./#learn');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('The model reasons.The harness makes it work.');
     await expect(page.locator('#agent-overview-title')).toBeInViewport();
+    await page.locator('#overview-details > summary').click();
+    await page.locator('#overview-map-toggle').click();
     await expect(page.locator('#agent-overview-scene [data-stage-node="model"]')).toHaveAccessibleName('Model. Explain component');
     const pin = page.locator('#agent-overview-scene .stage-node-label').nth(4);
     await expect(pin).toHaveAccessibleName('Telemetry & checks. Explain component');
@@ -49,6 +51,8 @@ for (const width of [1440, 390]) {
     await page.setViewportSize({ width, height: 900 });
     await page.emulateMedia({ reducedMotion: 'no-preference' });
     await page.goto('./#learn');
+    await page.locator('#overview-details > summary').click();
+    await page.locator('#overview-map-toggle').click();
     const overview = page.locator('#agent-overview-scene');
     await expect(overview.locator('.stage-node-label')).toHaveCount(6);
     await overview.locator('[data-stage-node="plugins"]').click();
@@ -82,8 +86,10 @@ for (const width of [1440, 390]) {
 }
 
 test('the overview remains useful when the graphic cannot load', async ({ page }) => {
-  await page.route(/\/assets\/stage-renderer-[^/]+\.js(?:\?.*)?$/, route => route.abort());
+  await page.route(/\/(?:src\/stage-renderer\.ts|assets\/stage-renderer-[^/]+\.js)(?:\?.*)?$/, route => route.abort());
   await page.goto('./#learn');
+  await page.locator('#overview-details > summary').click();
+  await page.locator('#overview-map-toggle').click();
   await expect(page.locator('#overview-fallback')).toBeVisible();
   await page.locator('[data-agent-part="work"]').click();
   await expect(page.locator('#agent-part-detail')).toContainText('objective, scope, constraints and acceptance evidence');

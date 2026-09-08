@@ -1,0 +1,73 @@
+{
+  "baselineRef": "4804a34d239f47e4ae169cd059b11177f5bf5f07",
+  "purpose": "Preserve accepted teaching content while changing its representation. The checker never rewrites this manifest.",
+  "entries": [
+    {
+      "path": "src/curriculum.ts",
+      "sha256": "472c6d4b9dc649ab306bd8b6c33e897bf6a49e2c1f22ab386e88ce141b2a8bd7"
+    },
+    {
+      "path": "src/simulation.ts",
+      "sha256": "97c15ec671842639821fc3dde77ea97e1d97a5b4e3e1a7be00e1f0711dc69d1c"
+    },
+    {
+      "path": "src/provider-guides.ts",
+      "sha256": "620b91ff7c951eb4632947b52ad4a6143ca1d36a30c0a442b167672b8ad56356"
+    },
+    {
+      "path": "src/provider-stages.ts",
+      "sha256": "05644fa8d5aaf323e36a2807d12f28f6469bc5dffc380a3057bae6483ce65d59"
+    },
+    {
+      "path": "src/lesson-stages.ts",
+      "sha256": "2723c8371d93a6b98515704bda7e97b0f064fd0e12d8b1248a14be00b7191b9b"
+    },
+    {
+      "path": "public/references/odin-conventions.md",
+      "sha256": "8d9913095b2e081b7058d67718ddae461cd5a6ecdee21cd9b3f368eba6ad0343"
+    },
+    {
+      "path": "public/workshop.zip",
+      "sha256": "eb909ac19fcf3274ba7b72699cbcc82f9c330fd178b98214cf93848cd12405c2"
+    },
+    {
+      "path": "public/workshop/AGENTS.md",
+      "sha256": "2c67927bd556dbcf5f524a6717bfe72b55593c4ac63c2f7d3096203d5a5cc011"
+    },
+    {
+      "path": "public/workshop/CLAUDE.md",
+      "sha256": "b44c0d5617b7642a52796c00b33bf5e2bfe0e10a5634d3a92c363125b799745b"
+    },
+    {
+      "path": "public/workshop/README.md",
+      "sha256": "1bf5942b57d8f8dfcecc97abdc2b2c33011a6d2efe0b07c6592bb74a10f44ec9"
+    },
+    {
+      "path": "public/workshop/faq.md",
+      "sha256": "4584d843eac320601ebafff3283c6b12b1902d9deae932581de8244c517aaa7c"
+    },
+    {
+      "path": "public/workshop/help.md",
+      "sha256": "61195e440d5dae61f2422262777c815a0b6ac5b37323b82e59cd0f11be191d65"
+    },
+    {
+      "path": "public/workshop/verify.mjs",
+      "sha256": "503ea05e86bea8ddaaab3f350eb5b61b4bed2b09fcafb7108e010262f88e33e4"
+    },
+    {
+      "path": "src/workshop.ts",
+      "declaration": "steps",
+      "sha256": "fa4f42a642796fbd81631209e2e6c8a0ce14edcd4ebffe4b92233fc3ddf656e6"
+    },
+    {
+      "path": "src/agent-overview.ts",
+      "declaration": "parts",
+      "sha256": "e5ce67f19a6e4d7b7fec642f0b1867c56e62fe49be8e6f7f4a232227f65002f9"
+    },
+    {
+      "path": "src/agent-overview.ts",
+      "declaration": "sources",
+      "sha256": "232ebac5196580397d1c2b56645b875e7573f379343b98d5bed06f3d4dfcdc87"
+    }
+  ]
+}

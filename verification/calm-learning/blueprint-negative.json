@@ -1,0 +1,78 @@
+{
+  "engine": "bce-engine@0.3.0",
+  "mode": "Unpinned source extraction; one import removed in a temporary copy for each probe",
+  "results": [
+    {
+      "constraint": "preserve-curriculum-connection",
+      "mutation": "Remove the ./curriculum import from src/main.ts",
+      "exitCode": 1,
+      "verdict": "fail",
+      "violationIds": [
+        "preserve-curriculum-connection"
+      ]
+    },
+    {
+      "constraint": "preserve-simulation-connection",
+      "mutation": "Remove the ./simulation import from src/main.ts",
+      "exitCode": 1,
+      "verdict": "fail",
+      "violationIds": [
+        "preserve-simulation-connection"
+      ]
+    },
+    {
+      "constraint": "preserve-workshop-connection",
+      "mutation": "Remove the ./workshop import from src/main.ts",
+      "exitCode": 1,
+      "verdict": "fail",
+      "violationIds": [
+        "preserve-workshop-connection"
+      ]
+    },
+    {
+      "constraint": "preserve-overview-connection",
+      "mutation": "Remove the ./agent-overview import from src/main.ts",
+      "exitCode": 1,
+      "verdict": "fail",
+      "violationIds": [
+        "preserve-overview-connection"
+      ]
+    },
+    {
+      "constraint": "preserve-lesson-theater-connection",
+      "mutation": "Remove the ./lesson-theater import from src/main.ts",
+      "exitCode": 1,
+      "verdict": "fail",
+      "violationIds": [
+        "preserve-lesson-theater-connection"
+      ]
+    },
+    {
+      "constraint": "preserve-provider-guides-connection",
+      "mutation": "Remove the ./provider-guides import from src/workshop.ts",
+      "exitCode": 1,
+      "verdict": "fail",
+      "violationIds": [
+        "preserve-provider-guides-connection"
+      ]
+    },
+    {
+      "constraint": "preserve-provider-stages-connection",
+      "mutation": "Remove the ./provider-stages import from src/workshop.ts",
+      "exitCode": 1,
+      "verdict": "fail",
+      "violationIds": [
+        "preserve-provider-stages-connection"
+      ]
+    },
+    {
+      "constraint": "preserve-lesson-stages-connection",
+      "mutation": "Remove the ./lesson-stages import from src/lesson-theater.ts",
+      "exitCode": 1,
+      "verdict": "fail",
+      "violationIds": [
+        "preserve-lesson-stages-connection"
+      ]
+    }
+  ]
+}
