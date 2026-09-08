@@ -69,6 +69,8 @@ try {
   assert.equal(localReference.status(), 200); assert((await localReference.text()).includes('forward correction'));
   // The lazy engineering renderer and provider code also load from this nested build.
   await page.locator('[data-mode="learn"]').click();
+  await page.locator('#overview-workshop').click();
+  await page.locator('#inspect-workshop-run').click();
   const stage = page.locator('#workshop-scene .engineering-stage');
   await stage.locator('.stage-renderer canvas').waitFor();
   const providerLayouts = [];

@@ -47,13 +47,12 @@ export function mountAgentOverview(host: HTMLElement, openLesson: (id: string) =
           <div class="agent-map-heading"><h2>The model inside its harness</h2><button class="workshop-link" id="overview-reset">Reset view</button></div>
           <div id="agent-overview-scene" aria-label="Interactive agent component map"></div>
           <p id="overview-fallback" hidden>3D is unavailable. The component buttons below explain every part.</p>
-          <figcaption>Each numbered object has a role. Select one here or below.<br>Conceptual map · no live model calls</figcaption>
-        </figure>
-      </div>
-      <div class="agent-overview-parts">
-        <h2>What shapes the agent?</h2>
+          <figcaption>Each numbered object has a role. Conceptual map · no live model calls</figcaption>
+        <div class="agent-overview-parts">
         <div class="agent-part-picker" role="group" aria-label="Inspect agent components">${parts.map((part, index) => `<button data-agent-part="${part.id}" aria-pressed="${part.id === selected}" aria-controls="agent-part-detail"><span aria-hidden="true">${index + 1}</span>${part.label}</button>`).join('')}</div>
         <div id="agent-part-detail" class="agent-part-detail" role="region" aria-label="Selected agent component" aria-live="polite"></div>
+        </div>
+        </figure>
       </div>
       <details class="agent-overview-sources"><summary>How to read this map · sources</summary><p>${spec.note}</p><p>“Harness” names the surrounding runtime and its configured extensions here. A work order is a task contract in this guide, not a universal provider file format.</p><ul>${sources.map(source => `<li><a href="${source.url}" target="_blank" rel="noopener noreferrer">${source.title} ↗</a></li>`).join('')}</ul></details>
     </section>`;
@@ -62,7 +61,8 @@ export function mountAgentOverview(host: HTMLElement, openLesson: (id: string) =
     const part = parts.find(item => item.id === id);
     if (!part || disposed) return;
     selected = id;
-    get('#agent-part-detail').innerHTML = `<div><h3>${part.title}</h3><p>${part.description}</p><button class="workshop-link" id="overview-part-lesson">Explore this in the lessons →</button></div><div class="agent-part-example"><h4>In a real project</h4><p>${part.example}</p><p class="agent-part-boundary">${part.boundary}</p></div>`;
+    get('#agent-part-detail').innerHTML = `<h3>${part.title}</h3><p>${part.description}</p><details class="agent-part-example"><summary>Example and boundaries</summary><p>${part.example}</p><p class="agent-part-boundary">${part.boundary}</p></details><div class="agent-part-actions"><button class="workshop-link" id="overview-part-workshop">Try it in the workshop →</button><button class="workshop-link" id="overview-part-lesson">Explore this in the lessons →</button></div>`;
+    get('#overview-part-workshop').onclick = beginWorkshop;
     get('#overview-part-lesson').onclick = () => openLesson(part.lesson);
     host.querySelectorAll<HTMLElement>('[data-agent-part]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.agentPart === id)));
     const frame = { ...spec.frames[0], focus: [id], packet: part.label };
@@ -76,7 +76,7 @@ export function mountAgentOverview(host: HTMLElement, openLesson: (id: string) =
   select(selected);
   import('./stage-renderer').then(module => {
     if (disposed) return;
-    renderer = module.createStageRenderer(get('#agent-overview-scene'), spec, 0, selected, id => { select(id); get('#agent-part-detail').scrollIntoView({ block: 'nearest', behavior: 'instant' }); }, fallback, true);
+    renderer = module.createStageRenderer(get('#agent-overview-scene'), spec, 0, selected, id => { select(id); get('#agent-part-detail h3').scrollIntoView({ block: 'nearest', behavior: 'instant' }); }, fallback, true);
     select(selected); renderer.pause(paused || reduced.matches);
   }).catch(fallback);
   const motionChanged = () => renderer?.pause(paused || reduced.matches);

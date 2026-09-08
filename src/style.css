@@ -10,5 +10,10 @@
 @media print{.topbar,.sidebar,.scene-column,.component-inspector,.lesson-tabs,.lesson-footer,.page-footer,.notification{display:none}.app-layout{display:block}main{padding:0}body,:root{background:white;color:black}.prose p,.lesson-notes p{color:#222}.observatory{display:none}.reader{margin-top:20px}.intro h1{font-size:30px}.lesson-columns{display:block}.lesson-notes{border:0;padding:15px 0}.lesson-sources a{color:#18553e}}
 
 /* Official Odin mark, paired with the public documentation name. */
+.workshop-return{display:flex;flex-wrap:wrap;align-items:center;gap:6px 20px;padding-bottom:20px;margin-bottom:22px;border-bottom:1px solid var(--line)}
+.workshop-return .text-button{min-height:44px;margin:0}.workshop-return span{font-size:12px;color:var(--muted)}
+.workshop-navigation{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:26px;color:#52665d;font-size:12px}
+.workshop-navigation button{min-height:44px}.workshop-navigation span{white-space:nowrap}
+@media(max-width:760px){.workshop-navigation{margin-bottom:18px}.workshop-navigation span{display:none}}
 .topbar .brand{align-items:center;gap:10px;color:#e2eee6;font-size:16px}.topbar .brand img{width:31px;height:34px}.brand strong{font-weight:400}.brand span{white-space:nowrap}
 @media(max-width:600px){.topbar .brand{font-size:14px;gap:7px}.topbar .brand img{width:26px;height:29px}}

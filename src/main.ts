@@ -42,6 +42,13 @@ try {
 let current = lessons.find(lesson => lesson.id === location.hash.slice(1)) || lessons[0];
 let mode = 'explore';
 let tab = 'essentials';
+type JourneyPoint = { scrollY: number; focusId?: string };
+type JourneyState = JourneyPoint & { odin: true; documentId: string; tab: string; workshopReturn?: JourneyPoint };
+const journeyDocument = crypto.randomUUID();
+let destination = '';
+let restoringJourney = false;
+let workshopReturn: JourneyPoint | undefined;
+history.scrollRestoration = 'manual';
 let scene: HarnessScene | undefined;
 let paused = matchMedia('(prefers-reduced-motion: reduce)').matches;
 let expanded = true;
@@ -166,26 +173,46 @@ function renderCurriculum() {
   $('#search-empty').hidden = filtered.length > 0;
   updateProgress();
 }
-function setMode(next: string) {
-  mode = next;
-  history.replaceState(null, '', `#${next === 'explore' ? current.id : next}`);
-  if (next === 'learn') workshop?.enter(); else workshop?.pause();
+function saveJourney() {
+  if (restoringJourney || !destination) return;
+  const focusId = document.activeElement instanceof HTMLElement ? document.activeElement.id : undefined;
+  const point = { scrollY: window.scrollY, focusId };
+  history.replaceState({ ...point, odin: true, documentId: journeyDocument, tab, workshopReturn } satisfies JourneyState, '', `#${destination}`);
+}
+function visit(id: string) {
+  if (id === destination) return;
+  saveJourney();
+  if (destination === 'workshop' && lessons.some(lesson => lesson.id === id)) {
+    workshopReturn = { scrollY: window.scrollY, focusId: 'workshop-deeper' };
+  } else if (!lessons.some(lesson => lesson.id === id)) workshopReturn = undefined;
+  destination = id;
+  history.pushState({ odin: true, documentId: journeyDocument, scrollY: 0, tab: 'essentials', workshopReturn } satisfies JourneyState, '', `#${id}`);
+}
+function setMode(next: string, record = true) {
+  if (record) visit(next === 'explore' ? current.id : next);
+  mode = next === 'workshop' ? 'learn' : next;
+  if (next === 'workshop') workshop?.enter(); else workshop?.pause();
   overview?.pause(next !== 'learn');
+  $('#agent-overview-host').hidden = next !== 'learn';
+  $('#workshop-host').hidden = next !== 'workshop';
+  $('#workshop-navigation').hidden = next !== 'workshop';
+  $('#workshop-return').hidden = next !== 'explore' || !workshopReturn;
   lessonTheater?.pause(next !== 'explore' || paused); traceTheater?.pause(next !== 'lab' || paused);
   document.body.dataset.view = mode;
   if (matchMedia('(max-width:760px)').matches && next !== 'reference') $<HTMLDetailsElement>('#curriculum-disclosure').open = false;
-  $('.skip-link').setAttribute('href', next === 'explore' ? '#lesson-reader' : `#${next}-view`);
-  $('.skip-link').textContent = next === 'explore' ? 'Skip to lesson' : next === 'lab' ? 'Skip to failure lab' : next === 'learn' ? 'Skip to workshop' : 'Skip to field guide';
+  $('.skip-link').setAttribute('href', next === 'explore' ? '#lesson-reader' : next === 'workshop' ? '#workshop-entry' : `#${next}-view`);
+  $('.skip-link').textContent = next === 'explore' ? 'Skip to lesson' : next === 'lab' ? 'Skip to failure lab' : next === 'workshop' ? 'Skip to workshop' : next === 'learn' ? 'Skip to overview' : 'Skip to field guide';
   if (next !== 'lab') stopRun();
-  ['learn', 'explore', 'lab', 'reference'].forEach(id => { $(`#${id}-view`).hidden = id !== next; });
-  document.querySelectorAll<HTMLElement>('[data-mode]').forEach(button => { button.classList.toggle('active', button.dataset.mode === next); button.setAttribute('aria-pressed', String(button.dataset.mode === next)); });
+  ['learn', 'explore', 'lab', 'reference'].forEach(id => { $(`#${id}-view`).hidden = id !== mode; });
+  document.querySelectorAll<HTMLElement>('[data-mode]').forEach(button => { button.classList.toggle('active', button.dataset.mode === mode); button.setAttribute('aria-pressed', String(button.dataset.mode === mode)); });
   if (next === 'explore') scene?.select(current.component);
 }
-function chooseLesson(id: string, scroll = false) {
+function chooseLesson(id: string, scroll = false, record = true) {
+  if (record) visit(lessons.find(lesson => lesson.id === id)?.id || lessons[0].id);
   current = lessons.find(lesson => lesson.id === id) || lessons[0]; tab = 'essentials';
-  history.replaceState(null, '', `#${current.id}`); setMode('explore'); renderCurriculum(); renderLesson(); scene?.select(current.component);
+  setMode('explore', false); renderCurriculum(); renderLesson(); scene?.select(current.component);
   if (matchMedia('(max-width: 760px)').matches) $<HTMLDetailsElement>('#curriculum-disclosure').open = false;
-  if (scroll) { $('#lesson-reader').scrollIntoView({ behavior: paused ? 'instant' : 'smooth', block: 'start' }); $('#lesson-reader').focus({ preventScroll: true }); }
+  if (scroll) { $('#lesson-reader').scrollIntoView({ behavior: 'instant', block: 'start' }); $('#lesson-reader').focus({ preventScroll: true }); }
 }
 function renderLesson() {
   lessonTheater?.update(current);
@@ -287,7 +314,7 @@ document.addEventListener('click', event => {
   if (button.dataset.mode) { setMode(button.dataset.mode); const target = mode === 'explore' ? $('#lesson-reader') : $(`#${mode}-view`); target.scrollIntoView({ block: 'start', behavior: 'instant' }); }
   if (button.dataset.lesson) chooseLesson(button.dataset.lesson, true);
   if (button.dataset.openConcept) chooseLesson(button.dataset.openConcept, true);
-  if (button.dataset.tab || button.dataset.nextTab) { tab = button.dataset.tab || button.dataset.nextTab!; renderPanel(); if (button.dataset.nextTab) $(`#tab-${tab}`).focus(); }
+  if (button.dataset.tab || button.dataset.nextTab) { tab = button.dataset.tab || button.dataset.nextTab!; renderPanel(); saveJourney(); if (button.dataset.nextTab) $(`#tab-${tab}`).focus(); }
   if (button.dataset.question !== undefined) {
     const index = Number(button.dataset.question); const answer = Number(button.dataset.answer);
     const answers = progress.answers[current.id] ||= [-1, -1]; answers[index] = answer; save(); renderPanel();
@@ -315,10 +342,15 @@ document.addEventListener('click', event => {
   }
 });
 $('.brand').addEventListener('click', event => { event.preventDefault(); setMode('learn'); window.scrollTo({ top: 0, behavior: 'instant' }); });
+$('.skip-link').addEventListener('click', event => {
+  event.preventDefault();
+  const target = document.getElementById($('.skip-link').getAttribute('href')!.slice(1));
+  if (target) { target.tabIndex = -1; target.scrollIntoView({ block: 'start', behavior: 'instant' }); target.focus({ preventScroll: true }); }
+});
 $('.lesson-tabs').addEventListener('keydown', event => {
   const key = (event as KeyboardEvent).key; const tabs = ['essentials', 'deep', 'check'];
   if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(key)) return; event.preventDefault();
-  tab = key === 'Home' ? tabs[0] : key === 'End' ? tabs[2] : tabs[(tabs.indexOf(tab) + (key === 'ArrowRight' ? 1 : 2)) % 3]; renderPanel(); $(`#tab-${tab}`).focus();
+  tab = key === 'Home' ? tabs[0] : key === 'End' ? tabs[2] : tabs[(tabs.indexOf(tab) + (key === 'ArrowRight' ? 1 : 2)) % 3]; renderPanel(); saveJourney(); $(`#tab-${tab}`).focus();
 });
 $('#lesson-search').addEventListener('input', renderCurriculum); $('#concept-search').addEventListener('input', renderReference);
 document.querySelectorAll<HTMLInputElement>('[data-control]').forEach(input => input.addEventListener('change', () => { controls[input.dataset.control as keyof Pick<Controls, 'policy' | 'checkpoint' | 'idempotency' | 'verification'>] = input.checked; controlsChanged(); }));
@@ -332,8 +364,22 @@ const probabilityChanged = () => {
   $<HTMLProgressElement>('#pass-at-bar').value = at; $<HTMLProgressElement>('#pass-all-bar').value = all;
 };
 $('#success-rate').addEventListener('input', probabilityChanged); $('#attempts').addEventListener('input', probabilityChanged);
-function route() { const id = location.hash.slice(1) === 'workspace' ? 'reference' : location.hash.slice(1); if (['learn', 'lab', 'reference'].includes(id) || !id) setMode(id || 'learn'); else chooseLesson(id); }
-window.addEventListener('hashchange', route);
+function route() {
+  const raw = location.hash.slice(1) === 'workspace' ? 'reference' : location.hash.slice(1);
+  const id = ['learn', 'workshop', 'lab', 'reference'].includes(raw) || lessons.some(lesson => lesson.id === raw) ? raw : 'learn';
+  const state = history.state as JourneyState | null;
+  restoringJourney = true;
+  destination = id; workshopReturn = state?.odin && state.documentId === journeyDocument ? state.workshopReturn : undefined;
+  if (['learn', 'workshop', 'lab', 'reference'].includes(id)) setMode(id, false);
+  else { chooseLesson(id, false, false); if (state?.odin && ['essentials', 'deep', 'check'].includes(state.tab)) { tab = state.tab; renderPanel(); } }
+  window.scrollTo({ top: state?.odin ? state.scrollY : 0, behavior: 'instant' });
+  if (state?.odin && state.focusId) document.getElementById(state.focusId)?.focus({ preventScroll: true });
+  restoringJourney = false; saveJourney();
+}
+window.addEventListener('popstate', route);
+window.addEventListener('hashchange', () => { if (location.hash !== `#${destination}`) route(); });
+let journeySaveTimer: ReturnType<typeof setTimeout> | undefined;
+window.addEventListener('scroll', () => { clearTimeout(journeySaveTimer); journeySaveTimer = setTimeout(saveJourney, 150); }, { passive: true });
 const media = matchMedia('(prefers-reduced-motion: reduce)');
 media.addEventListener('change', event => { paused = event.matches; scene?.pause(paused); $('#toggle-motion').innerHTML = icon(paused ? 'play' : 'pause'); $('#toggle-motion').setAttribute('aria-label', paused ? 'Play animation' : 'Pause animation'); });
 function fallback() {
@@ -347,6 +393,20 @@ function fallback() {
 function selectComponent(id: Component) { chooseLesson(components.find(component => component.id === id)!.lesson); }
 const reader = $('#lesson-reader'), lessonHost = $('#lesson-theater');
 $('#explore-view').prepend(reader);
+const returnToWorkshop = document.createElement('div'); returnToWorkshop.id = 'workshop-return'; returnToWorkshop.className = 'workshop-return'; returnToWorkshop.hidden = true;
+returnToWorkshop.innerHTML = '<button class="text-button" id="return-to-workshop">← Return to your workshop</button><span>Your experiment is saved while you read.</span>';
+reader.prepend(returnToWorkshop);
+$('#return-to-workshop').addEventListener('click', () => {
+  const point = workshopReturn;
+  setMode('workshop');
+  if (point) { window.scrollTo({ top: point.scrollY, behavior: 'instant' }); document.getElementById(point.focusId || 'workshop-entry')?.focus({ preventScroll: true }); }
+  else $('#workshop-entry').focus();
+  saveJourney();
+});
+const workshopNavigation = document.createElement('nav'); workshopNavigation.id = 'workshop-navigation'; workshopNavigation.className = 'workshop-navigation'; workshopNavigation.setAttribute('aria-label', 'Workshop navigation');
+workshopNavigation.innerHTML = '<button class="workshop-link" id="workshop-overview">← Back to the agent overview</button><span>Hands-on workshop</span>';
+$('#workshop-host').before(workshopNavigation);
+$('#workshop-overview').addEventListener('click', () => { setMode('learn'); window.scrollTo({ top: 0, behavior: 'instant' }); $('#agent-overview-title').focus({ preventScroll: true }); });
 const showStage = document.createElement('button'); showStage.className = 'secondary open-lesson-stage'; showStage.textContent = 'Open this lesson’s 3D walkthrough'; showStage.addEventListener('click', () => lessonHost.scrollIntoView({ block: 'start', behavior: 'instant' })); reader.append(showStage);
 const backToReader = document.createElement('button'); backToReader.className = 'text-button'; backToReader.textContent = 'Back to lesson and checks'; backToReader.addEventListener('click', () => { reader.scrollIntoView({ block: 'start', behavior: 'instant' }); reader.focus({ preventScroll: true }); }); lessonHost.before(backToReader);
 $('.lab-grid').after($('#lab-theater'));
@@ -354,13 +414,12 @@ const backToLab = document.createElement('button'); backToLab.className = 'text-
 $('.trace-header').after($('#trace-outcome'));
 $('.trace-panel').prepend($('.run-actions'));
 const inspectTrace = document.createElement('button'); inspectTrace.className = 'text-button'; inspectTrace.textContent = 'Inspect the current event in 3D'; inspectTrace.addEventListener('click', () => $('#lab-theater').scrollIntoView({ block: 'start', behavior: 'instant' })); $('.trace-panel').append(inspectTrace);
-const initialHash = location.hash;
 const workshop = mountWorkshop($('#workshop-host'), id => chooseLesson(id, true));
-const overview = mountAgentOverview($('#agent-overview-host'), id => chooseLesson(id, true), () => { const entry = $('#workshop-entry'); entry.scrollIntoView({ block: 'start', behavior: 'instant' }); entry.focus({ preventScroll: true }); });
+const overview = mountAgentOverview($('#agent-overview-host'), id => chooseLesson(id, true), () => { setMode('workshop'); window.scrollTo({ top: 0, behavior: 'instant' }); $('#workshop-entry').focus({ preventScroll: true }); });
 const lessonTheater = mountLessonTheater($('#lesson-theater'), current);
 const traceTheater = mountTraceTheater($('#lab-theater'));
 renderCurriculum(); renderLesson(); renderReference(); selectScenario(activeScenario);
-history.replaceState(null, '', initialHash || '#learn'); route();
+route();
 if (matchMedia('(max-width: 760px)').matches) $<HTMLDetailsElement>('#curriculum-disclosure').open = false;
 import('./scene').then(module => {
   try { scene = module.createScene($('#scene-host'), selectComponent, fallback); scene.select(current.component); $('#scene-loading').remove(); $('#engine-state').textContent = 'Interactive 3D'; }

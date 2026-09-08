@@ -6,7 +6,8 @@ test.use({ actionTimeout: 15000 });
 
 test('provider selection changes the engineered ecosystem and inspectable code', async ({ page }) => {
   const errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
-  await page.goto('./#learn');
+  await page.goto('./#workshop');
+  await page.locator('#inspect-workshop-run').click();
   const stage = page.locator('#workshop-scene .engineering-stage');
   await expect(stage).toHaveAttribute('data-engine', 'three');
   const observations: object[] = [];
@@ -68,7 +69,8 @@ test('every lesson and individual deep section changes the stage and its code', 
 
 test('stage code and timelines survive unavailable renderer and retain mobile accessibility', async ({ page }) => {
   await page.route(/\/(?:src\/stage-renderer\.ts|assets\/stage-renderer-[^/]+\.js)(?:\?.*)?$/, route => route.abort());
-  await page.goto('./#learn');
+  await page.goto('./#workshop');
+  await page.locator('#inspect-workshop-run').click();
   const stage = page.locator('#workshop-scene .engineering-stage');
   await expect(stage.locator('.engineering-fallback')).toBeVisible();
   await page.locator('#stage-provider').selectOption('pi');
