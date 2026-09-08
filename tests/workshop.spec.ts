@@ -10,7 +10,7 @@ const original = '# Welcomme\n\nFind answers in our [FAQ](./faq.md).\n';
 const corrected = '# Welcome\n\nFind answers in our [FAQ](./faq.md).\n';
 
 async function openWorkshop(page: Page) {
-  await page.goto('./#learn');
+  await page.goto('./#workshop');
   await expect(page.getByRole('heading', { name: 'Make your first agent loop click.' })).toBeVisible();
   await expect(page.locator('#run-workshop')).toBeDisabled();
 }
@@ -21,7 +21,7 @@ const discoveries = [
     title: 'Give the agent a finish line.', prediction: 'Fix one typo, preserve the link, and check the file.',
     wrongReflection: 'It asked the model to sound more certain.', reflection: 'It named the change, the boundary, and the evidence.',
     failure: 'The request has no reliable acceptance test.', success: 'A testable finish line is now attached.',
-    correct: async (page: Page) => { await page.locator('#workshop-contract').selectOption('scoped'); },
+    correct: async (page: Page) => { await page.locator('[data-prediction="1"]').click(); },
   },
   {
     title: 'Pack a useful briefing.', prediction: 'The task file and the short project rules.',
@@ -59,12 +59,15 @@ test('beginner completes five discoveries through failed and corrected runs, exp
 
   for (const [index, discovery] of discoveries.entries()) {
     await expect(page.getByRole('heading', { name: discovery.title, exact: true })).toBeVisible();
+    await expect(page.locator('#workshop-inspection')).toBeHidden();
+    await expect(page.locator('#stage-provider')).toBeHidden();
+    await expect(page.locator('#workshop-contract')).toHaveCount(0);
     await expect(page.locator('#workshop-scene')).toHaveAttribute('data-engine', 'three');
     await expect(page.locator('#workshop-scene .engineering-stage')).toHaveAttribute('data-stage', new RegExp(['contract', 'context', 'permissions', 'verification', 'recovery'][index]));
     await expect(page.locator('#run-workshop')).toBeDisabled();
     await expect(page.locator('#workshop-next')).toBeDisabled();
     await page.getByRole('button', { name: discovery.prediction, exact: true }).click();
-    if (index === 0) await page.locator('#workshop-contract').selectOption('broad');
+    if (index === 0) await page.locator('[data-prediction="0"]').click();
     await page.locator('#run-workshop').click();
     await expect(page.locator('#workshop-result')).toContainText(discovery.failure);
     await expect(page.locator('#workshop-scene .engineering-narrative h3')).toHaveText(discovery.failure);
@@ -75,8 +78,9 @@ test('beginner completes five discoveries through failed and corrected runs, exp
       await expect(page.locator('#workshop-document')).toHaveText(original);
     }
     if (index === 3) await expect(page.locator('#workshop-document')).toContainText('./missing.md');
-    await page.getByRole('button', { name: discovery.reflection, exact: true }).click();
-    await expect(page.locator('#reflection-feedback')).toContainText('Correct the failed run');
+    await expect(page.locator('#workshop-reflection')).toBeHidden();
+    await page.locator('#change-workshop-configuration').click();
+    await expect(page.locator(index === 0 ? '[data-prediction="0"]' : '#workshop-action input, #workshop-action select').first()).toBeFocused();
     await expect(page.locator('#workshop-next')).toBeDisabled();
     await discovery.correct(page);
     await expect(page.locator('#workshop-result')).toContainText('controls changed');
@@ -97,7 +101,15 @@ test('beginner completes five discoveries through failed and corrected runs, exp
     await page.locator('#workshop-next').click();
   }
 
-  await expect(page.locator('#provider-transfer')).toBeInViewport();
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.locator('#workshop-next').click();
+    await expect(page.locator('#provider-transfer')).toBeFocused();
+    const heading = await page.locator('#provider-transfer h2').boundingBox();
+    const header = await page.locator('.topbar').boundingBox();
+    expect(heading!.y).toBeGreaterThanOrEqual(header!.y + header!.height);
+    expect(heading!.y + heading!.height).toBeLessThanOrEqual(844);
+  }
   await page.reload();
   await expect(page.locator('#workshop-progress')).toContainText('5 / 5 discoveries completed');
   await expect(page.locator('[data-workshop-step="4"]')).toHaveAttribute('aria-current', 'step');
@@ -112,6 +124,8 @@ test('beginner completes five discoveries through failed and corrected runs, exp
 
 test('provider transfer guides distinguish models and harnesses; all guides work publicly', async ({ page }) => {
   await openWorkshop(page);
+  await expect(page.locator('#provider-content')).toBeHidden();
+  await page.locator('#provider-transfer-disclosure > summary').click();
   const providers = [
     ['codex', 'Codex', 'codex', 'AGENTS.md'],
     ['claude', 'Claude Code', 'claude', 'CLAUDE.md'],
@@ -130,12 +144,14 @@ test('provider transfer guides distinguish models and harnesses; all guides work
     if (id === 'deepseek') await expect(page.locator('#provider-content')).toContainText('not the CLI or the permission boundary');
   }
   await page.reload();
+  await page.locator('#provider-transfer-disclosure > summary').click();
   await expect(page.locator('#provider-content h3')).toHaveText('Factory Droid');
   await expect(page.locator('[data-mode="workspace"]')).toHaveCount(0);
 });
 
 test('downloaded starter ZIP is runnable and independently rejects wrong artifacts', async ({ page }) => {
   await openWorkshop(page);
+  await page.locator('#provider-transfer-disclosure > summary').click();
   const downloadEvent = page.waitForEvent('download');
   await page.locator('#download-workshop').click();
   const download = await downloadEvent;
@@ -166,6 +182,7 @@ test('downloaded starter ZIP is runnable and independently rejects wrong artifac
 
 test('beginner workshop stays readable and accessible on desktop and mobile with reduced motion', async ({ page }) => {
   await openWorkshop(page);
+  await page.locator('#inspect-workshop-run').click();
   for (const viewport of [{ width: 1440, height: 1100 }, { width: 390, height: 844 }]) {
     await page.setViewportSize(viewport);
     await page.evaluate(() => document.fonts.ready);
@@ -192,6 +209,7 @@ test('unavailable WebGL preserves the beginner task and evidence', async ({ page
     } as typeof getContext;
   });
   await openWorkshop(page);
+  await page.locator('#inspect-workshop-run').click();
   await expect(page.locator('#workshop-scene .engineering-fallback')).toContainText('3D is unavailable');
   await page.getByRole('button', { name: discoveries[0].prediction, exact: true }).click();
   await discoveries[0].correct(page);

@@ -19,6 +19,19 @@ or jump directly to the workshop with keyboard focus on its heading. The graph
 has a written alternative when WebGL or its module is unavailable. It performs no
 live model calls. Existing lessons, experiments and workshop progress remain.
 
+The overview and workshop are separate destinations. Browser Back and Forward
+restore location and lesson section; a workshop lesson detour also offers a
+visible return to the current experiment without discarding its result. This
+in-memory experiment survives navigation in the tab, not a page reload.
+
+Keep one immediate decision in front of the learner. The first request selection
+is the experiment input, without a second dropdown repeating it. A failed run
+reveals evidence and a direct route to correction. A passing run reveals the
+reflection; its response and next discovery must be visible after selection.
+3D inspection and provider setup remain available on request, with an explicit
+return to the discovery. Selecting a component keeps its explanation near the
+map, with examples and boundaries available to expand.
+
 Validate the full browser suite, including the new map-to-lesson and
 map-to-workshop journeys on desktop and mobile, a missing renderer module,
 accessibility, and the existing failed/corrected workshop path. Inspect rendered

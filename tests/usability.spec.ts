@@ -15,22 +15,31 @@ for (const width of [1440, 390]) {
   const height = width === 390 ? 844 : 900;
   const errors: string[] = []; page.on('pageerror', e => errors.push(e.message));
   await page.setViewportSize({ width, height });
-  await page.goto('./#learn');
+  await page.goto('./#workshop');
   await expect(page.getByRole('heading', { name: 'Make your first agent loop click.' })).toBeVisible();
   await page.locator('[data-prediction="1"]').click();
-  await expect(page.locator('#workshop-contract')).toHaveValue('scoped');
+  await expect(page.locator('#workshop-contract')).toHaveCount(0);
+  await expect(page.locator('#run-workshop')).toBeInViewport();
   await page.locator('#run-workshop').click();
   await expect(page.locator('#workshop-result')).toContainText('A testable finish line');
   await visibleFeedback(page.locator('#workshop-result'), height);
   await page.screenshot({ path: `/tmp/harness-v4-workshop-result-${width}.png` });
   await page.locator('[data-prediction="0"]').click();
   await expect(page.locator('#workshop-result')).toContainText('controls changed');
+  await page.locator('#run-workshop').click();
+  await expect(page.locator('#workshop-result')).toContainText('no reliable acceptance test');
+  await expect(page.locator('#change-workshop-configuration')).toBeInViewport();
+  await page.locator('#change-workshop-configuration').click();
+  await expect(page.locator('[data-prediction="0"]')).toBeFocused();
   await expect(page.locator('#workshop-reflection')).toBeHidden();
   await page.locator('[data-prediction="1"]').click();
   await page.locator('#run-workshop').click();
   await page.locator('[data-reflection="0"]').click();
   await expect(page.locator('#workshop-next')).toBeEnabled();
+  await expect(page.locator('#workshop-next')).toBeInViewport();
+  await expect(page.locator('#workshop-inspection')).toBeHidden();
   await page.locator('#inspect-workshop-run').click();
+  await expect(page.locator('#workshop-inspection')).toBeFocused();
   const stage = page.locator('#workshop-scene .engineering-stage');
   await stage.getByRole('button', { name: 'Previous event', exact: true }).click();
   await visibleFeedback(stage.locator('.engineering-narrative'), height);
@@ -51,6 +60,14 @@ for (const width of [1440, 390]) {
   await pin.click();
   await expect(stage.locator('.engineering-code h3')).toHaveText((await stage.locator('.engineering-objects button').nth(2).getAttribute('aria-label'))!);
   await visibleFeedback(stage.locator('.engineering-code h3'), height);
+  const selectedFrame = await stage.getAttribute('data-frame');
+  const selectedCode = await stage.locator('.engineering-code h3').innerText();
+  await page.locator('#close-workshop-inspection').click();
+  await expect(page.locator('#workshop-inspection')).toBeHidden();
+  await expect(page.locator('.workshop-evidence')).toBeFocused();
+  await page.locator('#inspect-workshop-run').click();
+  await expect(stage).toHaveAttribute('data-frame', selectedFrame!);
+  await expect(stage.locator('.engineering-code h3')).toHaveText(selectedCode);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
   const audit = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
   expect(audit.violations).toEqual([]); expect(errors).toEqual([]);
@@ -93,7 +110,8 @@ for (const width of [1440, 390]) {
 
 test('copy and unavailable media explain the result beside their controls', async ({ page }) => {
  await page.addInitScript(() => { Object.defineProperty(navigator, 'clipboard', { value: { writeText: async () => { throw new Error('Clipboard disabled'); } }, configurable: true }); if ('speechSynthesis' in window) speechSynthesis.getVoices = () => []; });
- await page.goto('./#learn');
+ await page.goto('./#workshop');
+ await page.locator('#provider-transfer-disclosure > summary').click();
  await page.locator('#copy-entry').click();
  await expect(page.locator('.provider-command .copy-feedback')).toContainText('Clipboard unavailable');
  await expect(page.locator('.provider-command .copy-feedback')).toBeInViewport();

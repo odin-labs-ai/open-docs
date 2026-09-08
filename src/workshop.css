@@ -45,3 +45,35 @@ body[data-view=learn] .page-footer,body[data-view=workspace] .page-footer{color:
 /* Keep all four public destinations together on narrow screens. */
 @media(max-width:600px){.mode-nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:100%;gap:0}.mode-nav button{min-width:0;justify-content:center;padding:10px 2px;min-height:44px}.mode-nav button svg{width:12px}.mode-nav button.active:after{left:5px;right:5px}}
 @media(max-width:360px){.mode-nav button{font-size:10px;gap:3px}}
+
+/* Keep the discovery focused; the full inspection remains an optional detour. */
+.workshop-stage .workshop-task.workshop-request-task{grid-template-columns:minmax(0,1fr);max-width:760px;margin-inline:auto}
+.workshop-stage .workshop-request-task .workshop-configure{margin-top:-8px}
+.workshop-stage .workshop-request-task #workshop-action{display:none}
+.workshop-stage .workshop-request-task #run-workshop{margin-top:0}
+.workshop-stage .workshop-visual[hidden]{display:none}
+.workshop-inspection-header{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 22px;border-bottom:1px solid #bfcfc3}
+.workshop-inspection-header h3{font-size:18px;font-weight:500;margin:0}
+.workshop-visual .stage-provider-select{margin:0;padding:18px 22px;border-top:0}
+#provider-transfer,#workshop-inspection,.workshop-task,.workshop-heading,#change-workshop-configuration,[data-prediction],#workshop-action input,#workshop-action select{scroll-margin-top:110px}
+#change-workshop-configuration,#close-workshop-inspection{min-height:44px}
+@media(max-width:760px){.workshop-inspection-header{display:block;padding:18px}.workshop-inspection-header .workshop-link{margin-top:8px}.workshop-visual .stage-provider-select{padding:18px}#provider-transfer,#workshop-inspection,.workshop-task,.workshop-heading,[data-prediction],#workshop-action input,#workshop-action select{scroll-margin-top:150px}}
+
+.provider-transfer-disclosure{margin-block:28px;border-block:1px solid #b8ccbc}
+.provider-transfer-disclosure>summary{padding:18px 0;min-height:48px;cursor:pointer;font-size:16px;color:#24573d}
+.provider-transfer-disclosure>.provider-transfer{border-top:1px solid #b8ccbc;margin-top:0}
+@media(max-width:760px){
+  .workshop-welcome .workshop-introduction{display:none}
+  .workshop-welcome #workshop-entry{font-size:29px;line-height:1.1;max-width:18ch}
+  .workshop-welcome .workshop-mission{padding:8px 0;margin-top:8px}
+  #workshop-host .workshop-welcome{margin-bottom:12px}
+  #workshop-host .workshop-steps{padding-bottom:0;margin-bottom:12px}
+  #workshop-host .workshop-heading{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:end;margin-bottom:14px}
+  #workshop-host .workshop-heading h2{font-size:23px;line-height:1.2}
+  #workshop-host .workshop-heading .workshop-link{max-width:86px;text-align:left;margin:0;line-height:1.5;min-height:44px}
+  #workshop-host #narration-status{grid-column:1/-1;margin:0}
+  #workshop-host #narration-status:empty{display:none}
+  .workshop-stage .workshop-request-task{gap:12px;padding:16px 18px}
+  .workshop-request-task .prediction p{margin-bottom:12px}
+  .workshop-request-task .prediction legend{margin-bottom:8px}
+}

@@ -36,6 +36,7 @@ for (const width of [1440, 390]) {
     await page.locator('#overview-workshop').click();
     await expect(page.locator('#workshop-entry')).toBeFocused();
     await expect(page.locator('#workshop-entry')).toBeInViewport();
+    await page.locator('#inspect-workshop-run').click();
     const workshopPin = page.locator('#workshop-scene .stage-node-label[data-state="active"]').first();
     await expect(workshopPin).toHaveAccessibleName(/: current event\. Inspect code$/);
     const audit = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
@@ -53,6 +54,7 @@ for (const width of [1440, 390]) {
     await overview.locator('[data-stage-node="plugins"]').click();
     await expect(page.locator('#agent-part-detail')).toContainText('Package extensions');
     await page.locator('#overview-workshop').click();
+    await page.locator('#inspect-workshop-run').click();
     await page.locator('#stage-provider').selectOption('pi');
     const stage = page.locator('#workshop-scene .engineering-stage');
     await stage.getByRole('button', { name: 'Next event', exact: true }).click();

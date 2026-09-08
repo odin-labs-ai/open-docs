@@ -7,7 +7,8 @@ Start with the model and the system around it. Inspect how context, skills, tool
 workflows and feedback shape an agent, then try one small task: fix a typo and
 preserve a link. Predict an outcome, inspect the artifact, and explain what happened.
 
-- **Start here:** an interactive agent map, followed by five hands-on discoveries.
+- **Start here:** an interactive agent map with a direct route into a focused,
+  five-step workshop. Lesson detours keep a return path to your experiment.
 - **Explore:** 18 lessons with code, checks, and interactive 3D walkthroughs.
 - **Failure lab:** experiment with permissions, context, verification, and recovery.
 - **Field guide:** 111 concepts and links to primary sources.
