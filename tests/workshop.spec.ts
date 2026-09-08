@@ -101,7 +101,15 @@ test('beginner completes five discoveries through failed and corrected runs, exp
     await page.locator('#workshop-next').click();
   }
 
-  await expect(page.locator('#provider-transfer')).toBeInViewport();
+  for (const width of [1440, 390]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.locator('#workshop-next').click();
+    await expect(page.locator('#provider-transfer')).toBeFocused();
+    const heading = await page.locator('#provider-transfer h2').boundingBox();
+    const header = await page.locator('.topbar').boundingBox();
+    expect(heading!.y).toBeGreaterThanOrEqual(header!.y + header!.height);
+    expect(heading!.y + heading!.height).toBeLessThanOrEqual(844);
+  }
   await page.reload();
   await expect(page.locator('#workshop-progress')).toContainText('5 / 5 discoveries completed');
   await expect(page.locator('[data-workshop-step="4"]')).toHaveAttribute('aria-current', 'step');
