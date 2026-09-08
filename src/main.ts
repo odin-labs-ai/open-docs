@@ -40,7 +40,7 @@ try {
   }
 } catch { storageAvailable = false; }
 let current = lessons.find(lesson => lesson.id === location.hash.slice(1)) || lessons[0];
-let mode = 'explore';
+let mode = 'learn';
 let tab = 'essentials';
 type JourneyPoint = { scrollY: number; focusId?: string };
 type JourneyState = JourneyPoint & { odin: true; documentId: string; tab: string; workshopReturn?: JourneyPoint };
@@ -52,6 +52,9 @@ history.scrollRestoration = 'manual';
 let scene: HarnessScene | undefined;
 let paused = matchMedia('(prefers-reduced-motion: reduce)').matches;
 let expanded = true;
+let lessonStageOpen = false, labStageOpen = false;
+let renderedLessonId = '';
+let lessonStageReturn: HTMLElement | undefined;
 let runTimer: ReturnType<typeof setInterval> | undefined;
 let activeScenario = scenarios[0].id;
 let lastResult: ReturnType<typeof simulate> | undefined;
@@ -67,29 +70,29 @@ app.innerHTML = `
     <span class="header-divider"></span><span class="academy-label">Harness engineering</span>
     <nav class="mode-nav" aria-label="Experience views">
       <button data-mode="learn" aria-pressed="false">${icon('play')}<span>Start here</span></button>
-      <button class="active" data-mode="explore" aria-pressed="true">${icon('layers')}<span>Explore</span></button>
-      <button data-mode="lab" aria-pressed="false">${icon('lab')}<span>Failure lab</span></button>
-      <button data-mode="reference" aria-pressed="false">${icon('book')}<span>Field guide</span></button>
+      <button class="active" data-mode="explore" aria-pressed="true">${icon('layers')}<span>Lessons</span></button>
+      <button data-mode="lab" aria-pressed="false">${icon('lab')}<span>Experiments</span></button>
+      <button data-mode="reference" aria-pressed="false">${icon('book')}<span>Reference</span></button>
 </nav>
     <span class="local-badge"><span></span>Local learning space</span>
   </header>
   <div class="app-layout">
     <aside class="sidebar">
-      <details id="curriculum-disclosure" open>
-        <summary>Learning path <span>18 lessons</span></summary>
+      <details id="curriculum-disclosure">
+        <summary>Browse or search lessons <span>18 lessons</span></summary>
         <div class="sidebar-inner">
           <label class="search-box">${icon('search')}<input id="lesson-search" type="search" placeholder="Find a concept…" aria-label="Search lessons and concepts" /></label>
           <nav id="curriculum" aria-label="Course lessons"></nav>
           <p id="search-empty" hidden>No matching lessons. Try “memory”, “tools”, or “evals”.</p>
         </div>
       </details>
-      <div class="progress-panel">
+      <details id="progress-disclosure"><summary>Your progress</summary><div class="progress-panel">
         <div><strong>Your progress</strong><span id="progress-count">0 / 18</span></div>
         <progress id="course-progress" max="18" value="0" aria-label="Completed lessons"></progress>
         <p id="progress-note">Open both sections and pass each lesson’s two checks.</p>
         <button class="text-button" id="export-progress">${icon('download', 16)}Export learning record</button>
         <button class="text-button quiet" id="reset-progress">Reset progress</button>
-      </div>
+      </div></details>
     </aside>
     <main id="main-content">
       <section id="learn-view" hidden aria-label="Understand agents and try the workshop"><div id="agent-overview-host"></div><div id="workshop-host"></div></section>
@@ -114,6 +117,7 @@ app.innerHTML = `
         </div>
         </details><section id="lesson-reader" class="reader" tabindex="-1" aria-label="Lesson reader">
           <div class="reader-heading"><div><span id="lesson-position"></span><h2 id="lesson-title"></h2></div><span id="lesson-level" class="level-badge"></span></div>
+          <p id="lesson-summary"></p>
           <div class="lesson-tabs" role="tablist" aria-label="Lesson sections">
             <button id="tab-essentials" role="tab" aria-controls="lesson-panel" data-tab="essentials">Foundations</button>
             <button id="tab-deep" role="tab" aria-controls="lesson-panel" data-tab="deep">Deep dive</button>
@@ -197,7 +201,7 @@ function setMode(next: string, record = true) {
   $('#workshop-host').hidden = next !== 'workshop';
   $('#workshop-navigation').hidden = next !== 'workshop';
   $('#workshop-return').hidden = next !== 'explore' || !workshopReturn;
-  lessonTheater?.pause(next !== 'explore' || paused); traceTheater?.pause(next !== 'lab' || paused);
+  syncStageMotion();
   document.body.dataset.view = mode;
   if (matchMedia('(max-width:760px)').matches && next !== 'reference') $<HTMLDetailsElement>('#curriculum-disclosure').open = false;
   $('.skip-link').setAttribute('href', next === 'explore' ? '#lesson-reader' : next === 'workshop' ? '#workshop-entry' : `#${next}-view`);
@@ -205,19 +209,22 @@ function setMode(next: string, record = true) {
   if (next !== 'lab') stopRun();
   ['learn', 'explore', 'lab', 'reference'].forEach(id => { $(`#${id}-view`).hidden = id !== mode; });
   document.querySelectorAll<HTMLElement>('[data-mode]').forEach(button => { button.classList.toggle('active', button.dataset.mode === mode); button.setAttribute('aria-pressed', String(button.dataset.mode === mode)); });
-  if (next === 'explore') scene?.select(current.component);
+  if (next === 'explore') { scene?.select(current.component); markVisibleSection(); }
 }
 function chooseLesson(id: string, scroll = false, record = true) {
   if (record) visit(lessons.find(lesson => lesson.id === id)?.id || lessons[0].id);
-  current = lessons.find(lesson => lesson.id === id) || lessons[0]; tab = 'essentials';
+  const previousId = current.id;
+  current = lessons.find(lesson => lesson.id === id) || lessons[0];
+  if (record || current.id !== previousId) tab = 'essentials';
   setMode('explore', false); renderCurriculum(); renderLesson(); scene?.select(current.component);
   if (matchMedia('(max-width: 760px)').matches) $<HTMLDetailsElement>('#curriculum-disclosure').open = false;
   if (scroll) { $('#lesson-reader').scrollIntoView({ behavior: 'instant', block: 'start' }); $('#lesson-reader').focus({ preventScroll: true }); }
 }
 function renderLesson() {
-  lessonTheater?.update(current);
+  if (renderedLessonId !== current.id) { lessonTheater?.update(current); renderedLessonId = current.id; }
   const index = lessons.indexOf(current);
   $('#lesson-position').textContent = `Lesson ${String(index + 1).padStart(2, '0')} of 18`;
+  $('#lesson-summary').textContent = current.summary;
   $('#lesson-title').textContent = current.title; $('#lesson-level').textContent = current.level;
   const component = components.find(item => item.id === current.component)!;
   $('#inspector-content').innerHTML = `<div class="inspector-symbol" style="--component-color:${component.color}">${icon(current.component === 'policy' ? 'eye' : 'layers', 25)}</div><span class="component-name">${component.title}</span><h2>${current.summary}</h2><p>${component.role}. Select the surrounding layers to trace how responsibility moves through the system.</p><div class="inspector-concepts">${current.concepts.slice(0, 3).map(concept => `<span>${concept}</span>`).join('')}</div><button id="begin-lesson" class="text-button">Read this lesson ${icon('arrow')}</button><div class="inspector-foot">${String(index + 1).padStart(2, '0')} / 18 <span>${current.group}</span></div>`;
@@ -225,15 +232,20 @@ function renderLesson() {
   $('#next-lesson').innerHTML = index === lessons.length - 1 ? `Open failure lab ${icon('lab')}` : `Next lesson ${icon('arrow')}`;
   renderPanel();
 }
+function markVisibleSection() {
+  if (mode !== 'explore' || $('#explore-view').hidden || tab === 'check') return;
+  const visited = progress.visited[current.id] ||= [];
+  if (!visited.includes(tab)) { visited.push(tab); save(); }
+}
 function renderPanel() {
   lessonTheater?.setSection(tab as 'essentials' | 'deep' | 'check');
-  if (tab !== 'check') { const visited = progress.visited[current.id] ||= []; if (!visited.includes(tab)) visited.push(tab); save(); }
+  markVisibleSection();
   document.querySelectorAll<HTMLElement>('[data-tab]').forEach(button => { const isSelected = button.dataset.tab === tab; button.setAttribute('aria-selected', String(isSelected)); button.tabIndex = isSelected ? 0 : -1; });
   $('#lesson-panel').setAttribute('aria-labelledby', `tab-${tab}`);
   $('#check-indicator').textContent = ` ${current.questions.filter((question, i) => progress.answers[current.id]?.[i] === question.answer).length}/2`;
-  const links = `<div class="lesson-sources"><span>Further reading</span>${current.sources.map(id => `<a href="${sources[id].url}" target="_blank" rel="noopener noreferrer">${sources[id].title} ${icon('arrow', 14)}</a>`).join('')}</div>`;
-  if (tab === 'essentials') $('#lesson-panel').innerHTML = `<div class="lesson-columns"><div class="prose">${current.essentials.map(paragraph => `<p>${paragraph}</p>`).join('')}<div class="analogy"><h3>A useful analogy</h3><p>${current.analogy}</p></div></div><aside class="lesson-notes"><h3>Concepts in this lesson</h3><div class="concept-tags">${current.concepts.map(concept => `<span>${concept}</span>`).join('')}</div><h3>Watch for this</h3><p>${current.pitfall}</p><button class="text-button" data-next-tab="deep">Go deeper ${icon('arrow')}</button></aside></div>${links}`;
-  if (tab === 'deep') $('#lesson-panel').innerHTML = `<div class="lesson-columns"><div class="prose">${current.deep.map((section, index) => `<section><h3>${section.title}</h3><p>${section.text}</p><button class="stage-section-link" data-stage-section="${index}">Inspect this section on the stage</button></section>`).join('')}</div><aside class="lesson-notes"><h3>Worked example</h3><pre><code>${escape(current.example)}</code></pre><p class="example-note">Conceptual example, not a production implementation.</p><button class="text-button" data-next-tab="check">Check understanding ${icon('arrow')}</button></aside></div>${links}`;
+  const links = `<details class="reading-disclosure lesson-sources"><summary>Further reading</summary><div>${current.sources.map(id => `<a href="${sources[id].url}" target="_blank" rel="noopener noreferrer">${sources[id].title} ${icon('arrow', 14)}</a>`).join('')}</div></details>`;
+  if (tab === 'essentials') $('#lesson-panel').innerHTML = `<div class="lesson-columns"><div class="prose">${current.essentials.map(paragraph => `<p>${paragraph}</p>`).join('')}<section class="lesson-pitfall"><h3>Watch for this</h3><p>${current.pitfall}</p></section><section class="analogy"><h3>A useful analogy</h3><p>${current.analogy}</p></section><details class="reading-disclosure lesson-concepts"><summary>Concepts in this lesson</summary><div class="concept-tags">${current.concepts.map(concept => `<span>${concept}</span>`).join('')}</div></details>${links}<button class="text-button" data-next-tab="deep">Go deeper ${icon('arrow')}</button></div></div>`;
+  if (tab === 'deep') $('#lesson-panel').innerHTML = `<div class="lesson-columns"><div class="prose">${current.deep.map((section, index) => `<section><h3>${section.title}</h3><p>${section.text}</p><button class="stage-section-link" data-stage-section="${index}" aria-controls="lesson-inspection" aria-expanded="${lessonStageOpen}">Inspect this section on the stage</button></section>`).join('')}<details class="reading-disclosure lesson-notes"><summary>Worked example</summary><pre><code>${escape(current.example)}</code></pre><p class="example-note">Conceptual example, not a production implementation.</p></details>${links}<button class="text-button" data-next-tab="check">Check understanding ${icon('arrow')}</button></div></div>`;
   if (tab === 'check') $('#lesson-panel').innerHTML = `<div class="quiz-intro"><p>Apply the ideas. Each answer includes an explanation; you can retry after reviewing it.</p></div>${current.questions.map((question, i) => {
     const chosen = progress.answers[current.id]?.[i]; const correct = chosen === question.answer;
     return `<fieldset class="question"><legend><span>${i + 1}.</span> ${question.prompt}</legend><div class="answer-options">${question.options.map((option, j) => `<button data-question="${i}" data-answer="${j}" class="answer ${chosen === j ? correct ? 'correct' : 'incorrect' : ''}" aria-pressed="${chosen === j}"><span class="answer-letter">${String.fromCharCode(65 + j)}</span>${option}${chosen === j && correct ? icon('check', 17) : ''}</button>`).join('')}</div><p class="answer-feedback ${correct ? 'correct' : ''}" aria-live="polite">${chosen !== undefined && chosen >= 0 ? `${correct ? 'Correct.' : 'Revisit the principle.'} ${question.explanation}` : ''}</p></fieldset>`;
@@ -322,12 +334,12 @@ document.addEventListener('click', event => {
     const feedback = document.querySelectorAll<HTMLElement>('.answer-feedback')[index]; if (feedback.getBoundingClientRect().bottom > innerHeight) feedback.scrollIntoView({ block: 'nearest', behavior: 'instant' });
   }
   if (button.dataset.scenario) selectScenario(button.dataset.scenario);
-  if (button.dataset.stageSection !== undefined) { lessonTheater.setSection('deep', Number(button.dataset.stageSection)); $('#lesson-theater').scrollIntoView({ behavior: paused ? 'instant' : 'smooth', block: 'start' }); }
+  if (button.dataset.stageSection !== undefined) { lessonTheater.setSection('deep', Number(button.dataset.stageSection)); setLessonStage(true, button); }
   switch (button.id) {
     case 'begin-lesson': $('#lesson-reader').scrollIntoView({ behavior: paused ? 'instant' : 'smooth' }); $('#lesson-reader').focus({ preventScroll: true }); break;
     case 'prev-lesson': chooseLesson(lessons[Math.max(0, lessons.indexOf(current) - 1)].id, true); break;
     case 'next-lesson': if (current.id === 'capstone') { setMode('lab'); $('#lab-view').scrollIntoView(); } else chooseLesson(lessons[lessons.indexOf(current) + 1].id, true); break;
-    case 'toggle-motion': paused = !paused; scene?.pause(paused); button.innerHTML = icon(paused ? 'play' : 'pause'); button.setAttribute('aria-label', paused ? 'Play animation' : 'Pause animation'); break;
+    case 'toggle-motion': paused = !paused; syncStageMotion(); button.innerHTML = icon(paused ? 'play' : 'pause'); button.setAttribute('aria-label', paused ? 'Play animation' : 'Pause animation'); break;
     case 'toggle-explode': expanded = !expanded; scene?.explode(expanded); button.setAttribute('aria-pressed', String(expanded)); button.setAttribute('aria-label', expanded ? 'Assemble layers' : 'Explode layers'); break;
     case 'reset-view': scene?.reset(); break;
     case 'run-simulation': startRun(); $<HTMLButtonElement>('#run-simulation').disabled = true; $<HTMLButtonElement>('#stop-simulation').disabled = false; stepRun(); if (runIndex < lastResult!.events.length) runTimer = setInterval(stepRun, paused ? 120 : 520); revealTrace(); break;
@@ -381,7 +393,7 @@ window.addEventListener('hashchange', () => { if (location.hash !== `#${destinat
 let journeySaveTimer: ReturnType<typeof setTimeout> | undefined;
 window.addEventListener('scroll', () => { clearTimeout(journeySaveTimer); journeySaveTimer = setTimeout(saveJourney, 150); }, { passive: true });
 const media = matchMedia('(prefers-reduced-motion: reduce)');
-media.addEventListener('change', event => { paused = event.matches; scene?.pause(paused); $('#toggle-motion').innerHTML = icon(paused ? 'play' : 'pause'); $('#toggle-motion').setAttribute('aria-label', paused ? 'Play animation' : 'Pause animation'); });
+media.addEventListener('change', event => { paused = event.matches; syncStageMotion(); $('#toggle-motion').innerHTML = icon(paused ? 'play' : 'pause'); $('#toggle-motion').setAttribute('aria-label', paused ? 'Play animation' : 'Pause animation'); });
 function fallback() {
   scene?.dispose(); scene = undefined;
   $('#scene-host').hidden = true; $('#scene-fallback').hidden = false; $('#engine-state').textContent = 'Accessible component map';
@@ -407,22 +419,49 @@ const workshopNavigation = document.createElement('nav'); workshopNavigation.id 
 workshopNavigation.innerHTML = '<button class="workshop-link" id="workshop-overview">← Back to the agent overview</button><span>Hands-on workshop</span>';
 $('#workshop-host').before(workshopNavigation);
 $('#workshop-overview').addEventListener('click', () => { setMode('learn'); window.scrollTo({ top: 0, behavior: 'instant' }); $('#agent-overview-title').focus({ preventScroll: true }); });
-const showStage = document.createElement('button'); showStage.className = 'secondary open-lesson-stage'; showStage.textContent = 'Open this lesson’s 3D walkthrough'; showStage.addEventListener('click', () => lessonHost.scrollIntoView({ block: 'start', behavior: 'instant' })); reader.append(showStage);
-const backToReader = document.createElement('button'); backToReader.className = 'text-button'; backToReader.textContent = 'Back to lesson and checks'; backToReader.addEventListener('click', () => { reader.scrollIntoView({ block: 'start', behavior: 'instant' }); reader.focus({ preventScroll: true }); }); lessonHost.before(backToReader);
-$('.lab-grid').after($('#lab-theater'));
-const backToLab = document.createElement('button'); backToLab.className = 'text-button'; backToLab.textContent = 'Back to experiment controls'; backToLab.addEventListener('click', () => $('.lab-grid').scrollIntoView({ block: 'start', behavior: 'instant' })); $('#lab-theater').before(backToLab);
+// Keep the reading surface focused; optional inspections retain their mounted state.
+const courseAbout = document.createElement('details'); courseAbout.className = 'course-about'; courseAbout.innerHTML = '<summary>About this course</summary>';
+$('.intro').before(courseAbout); courseAbout.append($('.intro')); $('.sidebar').append(courseAbout);
+const showStage = document.createElement('button'); showStage.id = 'open-lesson-stage'; showStage.className = 'text-button open-lesson-stage'; showStage.textContent = 'Open this lesson’s 3D walkthrough'; showStage.setAttribute('aria-controls', 'lesson-inspection'); showStage.setAttribute('aria-expanded', 'false'); showStage.addEventListener('click', () => setLessonStage(!lessonStageOpen, showStage)); reader.append(showStage);
+const lessonInspection = document.createElement('section'); lessonInspection.id = 'lesson-inspection'; lessonInspection.className = 'optional-inspection'; lessonInspection.hidden = true; lessonInspection.tabIndex = -1; lessonInspection.setAttribute('aria-label', 'Lesson 3D walkthrough');
+lessonHost.before(lessonInspection); lessonInspection.append(lessonHost);
+const backToReader = document.createElement('button'); backToReader.id = 'close-lesson-stage'; backToReader.className = 'text-button'; backToReader.textContent = 'Close walkthrough · return to lesson'; backToReader.addEventListener('click', () => setLessonStage(false)); lessonInspection.prepend(backToReader);
+function syncStageMotion() {
+  lessonTheater?.pause(mode !== 'explore' || !lessonStageOpen || paused);
+  traceTheater?.pause(mode !== 'lab' || !labStageOpen || paused);
+  scene?.pause(mode !== 'explore' || !$<HTMLDetailsElement>('.architecture-disclosure').open || paused);
+}
+function setLessonStage(open: boolean, origin?: HTMLElement) {
+  if (open && origin) lessonStageReturn = origin;
+  lessonStageOpen = open; lessonInspection.hidden = !open;
+  showStage.setAttribute('aria-expanded', String(open));
+  document.querySelectorAll('[data-stage-section]').forEach(button => button.setAttribute('aria-expanded', String(open)));
+  showStage.textContent = open ? 'Close this lesson’s 3D walkthrough' : 'Open this lesson’s 3D walkthrough';
+  syncStageMotion();
+  const target = open ? lessonInspection : lessonStageReturn?.isConnected ? lessonStageReturn : showStage;
+  target.scrollIntoView({ block: 'start', behavior: 'instant' }); target.focus({ preventScroll: true });
+}
+const labInspection = document.createElement('section'); labInspection.id = 'lab-inspection'; labInspection.className = 'optional-inspection'; labInspection.hidden = true; labInspection.tabIndex = -1; labInspection.setAttribute('aria-label', 'Experiment 3D inspection');
+$('.lab-grid').after(labInspection); labInspection.append($('#lab-theater'));
+const backToLab = document.createElement('button'); backToLab.id = 'close-lab-stage'; backToLab.className = 'text-button'; backToLab.textContent = 'Close inspection · return to experiment'; backToLab.addEventListener('click', () => setLabStage(false)); labInspection.prepend(backToLab);
 $('.trace-header').after($('#trace-outcome'));
 $('.trace-panel').prepend($('.run-actions'));
-const inspectTrace = document.createElement('button'); inspectTrace.className = 'text-button'; inspectTrace.textContent = 'Inspect the current event in 3D'; inspectTrace.addEventListener('click', () => $('#lab-theater').scrollIntoView({ block: 'start', behavior: 'instant' })); $('.trace-panel').append(inspectTrace);
+const inspectTrace = document.createElement('button'); inspectTrace.id = 'open-lab-stage'; inspectTrace.className = 'text-button'; inspectTrace.textContent = 'Inspect the current event in 3D'; inspectTrace.setAttribute('aria-controls', 'lab-inspection'); inspectTrace.setAttribute('aria-expanded', 'false'); inspectTrace.addEventListener('click', () => setLabStage(!labStageOpen)); $('.trace-panel').append(inspectTrace);
+function setLabStage(open: boolean) {
+  labStageOpen = open; labInspection.hidden = !open; inspectTrace.setAttribute('aria-expanded', String(open)); syncStageMotion();
+  const target = open ? labInspection : inspectTrace; target.scrollIntoView({ block: 'start', behavior: 'instant' }); target.focus({ preventScroll: true });
+}
+$('.architecture-disclosure').addEventListener('toggle', syncStageMotion);
 const workshop = mountWorkshop($('#workshop-host'), id => chooseLesson(id, true));
 const overview = mountAgentOverview($('#agent-overview-host'), id => chooseLesson(id, true), () => { setMode('workshop'); window.scrollTo({ top: 0, behavior: 'instant' }); $('#workshop-entry').focus({ preventScroll: true }); });
 const lessonTheater = mountLessonTheater($('#lesson-theater'), current);
 const traceTheater = mountTraceTheater($('#lab-theater'));
 renderCurriculum(); renderLesson(); renderReference(); selectScenario(activeScenario);
 route();
+syncStageMotion();
 if (matchMedia('(max-width: 760px)').matches) $<HTMLDetailsElement>('#curriculum-disclosure').open = false;
 import('./scene').then(module => {
-  try { scene = module.createScene($('#scene-host'), selectComponent, fallback); scene.select(current.component); $('#scene-loading').remove(); $('#engine-state').textContent = 'Interactive 3D'; }
+  try { scene = module.createScene($('#scene-host'), selectComponent, fallback); scene.select(current.component); syncStageMotion(); $('#scene-loading').remove(); $('#engine-state').textContent = 'Interactive 3D'; }
   catch { fallback(); }
 }).catch(fallback);
 window.addEventListener('pagehide', () => { stopRun(); scene?.dispose(); workshop.dispose(); overview.dispose(); lessonTheater.dispose(); traceTheater.dispose(); });

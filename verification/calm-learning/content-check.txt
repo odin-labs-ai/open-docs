@@ -1,0 +1,4 @@
+PASS: 16 protected learning sources match accepted release 4804a34d239f47e4ae169cd059b11177f5bf5f07.
+PASS: deleting a teaching explanation is rejected in src/curriculum.ts.
+PASS: deleting a teaching explanation is rejected in src/workshop.ts.
+PASS: deleting a teaching explanation is rejected in src/agent-overview.ts.

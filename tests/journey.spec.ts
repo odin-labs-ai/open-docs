@@ -61,3 +61,30 @@ test('skip links stay in the active view and reloaded lessons do not promise an 
   await expect(page).toHaveURL(/#intent$/);
   await expect(page.locator('#workshop-return')).toBeHidden();
 });
+
+
+test('returning to the same lesson preserves a deep inspection and its selected code', async ({ page }) => {
+  await page.goto('./#foundations');
+  await page.locator('#tab-deep').click();
+  await page.locator('[data-stage-section="1"]').click();
+  const stage = page.locator('#lesson-theater .engineering-stage');
+  await stage.getByRole('button', { name: 'Next event', exact: true }).click();
+  await stage.locator('.engineering-objects button').last().click();
+  const stageId = await stage.getAttribute('data-stage');
+  const frame = await stage.getAttribute('data-frame');
+  const selectedTitle = await stage.locator('.engineering-code h3').innerText();
+  const selectedCode = await stage.locator('.engineering-code pre').innerText();
+  await page.locator('[data-mode="reference"]').click();
+  await expect(page).toHaveURL(/#reference$/);
+  await page.goBack();
+  await expect(page).toHaveURL(/#foundations$/);
+  await expect(page.locator('#tab-deep')).toHaveAttribute('aria-selected', 'true');
+  await expect(page.locator('#lesson-inspection')).toBeVisible();
+  await expect(stage).toHaveAttribute('data-stage', stageId!);
+  await expect(stage).toHaveAttribute('data-frame', frame!);
+  await expect(stage.locator('.engineering-code h3')).toHaveText(selectedTitle);
+  await expect(stage.locator('.engineering-code pre')).toHaveText(selectedCode, { useInnerText: true });
+  await page.locator('#close-lesson-stage').click();
+  await expect(page.locator('#lesson-inspection')).toBeHidden();
+  await expect(page.locator('#open-lesson-stage')).toBeFocused();
+});

@@ -11,8 +11,9 @@
     "build": "tsc --noEmit && vite build && node scripts/build-version.mjs",
     "preview": "vite preview --host 127.0.0.1",
     "test": "playwright test",
-    "test:static": "node tests/static-smoke.mjs",
-    "test:starter": "node --test tests/starter.test.mjs"
+    "test:static": "node scripts/check-learning-content.mjs && node tests/static-smoke.mjs",
+    "test:starter": "node --test tests/starter.test.mjs",
+    "test:content": "node scripts/check-learning-content.mjs"
   },
   "dependencies": {
     "fflate": "0.8.3",

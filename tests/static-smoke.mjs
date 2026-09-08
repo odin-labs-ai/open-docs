@@ -37,13 +37,17 @@ try {
   assert(await page.evaluate(() => document.fonts.check('14px Manrope') && document.fonts.check('14px "Space Grotesk"')));
   assert.equal(await page.locator('#toggle-motion').getAttribute('aria-label'), 'Play animation');
   // Read the course through its actual production UI. No curriculum imports.
+  await page.locator('#curriculum-disclosure > summary').click();
   const lessonIds = await page.locator('.lesson-link').evaluateAll(nodes => nodes.map(node => node.dataset.lesson));
   const rendered = [];
   for (const id of lessonIds) {
     await page.locator(`[data-lesson="${id}"]`).click();
     const title = await page.locator('#lesson-title').innerText();
+    for (const summary of await page.locator('#lesson-panel .reading-disclosure > summary').all()) await summary.click();
     const foundations = await page.locator('#lesson-panel').innerText();
-    await page.locator('#tab-deep').click(); const deep = await page.locator('#lesson-panel').innerText();
+    await page.locator('#tab-deep').click();
+    for (const summary of await page.locator('#lesson-panel .reading-disclosure > summary').all()) await summary.click();
+    const deep = await page.locator('#lesson-panel').innerText();
     rendered.push({ id, title, foundations, deep });
     if (id === 'context' || id === 'memory') {
       await page.locator('[data-stage-section="1"]').click();

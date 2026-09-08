@@ -14,14 +14,17 @@ const reviewAnswers: [string, number, number][] = [
 test('complete the course from rendered lessons and observe every failure and correction', async ({ page }) => {
   const errors: string[] = []; page.on('pageerror', error => errors.push(error.message));
   await page.goto('./#foundations'); await page.locator('.architecture-disclosure > summary').click(); await expect(page.locator('#scene-host')).toHaveAttribute('data-engine', 'three');
+  await page.locator('#curriculum-disclosure > summary').click();
   let readWords = 0;
   const learned: { title: string; essentials: string; deep: string; explanations: string[] }[] = [];
   for (const [id, first, second] of reviewAnswers) {
     await page.locator(`[data-lesson="${id}"]`).click();
     const title = await page.locator('#lesson-title').innerText();
+    for (const summary of await page.locator('#lesson-panel .reading-disclosure > summary').all()) await summary.click();
     const essentials = await page.locator('#lesson-panel').innerText();
     expect(essentials.length).toBeGreaterThan(500);
     await page.getByRole('tab', { name: 'Deep dive', exact: true }).click();
+    for (const summary of await page.locator('#lesson-panel .reading-disclosure > summary').all()) await summary.click();
     const deep = await page.locator('#lesson-panel').innerText(); expect(deep.length).toBeGreaterThan(500);
     readWords += `${essentials} ${deep}`.split(/\s+/).length;
     await page.getByRole('tab', { name: /Check understanding/ }).click();
@@ -79,6 +82,7 @@ test('desktop and mobile views, accessibility, scene controls, search, and keybo
   await page.locator('#reset-view').click();
   await page.getByRole('tab', { name: 'Foundations', exact: true }).focus(); await page.keyboard.press('ArrowRight');
   await expect(page.getByRole('tab', { name: 'Deep dive', exact: true })).toBeFocused();
+  await page.locator('#curriculum-disclosure > summary').click();
   await page.locator('#lesson-search').fill('idempotency'); await expect(page.locator('.lesson-link')).toHaveCount(1);
   await page.locator('#lesson-search').fill('nonesuch'); await expect(page.locator('#search-empty')).toBeVisible(); await page.locator('#lesson-search').fill('');
   let audit = await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze();
@@ -118,4 +122,22 @@ test('no WebGL, reduced motion, and storage refusal', async ({ browser }) => {
   await page.locator('[data-fallback="memory"]').click(); await expect(page.locator('#lesson-title')).toHaveText('Memory across sessions');
   await page.locator('[data-mode="reference"]').click(); await expect(page.locator('#concept-index button')).toHaveCount(111);
   await context.close();
+});
+
+test('opening Lessons from home starts a real lesson without crediting hidden reading', async ({ page }) => {
+  await page.goto('./#learn');
+  const visitedBeforeReading = await page.evaluate(() => JSON.parse(localStorage.getItem('odin-harness-course-v1') || '{"visited":{}}').visited);
+  expect(visitedBeforeReading.foundations || []).toEqual([]);
+  await page.locator('[data-mode="explore"]').click();
+  await expect(page.locator('#lesson-title')).toHaveText('What is a harness?');
+  await expect(page.locator('#lesson-panel .prose > p').first()).toBeVisible();
+  await expect(page.locator('#lesson-panel .prose > p').first()).toContainText('A model maps input context');
+  await expect(page.locator('#lesson-inspection')).toBeHidden();
+  const visitedAfterReading = await page.evaluate(() => JSON.parse(localStorage.getItem('odin-harness-course-v1')!).visited.foundations);
+  expect(visitedAfterReading).toEqual(['essentials']);
+  await page.locator('#curriculum-disclosure > summary').click();
+  await page.locator('#lesson-search').fill('memory');
+  await expect(page.locator('.lesson-link').first()).toBeVisible();
+  await page.locator('#progress-disclosure > summary').click();
+  await expect(page.locator('#export-progress')).toBeVisible();
 });
