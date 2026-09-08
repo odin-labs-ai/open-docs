@@ -1,0 +1,41 @@
+{
+  "url": "https://odin-labs-ai.github.io/open-docs/",
+  "expectedSha": "4804a34d239f47e4ae169cd059b11177f5bf5f07",
+  "recordedAt": "2026-09-08T01:37:26.567Z",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 844,
+      "failedAndCorrected": true,
+      "localRecoveryVisible": true,
+      "nextVisible": true,
+      "experimentPreserved": true,
+      "browserHistoryAndLessonSection": true,
+      "contextualReturnFocus": true,
+      "optionalInspectionPreserved": true,
+      "replayDistinctRasterFrames": 7,
+      "replaySettled": true,
+      "horizontalOverflow": false,
+      "pageErrors": []
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "failedAndCorrected": true,
+      "localRecoveryVisible": true,
+      "nextVisible": true,
+      "experimentPreserved": true,
+      "browserHistoryAndLessonSection": true,
+      "contextualReturnFocus": true,
+      "optionalInspectionPreserved": true,
+      "replayDistinctRasterFrames": 7,
+      "replaySettled": true,
+      "horizontalOverflow": false,
+      "pageErrors": []
+    }
+  ],
+  "version": {
+    "sha": "4804a34d239f47e4ae169cd059b11177f5bf5f07",
+    "builtAt": "2026-09-08T01:34:21.347Z"
+  }
+}

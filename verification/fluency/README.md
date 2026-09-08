@@ -19,8 +19,13 @@ reflection and reveal the next discovery. The overview retains the six-component
 The preview images here were captured from the production build of the feature
 source tree before its commit. They show the mobile entry, failed result,
 corrected reflection/continuation, and desktop overview. They are not deployment
-proof. Head-bound independent review is in `../reviews/pr-5.json`. Live evidence
-will be added after the reviewed change lands and Pages serves its merged SHA.
+proof. Head-bound independent review is in `../reviews/pr-5.json`. Live evidence is in `live/`: the public version endpoint served merged SHA
+`4804a34d239f47e4ae169cd059b11177f5bf5f07`, and actual Chromium journeys at
+1440×844 and 390×844 verified visible failure recovery and next actions, preserved
+experiment and lesson section through Back/Forward, contextual return focus,
+optional inspection state, and representative replay changing across seven raster
+frames then settling. Screenshots were inspected. No page errors or horizontal
+overflow occurred in these flows.
 
 Local validation: Node 22 production build; 11 starter integrity tests; 27 browser
 tests; nested-path production check reading 18 lessons, 111 concept links and all
@@ -29,3 +34,11 @@ The browser suite covers history/lesson-section restoration, skip links, retaine
 experiment state, missing graphics, keyboard access, failed/corrected exercises,
 optional inspection state, accessibility scans and representative raster motion
 that settles. Rendered review used Chromium, not physical mobile/Safari/Firefox.
+
+Release sequence completed: [final PR Quality](https://github.com/odin-labs-ai/open-docs/actions/runs/34176630768),
+[merge-group Quality](https://github.com/odin-labs-ai/open-docs/actions/runs/34176867177),
+and [main Quality plus publication/live verification](https://github.com/odin-labs-ai/open-docs/actions/runs/34177071706)
+all succeeded. The independent receipt was committed and pushed before queueing.
+Reviewed and merged Git trees are identical. `release.json` binds this sequence;
+`live/live-verification.json` binds actual public-browser observations to the
+served version. Public [Open Docs](https://odin-labs-ai.github.io/open-docs/).

@@ -1,0 +1,29 @@
+{
+  "pr": 5,
+  "repository": "odin-labs-ai/open-docs",
+  "reviewedHead": "eae0012b5e0f06ed1ab79a6c6da707f999db9338",
+  "reviewReceiptCommit": "a33dd3ad533a4ac24b0b070e1fccbbc7537db974",
+  "reviewRecordedAt": "2026-09-08T01:28:07.995Z",
+  "enqueuedAt": "2026-09-08T01:29:59Z",
+  "mergedAt": "2026-09-08T01:33:52Z",
+  "mergedSha": "4804a34d239f47e4ae169cd059b11177f5bf5f07",
+  "reviewedAndMergedTree": "5ae2f14c507e0befa831be759a2172d0a5e6d1b9",
+  "treesIdentical": true,
+  "prQualityRun": 34176630768,
+  "mergeGroupRun": 34176867177,
+  "releaseRun": 34177071706,
+  "releaseUrl": "https://github.com/odin-labs-ai/open-docs/actions/runs/34177071706",
+  "releaseConclusion": "success",
+  "jobs": [
+    {
+      "name": "Quality",
+      "conclusion": "success"
+    },
+    {
+      "name": "Publish and verify live",
+      "conclusion": "success"
+    }
+  ],
+  "liveProof": "live/live-verification.json",
+  "recordedAt": "2026-09-08T01:39:30.312559+00:00"
+}

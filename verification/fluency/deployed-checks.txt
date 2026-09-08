@@ -1,0 +1,2 @@
+Publish and verify live	Run pnpm test --reporter=line,html	2026-09-08T01:36:50.9889116Z   PLAYWRIGHT_BASE_URL: https://odin-labs-ai.github.io/open-docs/
+Publish and verify live	Run pnpm test --reporter=line,html	2026-09-08T01:38:25.8871653Z   27 passed (1.6m)
