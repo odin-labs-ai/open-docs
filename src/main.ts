@@ -1,3 +1,4 @@
+import { mountOdinCapabilities, capabilityRoute } from './odin-capabilities';
 import { mountAgentOverview } from './agent-overview';
 import './style.css';
 import './workshop.css';
@@ -147,6 +148,7 @@ app.innerHTML = `
       </section>
       <section id="reference-view" hidden>
         <div class="section-heading"><div><h2>A field guide to the whole system.</h2><p>Find a concept, follow it to a lesson, and inspect the underlying sources.</p></div></div>
+        <div id="odin-capabilities-host"></div>
         <label class="search-box reference-search">${icon('search')}<input id="concept-search" type="search" placeholder="Search the concept index…" aria-label="Search concept index"/></label>
         <div id="concept-index"></div><p id="concept-empty" hidden>No concepts match this search. Try a broader term.</p>
         <section class="sources-section"><h2>Go to the source.</h2><p>Primary engineering references inform this course. Examples, architectural synthesis, quizzes, and failure fixtures are authored for this learning experience. Reviewed 7 September 2026; provider behavior and conventions can change.</p><div class="source-list">${Object.values(sources).map(source => `<a href="${source.url}" target="_blank" rel="noopener noreferrer"><strong>${source.title} ${icon('arrow', 16)}</strong><span>${source.note}</span></a>`).join('')}</div></section>
@@ -378,14 +380,17 @@ const probabilityChanged = () => {
 $('#success-rate').addEventListener('input', probabilityChanged); $('#attempts').addEventListener('input', probabilityChanged);
 function route() {
   const raw = location.hash.slice(1) === 'workspace' ? 'reference' : location.hash.slice(1);
-  const id = ['learn', 'workshop', 'lab', 'reference'].includes(raw) || lessons.some(lesson => lesson.id === raw) ? raw : 'learn';
+  const capabilityPath = raw === capabilityRoute() || raw.startsWith(`${capabilityRoute()}/`);
+  const id = capabilityPath ? raw : ['learn', 'workshop', 'lab', 'reference'].includes(raw) || lessons.some(lesson => lesson.id === raw) ? raw : 'learn';
   const state = history.state as JourneyState | null;
   restoringJourney = true;
   destination = id; workshopReturn = state?.odin && state.documentId === journeyDocument ? state.workshopReturn : undefined;
-  if (['learn', 'workshop', 'lab', 'reference'].includes(id)) setMode(id, false);
+  if (capabilityPath) { setMode('reference', false); capabilities.show(raw === capabilityRoute() ? undefined : raw.slice(capabilityRoute().length + 1)); }
+  else if (['learn', 'workshop', 'lab', 'reference'].includes(id)) setMode(id, false);
   else { chooseLesson(id, false, false); if (state?.odin && ['essentials', 'deep', 'check'].includes(state.tab)) { tab = state.tab; renderPanel(); } }
   window.scrollTo({ top: state?.odin ? state.scrollY : 0, behavior: 'instant' });
   if (state?.odin && state.focusId) document.getElementById(state.focusId)?.focus({ preventScroll: true });
+  if (capabilityPath && !state?.odin) capabilities.reveal();
   restoringJourney = false; saveJourney();
 }
 window.addEventListener('popstate', route);
@@ -453,6 +458,9 @@ function setLabStage(open: boolean) {
 }
 $('.architecture-disclosure').addEventListener('toggle', syncStageMotion);
 const workshop = mountWorkshop($('#workshop-host'), id => chooseLesson(id, true));
+const capabilities = mountOdinCapabilities($('#odin-capabilities-host'), id => {
+  visit(capabilityRoute(id)); setMode('reference', false); capabilities.show(id); capabilities.reveal(); saveJourney();
+});
 const overview = mountAgentOverview($('#agent-overview-host'), id => chooseLesson(id, true), () => { setMode('workshop'); window.scrollTo({ top: 0, behavior: 'instant' }); $('#workshop-entry').focus({ preventScroll: true }); });
 const lessonTheater = mountLessonTheater($('#lesson-theater'), current);
 const traceTheater = mountTraceTheater($('#lab-theater'));

@@ -71,6 +71,18 @@ try {
   const refLink = page.locator('.source-list a').filter({ hasText: 'Odin repository conventions' });
   const localReference = await context.request.get(new URL(await refLink.getAttribute('href'), `${origin}${prefix}`).href);
   assert.equal(localReference.status(), 200); assert((await localReference.text()).includes('forward correction'));
+  // Capability deep links and authored downloads also work below a nested base path.
+  await page.goto(`${origin}${prefix}#reference/capabilities/odin-next`);
+  assert.equal(await page.locator('#capability-detail-title').innerText(), 'Odin Next and grounded action');
+  assert.equal(await page.locator('[data-capability]').count(), 8);
+  for (const filename of ['odin-capability-guide.md', 'mechanism-map.svg']) {
+    const asset = await context.request.get(`${origin}${prefix}capabilities/${filename}`);
+    assert.equal(asset.status(), 200);
+  }
+  await page.goto(`${origin}${prefix}#reference/capabilities/no-such-guide`);
+  assert.equal(await page.locator('#capability-detail-title').innerText(), 'Guide not found');
+  await page.locator('#capability-back').click();
+  assert.equal(await page.locator('#capability-detail').isHidden(), true);
   // The lazy engineering renderer and provider code also load from this nested build.
   await page.locator('[data-mode="learn"]').click();
   await page.locator('#overview-workshop').click();
