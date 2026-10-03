@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" role="img" aria-labelledby="title desc">
+<title id="title">Odin capability mechanisms</title>
+<desc id="desc">Annotation supplies pointed-at evidence; memory supplies grounded context. Goals and sessions carry intent and continuity; skills and swarm support work. Next adds premise checks and durable workflows. Intelligence Systems observe sources and learn from supported outcomes. Media and artifacts carry usable results to verification. This is a concept map, not a connected deployment.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10Z" fill="#91cbb3"/></marker></defs>
+<rect width="960" height="560" rx="12" fill="#101b22"/>
+<g font-family="Arial,sans-serif" fill="#e4f5ed"><text x="36" y="48" font-size="27">From intent to evidence</text><text x="36" y="78" font-size="16" fill="#a1b7c3">A relationship map · distinct mechanisms · no connected deployment implied</text></g>
+<g stroke="#91cbb3" stroke-width="2" fill="none" marker-end="url(#arrow)">
+<path d="M274 172H354"/><path d="M274 292H314V202H354"/>
+<path d="M474 262V230"/><path d="M594 422H628V202H594"/>
+<path d="M594 172H674"/>
+</g>
+<g font-family="Arial,sans-serif">
+<g transform="translate(36 122)"><rect width="238" height="100" rx="6" fill="#182a32" stroke="#405b67"/><text x="18" y="34" fill="#e4f5ed" font-size="19">Annotation</text><text x="18" y="64" fill="#c2d3da" font-size="15">Pointed-at visual evidence</text></g>
+<g transform="translate(36 242)"><rect width="238" height="100" rx="6" fill="#182a32" stroke="#405b67"/><text x="18" y="34" fill="#e4f5ed" font-size="19">Memory and grounding</text><text x="18" y="64" fill="#c2d3da" font-size="15">Context with provenance</text></g>
+<g transform="translate(354 122)"><rect width="240" height="108" rx="6" fill="#19362e" stroke="#91cbb3"/><text x="18" y="34" fill="#e4f5ed" font-size="19">Goals and sessions</text><text x="18" y="64" fill="#c2d3da" font-size="15">Intent, steering, continuity</text><text x="18" y="88" fill="#c2d3da" font-size="15">Verify the completion condition</text></g>
+<g transform="translate(354 262)"><rect width="240" height="80" rx="6" fill="#182a32" stroke="#405b67"/><text x="18" y="32" fill="#e4f5ed" font-size="19">Skills</text><text x="18" y="59" fill="#c2d3da" font-size="15">Loaded and allowed instructions</text></g>
+<g transform="translate(354 382)"><rect width="240" height="80" rx="6" fill="#182a32" stroke="#405b67"/><text x="18" y="32" fill="#e4f5ed" font-size="19">Swarm and coordination</text><text x="18" y="59" fill="#c2d3da" font-size="15">Bounded workers and integration</text></g>
+<g transform="translate(674 122)"><rect width="250" height="110" rx="6" fill="#182a32" stroke="#405b67"/><text x="18" y="34" fill="#e4f5ed" font-size="19">Media and artifacts</text><text x="18" y="65" fill="#c2d3da" font-size="15">Usable persisted results</text><text x="18" y="90" fill="#c2d3da" font-size="15">Reopen and verify the output</text></g>
+<g transform="translate(674 262)"><rect width="250" height="80" rx="6" fill="#182a32" stroke="#405b67"/><text x="18" y="32" fill="#e4f5ed" font-size="19">Intelligence Systems</text><text x="18" y="59" fill="#c2d3da" font-size="15">Sources, signals, supported learning</text></g>
+<g transform="translate(36 382)"><rect width="238" height="80" rx="6" fill="#182a32" stroke="#405b67"/><text x="18" y="32" fill="#e4f5ed" font-size="19">Odin Next</text><text x="18" y="59" fill="#c2d3da" font-size="15">Premise, Loom, turns and Runs</text></g>
+<text x="36" y="508" fill="#efbd72" font-size="16">Shared boundary: identity · project scope · policy · budget · outcome evidence</text>
+<text x="36" y="536" fill="#a1b7c3" font-size="14">Profiles, versions and configured services determine which entry points are available.</text>
+</g></svg>

@@ -43,7 +43,7 @@ export function mountAgentOverview(host: HTMLElement, openLesson: (id: string) =
           <p class="agent-overview-definition">An AI agent combines a <strong>model</strong> with a <strong>harness</strong>: the software that gives it context, runs its tools, manages work and brings back evidence.</p>
           <p class="agent-overview-purpose">The same model can do different jobs when you change the instructions, skills and capabilities around it.</p>
           <p class="agent-overview-example">${parts[0].example}</p>
-          <div class="agent-overview-actions"><button class="workshop-primary" id="overview-foundations">Read the foundations</button><button class="workshop-link" id="overview-workshop">Try the hands-on workshop</button></div>
+          <div class="agent-overview-actions"><button class="workshop-primary" id="overview-foundations">Read the foundations</button><button class="workshop-link" id="overview-workshop">Try the hands-on workshop</button><a class="workshop-link" href="#reference/capabilities">Explore Odin’s capabilities</a></div>
         </div>
       </div>
       <details id="overview-details" class="agent-overview-exploration">
