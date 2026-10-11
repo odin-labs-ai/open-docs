@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#080f14" />
+    <title>Page not found · Odin Open Docs</title>
+    <style>
+      :root{color-scheme:dark;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:#080f14;color:#e4f5ed}
+      body{margin:0;min-height:100vh;display:flex;flex-direction:column}
+      header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 20px;border-bottom:1px solid #263842;background:#0b131a}
+      header strong{font-weight:600}header span{font-weight:400;color:#a1b7c3}
+      main{flex:1;max-width:620px;padding:56px 20px;margin:0 auto;box-sizing:border-box;width:100%}
+      h1{font-size:30px;line-height:1.2;margin:0 0 14px}
+      p{font-size:16px;line-height:1.7;color:#c2d3da;margin:0 0 18px}
+      a{color:#34d399;text-underline-offset:4px}
+      .primary{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:8px;background:#34d399;color:#06281c;font-weight:600;text-decoration:none}
+      .links{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;margin-top:8px}
+      .links a:not(.primary){min-height:44px;display:inline-flex;align-items:center}
+    </style>
+  </head>
+  <body>
+    <header><a href="https://odin-labs.ai/" aria-label="Back to odin-labs.ai"><strong>Odin</strong> <span>Open Docs</span></a><a href="https://odin-labs.ai/">odin-labs.ai</a></header>
+    <main>
+      <h1 id="title">Taking you to Open Docs…</h1>
+      <p id="message">Open Docs pages live after a <code>#</code> in the address. If nothing happens, use the link below.</p>
+      <div class="links">
+        <a class="primary" id="docs-link" href="https://odin-labs-ai.github.io/open-docs/#learn">Open Open Docs</a>
+        <a href="https://odin-labs.ai/">Back to odin-labs.ai</a>
+        <a href="https://odin-labs.ai/contact/">Talk to Odin</a>
+      </div>
+    </main>
+    <script>
+      // GitHub Pages serves this file for any missing path. Open Docs routes live in the
+      // hash, so /open-docs/<route> becomes /open-docs/#<route> for a known route, else #learn.
+      // Keep these lists equal to the app's routes; tests/connect.spec.ts checks them.
+      (function () {
+        var views = ['learn', 'workshop', 'lab', 'reference', 'workspace'];
+        var lessons = ['foundations', 'intent', 'loop', 'context', 'memory', 'tools', 'environment', 'policy', 'injection', 'recovery', 'observability', 'evals', 'economics', 'multiagent', 'repository', 'governance', 'improvement', 'capstone'];
+        var capabilities = ['annotation', 'swarm', 'goals', 'skills', 'memory', 'odin-next', 'intelligence-systems', 'media'];
+        window.openDocsRoutes = { views: views, lessons: lessons, capabilities: capabilities };
+        var segments = location.pathname.split('/').filter(Boolean);
+        var link = document.getElementById('docs-link');
+        function known(rest) {
+          var path = rest.join('/');
+          if (views.indexOf(path) >= 0 || lessons.indexOf(path) >= 0) return path;
+          // The app answers an unknown capability with "Guide not found" and a way back.
+          if (path === 'reference/capabilities' || path.indexOf('reference/capabilities/') === 0) return path;
+          return null;
+        }
+        function target(base, rest) {
+          return '/' + base.join('/') + (base.length ? '/' : '') + '#' + (known(rest) || 'learn');
+        }
+        function go(base) {
+          var rest = segments.slice(base.length);
+          var url = target(base, rest);
+          link.href = url;
+          if (!known(rest)) {
+            document.getElementById('title').textContent = 'Page not found';
+            document.getElementById('message').textContent = 'There is no Open Docs page at this address. Taking you to Start here.';
+          }
+          location.replace(url);
+        }
+        function guess() {
+          for (var i = 0; i < segments.length; i++) if (known(segments.slice(i))) return segments.slice(0, i);
+          return /\.github\.io$/.test(location.hostname) && segments.length ? segments.slice(0, 1) : [];
+        }
+        // The app's root serves version.json. Confirm the likely base first, then probe
+        // from the longest prefix, so a nested deployment still resolves.
+        var likely = guess();
+        var candidates = [likely];
+        for (var n = segments.length - 1; n >= 0; n--) if (n !== likely.length) candidates.push(segments.slice(0, n));
+        function probe(index) {
+          if (index >= candidates.length || !window.fetch) { go(guess()); return; }
+          var base = candidates[index];
+          fetch('/' + base.join('/') + (base.length ? '/' : '') + 'version.json', { cache: 'no-store' })
+            .then(function (response) { return response.ok ? response.json() : null; })
+            .then(function (version) { if (version && version.sha) go(base); else probe(index + 1); })
+            .catch(function () { probe(index + 1); });
+        }
+        link.href = target(likely, segments.slice(likely.length));
+        probe(0);
+      })();
+    </script>
+  </body>
+</html>

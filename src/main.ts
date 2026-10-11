@@ -1,4 +1,5 @@
 import { mountOdinCapabilities, capabilityRoute } from './odin-capabilities';
+import { harnessDistinction, odinPages, odinProducts, odinSite } from './odin-site';
 import { mountAgentOverview } from './agent-overview';
 import './style.css';
 import './workshop.css';
@@ -76,6 +77,7 @@ app.innerHTML = `
       <button data-mode="reference" aria-pressed="false">${icon('book')}<span>Reference</span></button>
 </nav>
     <span class="local-badge"><span></span>Local learning space</span>
+    <a class="site-link" href="${odinSite}" aria-label="Back to odin-labs.ai">odin-labs.ai</a>
   </header>
   <div class="app-layout">
     <aside class="sidebar">
@@ -154,8 +156,8 @@ app.innerHTML = `
         <section class="sources-section"><h2>Go to the source.</h2><p>Primary engineering references inform this course. Examples, architectural synthesis, quizzes, and failure fixtures are authored for this learning experience. Reviewed 7 September 2026; provider behavior and conventions can change.</p><div class="source-list">${Object.values(sources).map(source => `<a href="${source.url}" target="_blank" rel="noopener noreferrer"><strong>${source.title} ${icon('arrow', 16)}</strong><span>${source.note}</span></a>`).join('')}</div></section>
         <div class="scope-note"><h3>A map, not a claim of omniscience.</h3><p>Harness engineering has no closed, universally agreed inventory. This course spans the introductory and advanced concepts in its index. Completing it records your work through this curriculum; it does not certify every possible concept, production readiness, or regulatory compliance.</p></div>
       </section>
-      <section id="completion" hidden><div>${icon('check', 30)}<h2>Every layer explored.</h2><p>You completed all 18 lessons, 36 checks, and both outcomes of all six experiments. Export the record, then apply the ideas to a real, scoped system.</p></div><button class="primary" id="export-completion">Export learning record ${icon('download')}</button></section>
-      <footer class="page-footer"><a href="https://www.odin-labs.ai">Open docs · Powered by Odin</a><a href="https://github.com/odin-labs-ai/open-docs">Source &amp; contribute</a></footer>
+      <section id="completion" hidden><div>${icon('check', 30)}<h2>Every layer explored.</h2><p>You completed all 18 lessons, 36 checks, and both outcomes of all six experiments. Export the record, then apply the ideas to a real, scoped system.</p><p class="completion-next">${harnessDistinction}</p></div><div class="completion-actions"><button class="primary" id="export-completion">Export learning record ${icon('download')}</button><a class="odin-cta primary-cta" href="${odinProducts.harness.url}">Run this with Odin: Harness</a><a class="odin-cta" href="${odinProducts.harness.contact}">Talk to Odin</a></div></section>
+      <footer class="page-footer"><a class="footer-home" href="${odinSite}">Open Docs is part of odin-labs.ai</a><nav class="footer-links" aria-label="Odin Labs"><a href="${odinPages.products}">Products</a><a href="${odinPages.contact}">Talk to Odin</a><a href="${odinPages.trust}">Trust &amp; control</a><a href="${odinPages.research}">Research</a></nav><a href="https://github.com/odin-labs-ai/open-docs">Source &amp; contribute</a></footer>
     </main>
   </div><div id="notification" class="notification" role="status" hidden></div>`;
 
@@ -194,6 +196,9 @@ function visit(id: string) {
   destination = id;
   history.pushState({ odin: true, documentId: journeyDocument, scrollY: 0, tab: 'essentials', workshopReturn } satisfies JourneyState, '', `#${id}`);
 }
+const siteTitle = 'Odin Open Docs';
+const viewTitles: Record<string, string> = { learn: 'Harness engineering', workshop: 'Hands-on workshop', lab: 'Experiments', reference: 'Reference' };
+function setTitle(...parts: string[]) { document.title = [...parts, siteTitle].join(' · '); }
 function setMode(next: string, record = true) {
   if (record) visit(next === 'explore' ? current.id : next);
   mode = next === 'workshop' ? 'learn' : next;
@@ -212,6 +217,7 @@ function setMode(next: string, record = true) {
   ['learn', 'explore', 'lab', 'reference'].forEach(id => { $(`#${id}-view`).hidden = id !== mode; });
   document.querySelectorAll<HTMLElement>('[data-mode]').forEach(button => { button.classList.toggle('active', button.dataset.mode === mode); button.setAttribute('aria-pressed', String(button.dataset.mode === mode)); });
   if (next === 'explore') { scene?.select(current.component); markVisibleSection(); }
+  if (next === 'explore') setTitle(current.title, 'Lessons'); else setTitle(viewTitles[next] || viewTitles.learn);
 }
 function chooseLesson(id: string, scroll = false, record = true) {
   if (record) visit(lessons.find(lesson => lesson.id === id)?.id || lessons[0].id);
@@ -392,6 +398,11 @@ function route() {
   if (state?.odin && state.focusId) document.getElementById(state.focusId)?.focus({ preventScroll: true });
   if (capabilityPath && !state?.odin) capabilities.reveal();
   restoringJourney = false; saveJourney();
+  if (raw && id !== raw) notify(`There is no page at “#${readableHash(raw)}”. You are on Start here; Lessons, Experiments and Reference are in the menu above.`);
+}
+function readableHash(raw: string) {
+  let text = raw; try { text = decodeURIComponent(raw); } catch { /* keep the encoded form */ }
+  return text.length > 60 ? `${text.slice(0, 57)}…` : text;
 }
 window.addEventListener('popstate', route);
 window.addEventListener('hashchange', () => { if (location.hash !== `#${destination}`) route(); });

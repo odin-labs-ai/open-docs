@@ -119,3 +119,5 @@ body[data-view=learn] .page-footer,body[data-view=workspace] .page-footer{color:
 }
 
 #workshop-host .workshop-heading #narrate-workshop{white-space:nowrap;max-width:none}
+/* Odin next step at the end of the workshop. */
+.transfer-intro .workshop-odin{grid-column:1/-1;margin-top:22px;padding:18px 20px;border:1px solid #96b69d;border-radius:10px;background:#f1f7f2}.workshop-odin h3{font-size:18px;margin:0 0 8px}.transfer-intro .workshop-odin p{max-width:60ch;margin:0;font-size:13px;color:#3f5a48}.workshop-odin .odin-cta{color:#1f6144;font-size:13px}.workshop-odin .odin-cta.primary-cta{background:#23583d;color:#fff}.workshop-odin .odin-cta.primary-cta:hover{background:#17452e}

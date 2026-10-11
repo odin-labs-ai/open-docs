@@ -4,7 +4,8 @@
   "entries": [
     {
       "path": "src/curriculum.ts",
-      "sha256": "472c6d4b9dc649ab306bd8b6c33e897bf6a49e2c1f22ab386e88ce141b2a8bd7"
+      "sha256": "7b456a17d1ef4996de9a3488b518a7543b42ddac71bcf397541d0a99f0be646b",
+      "note": "Re-accepted on 2026-10-11 (fix/connect-to-odin-labs): lesson 15 states the shared-core and release-order principles without internal package or service names. Its teaching point, options and answer index are unchanged."
     },
     {
       "path": "src/simulation.ts",

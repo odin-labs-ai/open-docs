@@ -1,4 +1,8 @@
 /** Public usage guide. These records describe mechanisms; they do not probe a runtime. */
+import { harnessDistinction, odinPages, odinProducts, type OdinProductId } from './odin-site';
+
+/** Where a guide leads on odin-labs.ai. `product` is set only where a product page describes the same mechanism. */
+export type OdinNextStep = { product?: OdinProductId; fit: string };
 export type OdinCapability = {
   id: string;
   title: string;
@@ -12,6 +16,7 @@ export type OdinCapability = {
   steps: string[];
   evidence: string;
   limits: string;
+  next: OdinNextStep;
 };
 
 export const odinCapabilities: OdinCapability[] = [
@@ -27,6 +32,7 @@ export const odinCapabilities: OdinCapability[] = [
     steps: ['Capture the page or selected element.', 'Add the desired result and constraints.', 'Confirm the project before execution.', 'Inspect the diff and the corrected page.'],
     evidence: 'The captured target, correct project, changed files and an observed page after the change.',
     limits: 'Browser annotation, screenshot Visual Intent and feedback annotation are different mechanisms. Installing an extension does not prove its bridge is connected. This guide does not capture your browser or edit files.',
+    next: { fit: 'No single product page on odin-labs.ai covers annotation or Visual Intent. Talk to Odin about the agent and workspace you use and what you want to point at.' },
   },
   {
     id: 'swarm', title: 'Swarm and coordination',
@@ -40,6 +46,7 @@ export const odinCapabilities: OdinCapability[] = [
     steps: ['Identify genuinely independent pieces.', 'Name the conductor and each worker scope.', 'Collect results and handle failures.', 'Check the integrated outcome.'],
     evidence: 'Worker identities and scopes, actual dispatch, returned results and a check of their combined conclusion.',
     limits: 'Several workers do not automatically share memory or permissions. Loom is a dependency workflow, not a synonym for swarm. A status message about a worker is not proof that its task succeeded.',
+    next: { fit: 'No product page on odin-labs.ai describes worker coordination as its own product. Talk to Odin about the work you want to split and how results should be checked.' },
   },
   {
     id: 'goals', title: 'Goals and continuity',
@@ -53,6 +60,7 @@ export const odinCapabilities: OdinCapability[] = [
     steps: ['State the outcome and stop conditions.', 'Persist decisions and completed evidence.', 'Interrupt at a supported boundary.', 'Resume, recheck changed facts and finish.'],
     evidence: 'The same intended project, preserved decisions, remaining-work record and a check of the final state.',
     limits: 'A CLI goal is not a Loom Run or an Intelligence SystemRun. Persisting a checkpoint does not make arbitrary external side effects exactly-once. Budget exhaustion must not be labelled complete.',
+    next: { fit: 'No product page on odin-labs.ai describes goals and session continuity as its own product. Talk to Odin about the outcomes you want agents to carry across interruptions.' },
   },
   {
     id: 'skills', title: 'Skills and composition',
@@ -66,6 +74,7 @@ export const odinCapabilities: OdinCapability[] = [
     steps: ['Discover skills in the selected project.', 'Read origin, requirements and arguments.', 'Dispatch through the existing Run entry point.', 'Inspect output and the task’s acceptance evidence.'],
     evidence: 'The runtime-projected skill, supplied arguments, actual dispatch and an outcome beyond a successful toast.',
     limits: 'A skill on disk may be unloaded or excluded by a profile. Unavailable discovery differs from an empty list. A run that refuses missing arguments has not completed the job.',
+    next: { product: 'harness', fit: 'The closest product on odin-labs.ai is Harness: workflow skills and action guards bring repeatable practices into agent-assisted engineering.' },
   },
   {
     id: 'memory', title: 'Memory and grounding',
@@ -79,6 +88,7 @@ export const odinCapabilities: OdinCapability[] = [
     steps: ['Identify the store and caller scope.', 'Ingest permitted material with provenance.', 'Retrieve and inspect the supporting records.', 'Distinguish supported answers from missing evidence.'],
     evidence: 'The named store, allowed records, provenance/citations and refusal of out-of-scope retrieval.',
     limits: 'A row’s author is not the same as its visibility. Bounded semantic results are not a complete memory census. An empty answer can mean missing context, configuration or access; a health response alone cannot tell you which.',
+    next: { product: 'odin-next', fit: 'The closest product on odin-labs.ai is Odin Next: answers come from governed memory and must cite the entries they used, and every memory write needs a rationale and an owner.' },
   },
   {
     id: 'odin-next', title: 'Odin Next and grounded action',
@@ -92,6 +102,7 @@ export const odinCapabilities: OdinCapability[] = [
     steps: ['Ground the premise: live, gone or unverifiable.', 'Validate dependency order and approval boundaries.', 'Execute through the configured isolated harness.', 'Persist the turn outcome and Run boundary.'],
     evidence: 'The premise observation, scoped plan, approval where required, actual execution and persisted outcome.',
     limits: 'My Odin is a workspace surface, not another name for Next. Ask working does not establish an action runtime. A prose-based premise heuristic is not empirical proof, and an accepted proposal is not an executed action.',
+    next: { product: 'odin-next', fit: 'Odin Next has its own product page on odin-labs.ai: ask over configured knowledge, inspect cited sources, and keep useful context only after a governance check.' },
   },
   {
     id: 'intelligence-systems', title: 'Intelligence Systems and outcome learning',
@@ -105,6 +116,7 @@ export const odinCapabilities: OdinCapability[] = [
     steps: ['Connect a permitted source and choose a lens.', 'Inspect definition and operational state.', 'Run and trace the signal to its source.', 'Record action, feedback and supported outcome.'],
     evidence: 'Source provenance, System/run/signal identities, recommendation rationale and separately verified outcome evidence.',
     limits: 'A deployed definition and an operationally active System are different states. A registered adapter may be unavailable. Feedback annotation is not proof of effective learning or causation; mock outcome views must stay identified.',
+    next: { product: 'odin-next', fit: 'On odin-labs.ai, intelligence systems are part of Odin Next: they watch configured sources for signals, and a person resolves or dismisses each one.' },
   },
   {
     id: 'media', title: 'Media and artifacts',
@@ -118,9 +130,18 @@ export const odinCapabilities: OdinCapability[] = [
     steps: ['Inspect input permissions and renderer readiness.', 'Generate the bounded output.', 'Persist content with its metadata.', 'Reopen it in the intended consumer.'],
     evidence: 'A readable artifact, actual format, stored content/metadata and successful reopening.',
     limits: 'A renderer may fall back to Markdown when a tool is missing. A claimed file path is not a delivered file. This page’s downloadable report and diagram are authored guide assets, not outputs of a live agent run.',
+    next: { fit: 'No single product page on odin-labs.ai covers media input and artifacts. Talk to Odin about the inputs you have and the formats your results need.' },
   },
 ];
 
+function nextStepHTML(next: OdinNextStep) {
+  const product = next.product ? odinProducts[next.product] : undefined;
+  const links = product
+    ? `<a class="odin-cta primary-cta" href="${product.url}">See ${product.name} on odin-labs.ai</a><a class="odin-cta" href="${product.contact}">Talk to Odin about ${product.name}</a>`
+    : `<a class="odin-cta primary-cta" href="${odinPages.contact}">Talk to Odin</a><a class="odin-cta" href="${odinPages.products}">See Odin’s products</a>`;
+  const distinction = next.product === 'harness' ? `<p class="odin-distinction">${escape(harnessDistinction)}</p>` : '';
+  return `<section class="odin-next-step" aria-labelledby="capability-next-title"><h4 id="capability-next-title">Next step with Odin</h4><p>${escape(next.fit)}</p>${distinction}<div class="odin-cta-row">${links}</div></section>`;
+}
 const escape = (text: string) => text.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]!));
 export const capabilityRoute = (id?: string) => `reference/capabilities${id ? `/${id}` : ''}`;
 
@@ -129,6 +150,7 @@ export function mountOdinCapabilities(host: HTMLElement, openGuide: (id?: string
   host.innerHTML = `<section class="odin-capabilities" aria-labelledby="capabilities-title">
     <div class="capabilities-lead"><h2 id="capabilities-title" tabindex="-1">What can you do with Odin?</h2>
       <p>Eight capabilities, with their entry points, prerequisites and evidence. Use these guides to choose a workflow and check what your workspace actually supports.</p>
+      <p class="capabilities-products">These guides describe mechanisms in Odin’s agent tools and workspaces. Odin’s products are <a href="${odinProducts.gateway.url}">AI Gateway</a>, <a href="${odinProducts.harness.url}">Harness</a>, <a href="${odinProducts['command-center'].url}">Command Center</a> and <a href="${odinProducts['odin-next'].url}">Odin Next</a>. Each guide ends with where it fits and who to talk to.</p>
       <p class="capabilities-notice">Usage guide · no runtime connection or live agent calls. Examples are tasks to try in a configured workspace, not a promise that every feature is enabled.</p>
       <div class="capability-downloads"><a href="${asset('odin-capability-guide.md')}" download>Download the capability guide</a><a href="${asset('mechanism-map.svg')}" download>Download the mechanism diagram</a></div>
     </div>
@@ -148,6 +170,7 @@ export function mountOdinCapabilities(host: HTMLElement, openGuide: (id?: string
       else link.removeAttribute('aria-current');
     });
     detail.hidden = id === undefined;
+    document.title = [id === undefined ? 'What can you do with Odin?' : c ? c.title : 'Guide not found', 'Reference', 'Odin Open Docs'].join(' · ');
     if (id === undefined) { detail.innerHTML = ''; return; }
     if (!c) {
       detail.innerHTML = '<h3 id="capability-detail-title" tabindex="-1">Guide not found</h3><p>This capability link is unavailable. Choose a guide from the list.</p><button class="text-button" id="capability-back">See all capability guides</button>';
@@ -157,6 +180,7 @@ export function mountOdinCapabilities(host: HTMLElement, openGuide: (id?: string
         <h4>In the CLI</h4><p>${escape(c.cli)}</p><h4>In Code Server and your workspace</h4><p>${escape(c.codeServer)}</p>
         <h4>A task to try</h4><blockquote>${escape(c.example)}</blockquote><ol>${c.steps.map(step => `<li>${escape(step)}</li>`).join('')}</ol>
         <h4>What to verify</h4><p>${escape(c.evidence)}</p><h4>Limits to keep in view</h4><p class="capability-limits">${escape(c.limits)}</p>
+        ${nextStepHTML(c.next)}
         <button class="text-button" id="capability-back">See all capability guides</button>`;
     }
     detail.querySelector<HTMLButtonElement>('#capability-back')!.onclick = () => openGuide();

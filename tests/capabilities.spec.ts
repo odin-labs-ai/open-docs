@@ -82,6 +82,9 @@ test('downloadable report and diagram contain the guides and their limits', asyn
   }
   expect(text.match(/### Before you begin/g)).toHaveLength(8);
   expect(text.match(/### Limits to keep in view/g)).toHaveLength(8);
+  expect(text.match(/### Next step with Odin/g)).toHaveLength(8);
+  expect(text).toContain('https://odin-labs.ai/products/harness/');
+  expect(text).toContain('https://odin-labs.ai/contact/');
   expect(text).toContain('not a live runtime report');
   expect(text).toContain('/skills search review');
   expect(text).toContain('/goal status');
