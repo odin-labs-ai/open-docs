@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://odin-labs-ai.github.io/open-docs/sitemap.xml

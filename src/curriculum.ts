@@ -323,7 +323,7 @@ export const lessons: Lesson[] = [
     essentials: [
       'A short repository entry point should guide agents to architecture, conventions, setup commands, and scoped instructions. Keep details near their source of truth. An enormous instruction file becomes hard to navigate and easy to contradict.',
       'Turn important boundaries into linters, type checks, schema validation, and behavioral tests. Error messages should explain the violated rule and a valid correction. Instructions shape behavior; executable checks establish whether a boundary held.',
-      'In Odin, core logic belongs in local-agents and consumers use declared @odinlabs-ai packages. Release order is core, hubs, Command Center, staging, then production. Verify publication before consuming a new package version. This course models those principles without implementing a second platform runtime.',
+      'Odin keeps shared core logic in one set of core packages. Products consume those packages as declared dependencies instead of copying the logic. Releases move outward: core first, then the products that consume it, then staging, then production. Verify publication before consuming a new package version. This course models those principles without implementing a second platform runtime.',
     ],
     deep: [
       { title: 'Instructions need maintenance', text: 'Assign ownership to architectural decisions and test documentation links and setup steps. Remove obsolete guidance through reviewed forward corrections. A skill is reusable procedure, not new authority to ignore the current user’s scope or runtime policy.' },
@@ -331,7 +331,7 @@ export const lessons: Lesson[] = [
     ], example: 'AGENTS.md → concise map\nArchitecture docs → boundaries + rationale\nPackage contracts → declared dependencies\nCI checks → enforce important invariants\nEvidence → current artifact + executed checks',
     pitfall: 'Duplicating platform logic in a convenient frontend creates a second source of truth that drifts.',
     questions: [
-      { prompt: 'Where does Odin’s shared core logic belong?', options: ['Copied into each frontend', 'local-agents packages, consumed through declared dependencies', 'Only in prompt text'], answer: 1, explanation: 'The repository explicitly makes local-agents the single source of core logic.' },
+      { prompt: 'Where does Odin’s shared core logic belong?', options: ['Copied into each frontend', 'Shared core packages, consumed through declared dependencies', 'Only in prompt text'], answer: 1, explanation: 'Odin keeps one source of truth for core logic; products consume it as declared packages rather than copying it.' },
       { prompt: 'A rule repeatedly fails despite documentation. The next improvement is:', options: ['Repeat it in more prose', 'Encode an appropriate boundary check with useful feedback', 'Remove the rule'], answer: 1, explanation: 'Executable checks can enforce an invariant and give the agent actionable correction feedback.' },
     ], sources: ['harness', 'odin'],
   },

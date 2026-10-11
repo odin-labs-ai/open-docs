@@ -8,14 +8,21 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../dist');
 const prefix = '/academy/harness/';
+// GitHub Pages serves the project at /open-docs/ and answers any missing path with 404.html.
+const pagesPrefix = '/open-docs/';
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.ttf': 'font/ttf', '.md': 'text/plain' };
 const server = createServer(async (request, response) => {
   try {
     const pathname = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
-    if (!pathname.startsWith(prefix)) throw new Error('Outside fixture');
-    const file = path.resolve(root, pathname.slice(prefix.length) || 'index.html');
+    const base = [prefix, pagesPrefix].find(candidate => pathname.startsWith(candidate));
+    if (!base) throw new Error('Outside fixture');
+    const file = path.resolve(root, pathname.slice(base.length) || 'index.html');
     if (!file.startsWith(`${root}${path.sep}`)) throw new Error('Outside fixture');
-    const data = await readFile(file); response.writeHead(200, { 'Content-Type': types[path.extname(file)] || 'application/octet-stream' }); response.end(data);
+    let data;
+    try { data = await readFile(file); } catch {
+      response.writeHead(404, { 'Content-Type': 'text/html' }); response.end(await readFile(path.join(root, '404.html'))); return;
+    }
+    response.writeHead(200, { 'Content-Type': types[path.extname(file)] || 'application/octet-stream' }); response.end(data);
   } catch { response.writeHead(404); response.end('Not found'); }
 });
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
@@ -104,7 +111,34 @@ try {
   await canvas.dispatchEvent('webglcontextlost'); await page.locator('#scene-fallback').waitFor();
   await page.locator('[data-fallback="tools"]').click(); assert.equal(await page.locator('#lesson-title').innerText(), 'Tools are contracts');
   assert.deepEqual(errors, []); assert.deepEqual(badResponses, []); assert.deepEqual(externalRequests, []);
-  const report = { build: 'dist', nestedPath: prefix, lessonsRead: rendered.length, renderedWords: rendered.reduce((count, lesson) => count + `${lesson.foundations} ${lesson.deep}`.split(/\s+/).length, 0), conceptLinksChecked: targets.length, providerLayouts, meshPickedLessons: [...picked], externalRequests, badResponses, errors, fontsLoaded: true, contextLossRecovered: true };
+  // Hash-less links land on 404.html, which forwards known routes into the hash and anything else to Start here.
+  const missing = await context.newPage();
+  const missingErrors = []; missing.on('pageerror', error => missingErrors.push(error.message));
+  const forwarded = [];
+  for (const [from, to, check] of [
+    [`${pagesPrefix}repository`, `${pagesPrefix}#repository`, async () => assert.equal(await missing.locator('#lesson-title').innerText(), 'The repository is part of the harness')],
+    [`${pagesPrefix}reference/capabilities/memory`, `${pagesPrefix}#reference/capabilities/memory`, async () => assert.equal(await missing.locator('#capability-detail-title').innerText(), 'Memory and grounding')],
+    [`${pagesPrefix}workshop`, `${pagesPrefix}#workshop`, async () => assert.equal(await missing.locator('#workshop-entry').isVisible(), true)],
+    [`${pagesPrefix}does/not/exist`, `${pagesPrefix}#learn`, async () => assert.equal(await missing.locator('#agent-overview-title').isVisible(), true)],
+    [`${prefix}lab`, `${prefix}#lab`, async () => assert.equal(await missing.locator('#lab-view').isVisible(), true)],
+    [`${prefix}not-a-page`, `${prefix}#learn`, async () => assert.equal(await missing.locator('#agent-overview-title').isVisible(), true)],
+  ]) {
+    await missing.goto(`${origin}${from}`);
+    await missing.waitForURL(`${origin}${to}`);
+    await missing.locator('#app .topbar').waitFor();
+    await check();
+    forwarded.push({ from, to });
+  }
+  assert.deepEqual(missingErrors, []);
+  // Without JavaScript the 404 page still offers a visible way into Open Docs and back to odin-labs.ai.
+  const noScript = await browser.newContext({ javaScriptEnabled: false });
+  const fallback = await noScript.newPage();
+  const fallbackResponse = await fallback.goto(`${origin}${pagesPrefix}learn`);
+  assert.equal(fallbackResponse.status(), 404);
+  assert.equal(await fallback.getByRole('link', { name: 'Open Open Docs' }).getAttribute('href'), 'https://odin-labs-ai.github.io/open-docs/#learn');
+  assert.equal(await fallback.getByRole('link', { name: 'Back to odin-labs.ai' }).first().getAttribute('href'), 'https://odin-labs.ai/');
+  await noScript.close();
+  const report = { build: 'dist', nestedPath: prefix, forwarded404: forwarded, lessonsRead: rendered.length, renderedWords: rendered.reduce((count, lesson) => count + `${lesson.foundations} ${lesson.deep}`.split(/\s+/).length, 0), conceptLinksChecked: targets.length, providerLayouts, meshPickedLessons: [...picked], externalRequests, badResponses, errors, fontsLoaded: true, contextLossRecovered: true };
   await writeFile('/tmp/odin-harness-static-verification.json', JSON.stringify(report, null, 2));
   console.log(JSON.stringify(report, null, 2));
 } finally { await browser.close(); await new Promise(resolve => server.close(resolve)); }

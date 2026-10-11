@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Open Docs is a single page with hash routes (#learn, #workshop, a lesson id …). Fragments are not separate URLs, so only the root is listed. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://odin-labs-ai.github.io/open-docs/</loc>
+    <lastmod>2026-10-11</lastmod>
+  </url>
+</urlset>

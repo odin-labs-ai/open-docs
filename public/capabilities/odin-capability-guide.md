@@ -1,8 +1,10 @@
 # Odin capability guide
 
-Reviewed 3 October 2026. This is an authored public usage guide, not a live runtime report. Examples require your own configured workspace, identity and permissions. Availability varies by installed version, profile and connected services. No provider calls, organization login or task execution occur in the browser.
+Reviewed 11 October 2026. This is an authored public usage guide, not a live runtime report. Examples require your own configured workspace, identity and permissions. Availability varies by installed version, profile and connected services. No provider calls, organization login or task execution occur in the browser.
 
 Open guides: https://odin-labs-ai.github.io/open-docs/#reference/capabilities
+
+These guides describe mechanisms in Odin’s agent tools and workspaces. Odin’s products are AI Gateway (https://odin-labs.ai/products/gateway/), Harness (https://odin-labs.ai/products/harness/), Command Center (https://odin-labs.ai/products/command-center/) and Odin Next (https://odin-labs.ai/products/odin-next/). Each guide ends with where it fits and who to talk to. Open Docs is part of odin-labs.ai: https://odin-labs.ai/
 
 The mechanism diagram is available alongside this file as mechanism-map.svg. It describes relationships, not a connected deployment.
 
@@ -47,6 +49,13 @@ The captured target, correct project, changed files and an observed page after t
 
 Browser annotation, screenshot Visual Intent and feedback annotation are different mechanisms. Installing an extension does not prove its bridge is connected. This guide does not capture your browser or edit files.
 
+### Next step with Odin
+
+No single product page on odin-labs.ai covers annotation or Visual Intent. Talk to Odin about the agent and workspace you use and what you want to point at.
+
+- Talk to Odin: https://odin-labs.ai/contact/
+- See Odin’s products: https://odin-labs.ai/products/
+
 ## Swarm and coordination
 
 Delegate bounded work and see how the results fit together.
@@ -87,6 +96,13 @@ Worker identities and scopes, actual dispatch, returned results and a check of t
 ### Limits to keep in view
 
 Several workers do not automatically share memory or permissions. Loom is a dependency workflow, not a synonym for swarm. A status message about a worker is not proof that its task succeeded.
+
+### Next step with Odin
+
+No product page on odin-labs.ai describes worker coordination as its own product. Talk to Odin about the work you want to split and how results should be checked.
+
+- Talk to Odin: https://odin-labs.ai/contact/
+- See Odin’s products: https://odin-labs.ai/products/
 
 ## Goals and continuity
 
@@ -129,6 +145,13 @@ The same intended project, preserved decisions, remaining-work record and a chec
 
 A CLI goal is not a Loom Run or an Intelligence SystemRun. Persisting a checkpoint does not make arbitrary external side effects exactly-once. Budget exhaustion must not be labelled complete.
 
+### Next step with Odin
+
+No product page on odin-labs.ai describes goals and session continuity as its own product. Talk to Odin about the outcomes you want agents to carry across interruptions.
+
+- Talk to Odin: https://odin-labs.ai/contact/
+- See Odin’s products: https://odin-labs.ai/products/
+
 ## Skills and composition
 
 Find and reuse capabilities allowed in your workspace.
@@ -169,6 +192,15 @@ The runtime-projected skill, supplied arguments, actual dispatch and an outcome 
 ### Limits to keep in view
 
 A skill on disk may be unloaded or excluded by a profile. Unavailable discovery differs from an empty list. A run that refuses missing arguments has not completed the job.
+
+### Next step with Odin
+
+The closest product on odin-labs.ai is Harness: workflow skills and action guards bring repeatable practices into agent-assisted engineering.
+
+Harness engineering is the discipline these docs teach. Odin Harness is Odin’s product for it: work orders state the objective, scope and definition of done; action guards run as code before a tool acts; and a recorded review comes before work is reported as done.
+
+- See Harness on odin-labs.ai: https://odin-labs.ai/products/harness/
+- Talk to Odin about Harness: https://odin-labs.ai/contact/#product-harness
 
 ## Memory and grounding
 
@@ -211,6 +243,13 @@ The named store, allowed records, provenance/citations and refusal of out-of-sco
 
 A row’s author is not the same as its visibility. Bounded semantic results are not a complete memory census. An empty answer can mean missing context, configuration or access; a health response alone cannot tell you which.
 
+### Next step with Odin
+
+The closest product on odin-labs.ai is Odin Next: answers come from governed memory and must cite the entries they used, and every memory write needs a rationale and an owner.
+
+- See Odin Next on odin-labs.ai: https://odin-labs.ai/products/odin-next/
+- Talk to Odin about Odin Next: https://odin-labs.ai/contact/#product-odin-next
+
 ## Odin Next and grounded action
 
 Turn grounded reasoning into governed, durable work.
@@ -251,6 +290,13 @@ The premise observation, scoped plan, approval where required, actual execution 
 ### Limits to keep in view
 
 My Odin is a workspace surface, not another name for Next. Ask working does not establish an action runtime. A prose-based premise heuristic is not empirical proof, and an accepted proposal is not an executed action.
+
+### Next step with Odin
+
+Odin Next has its own product page on odin-labs.ai: ask over configured knowledge, inspect cited sources, and keep useful context only after a governance check.
+
+- See Odin Next on odin-labs.ai: https://odin-labs.ai/products/odin-next/
+- Talk to Odin about Odin Next: https://odin-labs.ai/contact/#product-odin-next
 
 ## Intelligence Systems and outcome learning
 
@@ -293,6 +339,13 @@ Source provenance, System/run/signal identities, recommendation rationale and se
 
 A deployed definition and an operationally active System are different states. A registered adapter may be unavailable. Feedback annotation is not proof of effective learning or causation; mock outcome views must stay identified.
 
+### Next step with Odin
+
+On odin-labs.ai, intelligence systems are part of Odin Next: they watch configured sources for signals, and a person resolves or dismisses each one.
+
+- See Odin Next on odin-labs.ai: https://odin-labs.ai/products/odin-next/
+- Talk to Odin about Odin Next: https://odin-labs.ai/contact/#product-odin-next
+
 ## Media and artifacts
 
 Bring visual evidence into work and carry usable results out.
@@ -333,6 +386,13 @@ A readable artifact, actual format, stored content/metadata and successful reope
 ### Limits to keep in view
 
 A renderer may fall back to Markdown when a tool is missing. A claimed file path is not a delivered file. This page’s downloadable report and diagram are authored guide assets, not outputs of a live agent run.
+
+### Next step with Odin
+
+No single product page on odin-labs.ai covers media input and artifacts. Talk to Odin about the inputs you have and the formats your results need.
+
+- Talk to Odin: https://odin-labs.ai/contact/
+- See Odin’s products: https://odin-labs.ai/products/
 
 ## Shared control boundary
 

@@ -63,6 +63,8 @@ test('complete the course from rendered lessons and observe every failure and co
     if (id === 'loop') await expect(page.locator('#trace-outcome')).toContainText('not complete');
   }
   await expect(page.locator('#completion')).toBeVisible();
+  await expect(page.locator('#completion').getByRole('link', { name: 'Run this with Odin: Harness' })).toHaveAttribute('href', 'https://odin-labs.ai/products/harness/');
+  await expect(page.locator('#completion').getByRole('link', { name: 'Talk to Odin' })).toHaveAttribute('href', 'https://odin-labs.ai/contact/#product-harness');
   const downloadPromise = page.waitForEvent('download'); await page.locator('#export-completion').click(); const download = await downloadPromise;
   await download.saveAs('/tmp/odin-harness-learning-record.json');
   await test.info().attach('rendered-curriculum-review', { body: JSON.stringify({ readWords, learned, observations, errors }, null, 2), contentType: 'application/json' });
